@@ -48,11 +48,8 @@ h2{margin:0 0 16px;font-size:15px;font-weight:600}.g{display:flex;align-items:fl
 <div class="row">${side('lt', NAME + ' on light (#ffffff)', '', '#dfe1e5', '#202124', '#fff')}${side('dk', NAME + ' on dark (#202124)', '-white', '#35363a', '#e8eaed', '#202124')}</div>
 <div class="row" style="background:#f4f2fb"><div class="p" style="width:1200px;padding-top:20px;display:flex;gap:30px;align-items:center"><img src="${P('icon512-preview.png')}" width=200><div style="font-size:14px;line-height:1.7;color:#444"><b>Contrast of tile vs toolbar</b><br>tile #7F52E8 vs white 4.9:1, vs #202124 3.3:1 (both above the 3:1 non-text minimum)<br>cream glyph #FFF3DC vs tile 4.5:1, amber z #FFC247 vs tile 3.1:1<br>Mono badge: black on light / white on dark, glyph silhouette with cut-out eyes.</div></div></div>`;
 const O = f => path.join(root, f);
+// The promo tiles and the marquee are now made by shots-compose.mjs (same file names); this script only renders the icon preview sheet.
 const jobs = [
-  {html: promo('en'), w: 440, h: 280, out: O('promo/small-tile-440x280-en.png'), transparent: false},
-  {html: promo('th'), w: 440, h: 280, out: O('promo/small-tile-440x280-th.png'), transparent: false},
-  {html: marquee('en'), w: 1400, h: 560, out: O('promo/marquee-1400x560-en.png'), transparent: false},
-  {html: marquee('th'), w: 1400, h: 560, out: O('promo/marquee-1400x560-th.png'), transparent: false},
   {html: sheet, w: 1200, h: 700, out: O('promo/preview-sheet.png'), transparent: false},
 ];
 const jf = O('tools/jobs-store.json'); fs.writeFileSync(jf, JSON.stringify(jobs));

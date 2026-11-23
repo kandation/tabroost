@@ -74,12 +74,17 @@ store-assets/
   png/<dir>/icon16|32|48|128.png, icon512-preview.png, mono16*.png, mono32*.png
   promo/small-tile-440x280-en.png / -th.png
   promo/marquee-1400x560-en.png / -th.png
+  promo/github-social-1280x640.png
   promo/preview-sheet.png    icon on #fff and #202124, 16/32/48/128, mono, mock toolbars
   tools/gen-svg.mjs          writes the SVGs
   tools/make-icons.mjs       rasterizes icons (one throwaway headless Chrome via CDP)
   tools/make-compare.mjs     comparison sheet
-  tools/make-store.mjs       promo tiles, marquee, preview sheet (change NAME / TAG at the top to rename)
+  tools/make-store.mjs       icon preview sheet (the promo tiles moved to shots-compose.mjs)
   tools/render.mjs           shared renderer (launches one Chrome with a temp profile, kills it, deletes the profile)
+  screenshots/README.md      the five 1280x800 store screenshots (en/ and th/), promo art list, captions, upload order
+  tools/shots-capture.mjs    raw UI captures with demo data (one Chrome with a scratch copy of the extension)
+  tools/shots-compose.mjs    final screenshots, promo tiles and the GitHub social preview (replaces the promo part of make-store.mjs)
+  tools/demo-data.mjs, lib-chrome.mjs, png-rgb.mjs   demo data, Chrome launcher, PNG to 24-bit RGB
 ```
 `<dir>` is `a-sleepy`, `b-nest` or `c-chip`. Promo art uses the Leelawadee UI font (installed with Windows), with Segoe UI as fallback. Regenerate with `node tools/gen-svg.mjs && node tools/make-icons.mjs && node tools/make-store.mjs` (needs Node 22 and Chrome at `C:/Program Files/Google/Chrome`).
 
@@ -92,6 +97,6 @@ store-assets/
    - `.../icon128.png` to `icons/icon128.png`
 2. In `manifest.json` set `"name"` to the final name (for example `"Tabroost"`). It is also worth changing the strings that say "Clean My RAM" in the command descriptions, `popup.html` / `stash.html` titles, and any Thai/English UI text. Search the repo for `Clean My RAM`.
 3. If you want a monochrome toolbar badge or favicon, use `svg/a-sleepy-mono*.svg` or `png/a-sleepy/mono*.png`.
-4. Upload `promo/small-tile-440x280-*.png` and `promo/marquee-1400x560-*.png` in the Web Store dashboard. The Web Store also needs 1280x800 or 640x400 screenshots of the real UI, which are not part of this folder.
+4. Upload `promo/small-tile-440x280-*.png` and `promo/marquee-1400x560-*.png` in the Web Store dashboard. The 1280x800 screenshots are in `screenshots/en/` (default) and `screenshots/th/` (Thai locale); see `screenshots/README.md`.
 5. Make sure `store-assets/` is excluded from the release zip.
 6. If you pick a different name than Tabroost, update `NAME` and `TAG` in `tools/make-store.mjs` and rerun it.
