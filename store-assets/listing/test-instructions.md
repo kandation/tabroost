@@ -38,7 +38,7 @@ F. STATISTICS DASHBOARD (local)
 Left menu > the dashboard entry opens a local page. All numbers come from data in this browser. It can be turned off in Settings, which stops collecting.
 
 NOTES
-- Language defaults to Thai and can be switched to English in Settings > Language.
+- The language follows the browser language (Thai or English) and can be switched in Settings > Language.
 - Tabroost makes no network requests of its own. Site icons come from the browser's favicon cache.
 - Tab pages on chrome:// cannot be inspected by extensions; Tabroost saves their URLs only if "internal pages" is set to save.
 ```

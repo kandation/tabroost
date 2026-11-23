@@ -91,6 +91,8 @@ try {
     return pg;
   };
   await openList();
+  // this test asserts on Thai wording (the erase word): set the UI language explicitly (the default is 'auto' = browser language)
+  await pg.ev(`chrome.storage.local.get('settings').then((o)=>chrome.storage.local.set({settings:{...(o.settings||{}),language:'th'}}))`); await pg.send('Page.reload'); await sleep(3000);
   const msg = (m) => pg.ev(`chrome.runtime.sendMessage(${JSON.stringify(m)})`);
   const ping = await msg({ type: 'ping' });
   check('1 service worker answers (init finished, no parse / import error)', !!ping && ping.pong === true, JSON.stringify(ping));

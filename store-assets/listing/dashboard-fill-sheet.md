@@ -9,7 +9,7 @@ One sheet, in the dashboard's own order. Each field's text is in its own block: 
 Upload this file (Add new item, or Package > Upload new package):
 
 ```
-F:\projects\chm-clean-my-ram\dist\tabroost-1.0.0.zip
+dist\tabroost-1.0.0.zip
 ```
 
 Version in the zip: 1.0.0 (MV3, minimum Chrome 121).
@@ -221,41 +221,41 @@ All files are PNG, no alpha.
 **Store icon 128x128**
 
 ```
-F:\projects\chm-clean-my-ram\icons\icon128.png
+icons\icon128.png
 ```
 
 **Screenshots, English (default language), 1280x800, upload in this order**
 
 ```
-1  F:\projects\chm-clean-my-ram\store-assets\screenshots\en\01-save-every-tab.png
-2  F:\projects\chm-clean-my-ram\store-assets\screenshots\en\02-find-any-tab.png
-3  F:\projects\chm-clean-my-ram\store-assets\screenshots\en\03-idle-tabs-sleep.png
-4  F:\projects\chm-clean-my-ram\store-assets\screenshots\en\04-private-by-design.png
-5  F:\projects\chm-clean-my-ram\store-assets\screenshots\en\05-organise-your-way.png
+1  store-assets\screenshots\en\01-save-every-tab.png
+2  store-assets\screenshots\en\02-find-any-tab.png
+3  store-assets\screenshots\en\03-idle-tabs-sleep.png
+4  store-assets\screenshots\en\04-private-by-design.png
+5  store-assets\screenshots\en\05-organise-your-way.png
 ```
 
 **Screenshots, Thai (upload under the Thai language), 1280x800**
 
 ```
-1  F:\projects\chm-clean-my-ram\store-assets\screenshots\th\01-save-every-tab.png
-2  F:\projects\chm-clean-my-ram\store-assets\screenshots\th\02-find-any-tab.png
-3  F:\projects\chm-clean-my-ram\store-assets\screenshots\th\03-idle-tabs-sleep.png
-4  F:\projects\chm-clean-my-ram\store-assets\screenshots\th\04-private-by-design.png
-5  F:\projects\chm-clean-my-ram\store-assets\screenshots\th\05-organise-your-way.png
+1  store-assets\screenshots\th\01-save-every-tab.png
+2  store-assets\screenshots\th\02-find-any-tab.png
+3  store-assets\screenshots\th\03-idle-tabs-sleep.png
+4  store-assets\screenshots\th\04-private-by-design.png
+5  store-assets\screenshots\th\05-organise-your-way.png
 ```
 
 **Small promo tile 440x280**
 
 ```
-EN: F:\projects\chm-clean-my-ram\store-assets\promo\small-tile-440x280-en.png
-TH: F:\projects\chm-clean-my-ram\store-assets\promo\small-tile-440x280-th.png
+EN: store-assets\promo\small-tile-440x280-en.png
+TH: store-assets\promo\small-tile-440x280-th.png
 ```
 
 **Marquee promo tile 1400x560**
 
 ```
-EN: F:\projects\chm-clean-my-ram\store-assets\promo\marquee-1400x560-en.png
-TH: F:\projects\chm-clean-my-ram\store-assets\promo\marquee-1400x560-th.png
+EN: store-assets\promo\marquee-1400x560-en.png
+TH: store-assets\promo\marquee-1400x560-th.png
 ```
 
 Do not upload `screenshots\raw\` (intermediate captures) or `promo\github-social-1280x640.png` (GitHub only).
@@ -455,7 +455,7 @@ F. STATISTICS DASHBOARD (local)
 Left menu > the dashboard entry opens a local page. All numbers come from data in this browser. It can be turned off in Settings, which stops collecting.
 
 NOTES
-- Language defaults to Thai and can be switched to English in Settings > Language.
+- The language follows the browser language (Thai or English) and can be switched in Settings > Language.
 - Tabroost makes no network requests of its own. Site icons come from the browser's favicon cache.
 - Tab pages on chrome:// cannot be inspected by extensions; Tabroost saves their URLs only if "internal pages" is set to save.
 ```

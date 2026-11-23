@@ -78,6 +78,8 @@ try {
   let t0; for (let i = 0; i < 30 && !t0; i++) { await sleep(200); t0 = (await J('/json/list')).find((x) => x.id === result.targetId); }
   const pg = await cdp(t0.webSocketDebuggerUrl, pageErrors);
   await pg.send('Runtime.enable'); await pg.send('Page.enable'); await pg.send('Page.bringToFront'); await pg.send('Emulation.setFocusEmulationEnabled', { enabled: true });
+  // WebAuthn refuses with NotAllowedError ("page does not have focus") when another window took the OS foreground, which focus emulation does not cover: keep the tab in front for the whole run.
+  setInterval(() => { pg.send('Page.bringToFront').catch(() => {}); br.send('Target.activateTarget', { targetId: result.targetId }).catch(() => {}); }, 400).unref();
   await sleep(2500);
   const reload = async (hash) => { if (hash != null) await pg.ev(`location.hash=${JSON.stringify(hash)}`); await pg.send('Page.reload'); await sleep(2500); };
   const msg = (m) => pg.ev(`chrome.runtime.sendMessage(${JSON.stringify(m)})`);

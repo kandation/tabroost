@@ -38,6 +38,9 @@ try {
   const pg = await cdp(t.webSocketDebuggerUrl);
   await pg.send('Runtime.enable'); await pg.send('Page.bringToFront'); await pg.send('Emulation.setFocusEmulationEnabled', { enabled: true });
   const ev = async (expr) => { const r = await pg.send('Runtime.evaluate', { expression: expr, awaitPromise: true, returnByValue: true }); if (r.result.exceptionDetails) throw new Error(JSON.stringify(r.result.exceptionDetails).slice(0, 300)); return r.result.result.value; };
+  // this test asserts on Thai wording / calendar: set the UI language explicitly (the default is 'auto' = browser language)
+  await ev(`chrome.storage.local.get('settings').then((o)=>chrome.storage.local.set({settings:{...(o.settings||{}),language:'th'}}))`); await pg.send('Page.reload'); await sleep(3000);
+  const _n = new Date(), TODAY_TH = `${_n.getDate()}/${_n.getMonth() + 1}/${_n.getFullYear() + 543}`, TODAY_CHIP = `${_n.getDate()} ${['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'][_n.getMonth()]} ${_n.getFullYear() + 543}`; // the range ends today
   const msg = (m) => ev(`chrome.runtime.sendMessage(${JSON.stringify(m)})`);
   const key = async (k, code, vk) => { await pg.send('Input.dispatchKeyEvent', { type: k === 'Enter' ? 'keyDown' : 'rawKeyDown', key: k, code, windowsVirtualKeyCode: vk, ...(k === 'Enter' ? { text: '\r' } : {}) }); await pg.send('Input.dispatchKeyEvent', { type: 'keyUp', key: k, code, windowsVirtualKeyCode: vk }); await sleep(150); };
 
@@ -77,13 +80,13 @@ try {
   await clickFk('p-custom'); await sleep(300);
   check('custom shows two labelled fields จาก / ถึง', await ev(`[...document.querySelectorAll('#filterMenu .dlab')].map(x=>x.textContent).join('|')==='จาก|ถึง' && document.querySelectorAll('#filterMenu .dinp').length===2`));
   const typeInto = async (fk, text) => { await ev(`(()=>{ const i=document.querySelector('#filterMenu [data-fk="${fk}"]'); i.focus(); i.value=${JSON.stringify(text)}; i.dispatchEvent(new Event('change',{bubbles:true})); })()`); await sleep(300); };
-  await typeInto('d-from', '12/11/2569'); await typeInto('d-to', '23/11/2569'); await sleep(300);
+  await typeInto('d-from', '12/11/2569'); await typeInto('d-to', TODAY_TH); await sleep(300);
   const chipTxt = await ev(`${$q('#chips .chip')}.firstChild.textContent`);
-  check('range chip reads like "12 พ.ย. – 23 พ.ย. 2569"', /12 พ\.ย\. – 23 พ\.ย\. 2569/.test(chipTxt), chipTxt);
-  check('a range that includes today (23 Nov) still finds the sessions saved today', /24/.test(await summary()), await summary());
+  check('range chip reads like "12 พ.ย. – <today> 2569"', chipTxt.includes('12 พ.ย. – ' + TODAY_CHIP), chipTxt);
+  check('a range that includes today still finds the sessions saved today', /24/.test(await summary()), await summary());
   await typeInto('d-from', '1/11/2569'); await typeInto('d-to', '5/11/2569');
   check('a past range finds nothing and says so', /ไม่พบ/.test(await summary()), await summary());
-  await typeInto('d-from', '12/11/2569'); await typeInto('d-to', '23/11/2569');
+  await typeInto('d-from', '12/11/2569'); await typeInto('d-to', TODAY_TH);
   await typeInto('d-from', '25/11/2569'); await typeInto('d-to', '1/1/2569');
   check('start after end shows the inline message and keeps the old range', await ev(`!${$q('#filterMenu .derr')}.hidden && ${$q('#filterMenu .derr')}.textContent.length>5`));
   await typeInto('d-from', 'abc');
