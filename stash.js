@@ -351,7 +351,7 @@ const STR = {
   actOffDel: 'ลบเลย', actOffKeep: 'เก็บไว้ แต่หยุดเก็บเพิ่ม', actOffCancel: 'ยกเลิก',
   actPurgeConfirm: 'ลบสถิติการใช้งานที่เก็บไว้ในเครื่องนี้ทั้งหมด? (เวลาใช้ล่าสุด เวลาเปิด สถิติรายวัน) ลบแล้วเอากลับมาไม่ได้', actPurging: (p) => `กำลังลบสถิติ… ${p}%`, actPurged: 'ลบสถิติแล้ว', actExported: 'ส่งออกสถิติแล้ว',
   actBanner: 'แอปเก็บสถิติการใช้งานไว้ในเครื่องนี้เท่านั้น · ปิดได้ในการตั้งค่า',
-  actBannerOk: 'เข้าใจแล้ว', navDash: 'แดชบอร์ด', navAbout: 'เกี่ยวกับ', dashFail: 'เปิดแดชบอร์ดไม่สำเร็จ', seeMore: 'ดูเพิ่ม', seeLess: 'ย่อ', vmOtherSort: 'เรียงแบบอื่น', vmOtherGroup: 'จัดกลุ่มแบบอื่น', vmOtherIsort: 'เรียงแบบอื่น', catOthers: (n) => `หมวดอื่น (${n})`, foldMore: (n) => `อีก ${n} เรื่อง · ดูเพิ่ม`, mgOpenOther: 'เปิดแบบอื่น', mgMore: 'เพิ่มเติม', stSets: 'ชุดแท็บ', stTabs: 'แท็บที่เก็บไว้', stSleep: 'กำลังพัก', stRam: 'แรมที่ประหยัด', statTip: 'ดูสรุปทั้งหมดในแดชบอร์ด',
+  actBannerOk: 'เข้าใจแล้ว', navDash: 'แดชบอร์ด', navAbout: 'เกี่ยวกับ', lockNowBtn: 'ล็อกตอนนี้', dashFail: 'เปิดแดชบอร์ดไม่สำเร็จ', seeMore: 'ดูเพิ่ม', seeLess: 'ย่อ', vmOtherSort: 'เรียงแบบอื่น', vmOtherGroup: 'จัดกลุ่มแบบอื่น', vmOtherIsort: 'เรียงแบบอื่น', catOthers: (n) => `หมวดอื่น (${n})`, foldMore: (n) => `อีก ${n} เรื่อง · ดูเพิ่ม`, mgOpenOther: 'เปิดแบบอื่น', mgMore: 'เพิ่มเติม', stSets: 'ชุดแท็บ', stTabs: 'แท็บที่เก็บไว้', stSleep: 'กำลังพัก', stRam: 'แรมที่ประหยัด', statTip: 'ดูสรุปทั้งหมดในแดชบอร์ด',
   tmUsed: (d) => `ใช้ล่าสุด ${d}ก่อน`, tmSaved: (d) => `เก็บมา ${d}`, tmOpenFor: (d) => `เปิดค้าง ${d}`, tmApproxTip: 'ประมาณ (อาจเปิดก่อนหน้านั้น)', tmNone: '—',
   chipLastUsed: (d) => `ใช้ล่าสุด ${d}ก่อน`, chipOpened: (n) => `เปิดแล้ว ${n} ครั้ง`,
   hcSaved: 'เก็บเมื่อ', hcLastUsed: 'ใช้ล่าสุด', hcOpened: 'เปิดเมื่อ', hcIdle: 'ไม่ได้ใช้ก่อนเก็บ', hcInList: 'อยู่ในรายการมา', hcCreated: 'สร้างเมื่อ', hcRange: 'ช่วงเวลาที่เปิดแท็บ',
@@ -3821,6 +3821,7 @@ async function onClick(e) {
     case 'syncOpen': setView('settings'); requestAnimationFrame(() => { const c = $('#s-sync'); if (c) c.scrollIntoView({ block: 'start' }); }); return null;
     case 'nav': if (btn.dataset.view === 'settings') setView('settings'); else if (btn.dataset.view === 'snaps') setView('snaps'); else if (btn.dataset.view === 'dash') setView('dash'); else if (btn.dataset.view === 'trash') navTo('trash'); return null;
     case 'toggleSide': $('#shell').classList.toggle('side-open'); $('#scrim').hidden = !$('#shell').classList.contains('side-open'); return null;
+    case 'lockNow': await send({ type: 'lock.lockNow' }); return null;
     case 'openAbout': location.href = 'about.html'; return null;
     case 'closeSide': $('#shell').classList.remove('side-open'); $('#scrim').hidden = true; return null;
     case 'catAdd': return catAddPrompt();
@@ -4472,6 +4473,8 @@ async function init() {
   await lockGate({ beforeLock: () => { try { SRCH.client && SRCH.client.post({ type: 'lock' }); } catch { /* ignore */ } } }); // password lock: resolves at once when it is off; shows the lock screen (and nothing else) while locked
   try { const r = await chrome.storage.local.get('view'); if (r.view) S.vs = { ...Q.DEFAULT_VIEW, ...r.view }; } catch { /* defaults */ }
   applyStrings();
+  const syncLockBtn = () => { const b = $('#lockNowRow'); if (b) b.hidden = !(lockrt.enabled() && !lockrt.isLocked()); };
+  syncLockBtn(); lockrt.onChange(syncLockBtn);
   wire();
   connectSearchWorker();
   initPermsUi({ toast: (t) => toast(t) }).catch(() => {});

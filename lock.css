@@ -78,3 +78,9 @@ html.lk-on, html.lk-on body { background: var(--bg); }
 .lk-erase a.lk-go { display: block; box-sizing: border-box; text-align: center; text-decoration: none; }
 .lk-archlink { margin: var(--sp-2) 0; }
 .lk-erase h3 { margin: var(--sp-3) 0 var(--sp-1); font-size: var(--fs-m); }
+/* the page-wide button:hover (stash.css) is more specific than .lk-go and turned the button light grey with white text */
+.lk-card .lk-go:hover:not(:disabled), .lk-erase a.lk-go:hover { background: var(--accent); color: var(--accent-text); filter: brightness(1.1); }
+.lk-card .lk-go:disabled:hover { background: var(--accent); color: var(--accent-text); filter: none; }
+.lk-card .lk-danger:hover:not(:disabled) { background: var(--danger); color: #fff; filter: brightness(1.1); }
+.lk-card .lk-danger:disabled:hover { background: var(--danger); color: #fff; }
+.lk-card .lk-link:hover, .lk-card .lk-eye:hover { background: none; }
