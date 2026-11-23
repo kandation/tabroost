@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tabroost Privacy Policy | นโยบายความเป็นส่วนตัว</title>
+<meta name="description" content="Privacy policy of the Tabroost browser extension. นโยบายความเป็นส่วนตัวของส่วนขยาย Tabroost">
+<style>
+:root{--bg:#fbfbfd;--card:#fff;--ink:#1b1d24;--mute:#5b6070;--line:#e3e5ec;--accent:#5b4bd6;--accent-ink:#fff;--soft:#f0eefc}
+@media (prefers-color-scheme:dark){:root{--bg:#14151a;--card:#1c1e26;--ink:#eceef4;--mute:#a3a8b8;--line:#2d303b;--accent:#9d90ff;--accent-ink:#14151a;--soft:#25233a}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 system-ui,-apple-system,"Segoe UI","Noto Sans Thai","Leelawadee UI",Tahoma,sans-serif}
+.wrap{max-width:46rem;margin:0 auto;padding:1.5rem 1rem 4rem}
+header{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:1rem}
+.brand{font-weight:700;font-size:1.15rem;letter-spacing:.2px}
+.tog{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden;background:var(--card)}
+.tog button{font:inherit;font-size:.9rem;border:0;background:none;color:var(--ink);padding:.35rem .9rem;cursor:pointer}
+.tog button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
+.tog button:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+h1{font-size:1.8rem;line-height:1.25;margin:.4rem 0 .2rem}
+h2{font-size:1.2rem;margin:2rem 0 .4rem}
+p,li{margin:.4rem 0}
+ul{padding-left:1.3rem}
+.meta{color:var(--mute);font-size:.92rem}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:1rem 1.2rem;margin:1rem 0}
+.card.soft{background:var(--soft)}
+table{border-collapse:collapse;width:100%;font-size:.93rem;margin:.6rem 0}
+th,td{border-bottom:1px solid var(--line);padding:.5rem .4rem;text-align:left;vertical-align:top}
+.tw{overflow-x:auto}
+code{font:.9em ui-monospace,Consolas,monospace;background:var(--soft);padding:.05rem .3rem;border-radius:4px}
+a{color:var(--accent)}
+[data-l]{display:none}
+html[lang="en"] [data-l="en"],html[lang="th"] [data-l="th"]{display:block}
+html[lang="en"] span[data-l="en"],html[lang="th"] span[data-l="th"],html[lang="en"] li[data-l="en"],html[lang="th"] li[data-l="th"]{display:list-item}
+html[lang="en"] span[data-l="en"],html[lang="th"] span[data-l="th"]{display:inline}
+.nojs [data-l]{display:block!important}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <span class="brand">Tabroost</span>
+  <div class="tog" role="group" aria-label="Language / ภาษา">
+    <button type="button" data-set="en" aria-pressed="true">English</button>
+    <button type="button" data-set="th" aria-pressed="false">ไทย</button>
+  </div>
+</header>
+
+<!-- ============================ ENGLISH ============================ -->
+<main data-l="en">
+<h1>Privacy Policy</h1>
+<p class="meta">Extension: Tabroost &middot; Effective date: {{EFFECTIVE_DATE}} &middot; Developer: {{DEVELOPER_NAME}} &middot; Contact: <a href="mailto:{{CONTACT_EMAIL}}">{{CONTACT_EMAIL}}</a></p>
+
+<div class="card soft"><strong>In short:</strong> Tabroost keeps your data on your device. It has no servers, no accounts, no analytics and no ads. We do not collect, sell or share your data, and the developer never receives it.</div>
+
+<h2>1. What data Tabroost handles</h2>
+<ul>
+<li>The address (URL) and title of tabs you choose to save, plus notes, categories, pin/star flags and the Chrome tab group name and color of those tabs.</li>
+<li>Short recovery notes of your open tabs, written every few minutes, so tabs can be recovered after a crash.</li>
+<li>Your settings (for example the sleep timer, protected sites, language, theme).</li>
+<li>Optional local usage statistics (for example when a saved tab was last used and daily counters). You can turn them off in settings.</li>
+<li>The free-memory value reported by the browser, used only to pace closing and opening tabs. It is not stored.</li>
+</ul>
+<p>Tabroost does not ask for your name, email, location, payment details or any account.</p>
+
+<h2>2. Where the data is stored</h2>
+<p>All of the above is stored locally in your browser (IndexedDB and chrome.storage of the extension). It is not sent to the developer or to any third party. Tabroost makes no network requests of its own. Site icons come from the browser's own favicon cache.</p>
+
+<h2>3. Checking tabs before sleeping them</h2>
+<p>If you enable auto-sleep, Tabroost runs a short function bundled in the extension inside a tab that is about to be put to sleep. It checks only two things: whether the page has form input that was not saved, and whether media is playing. The answer is yes or no, is used on the spot, and page content is not read out, stored or sent. This is why the extension asks for access to all websites.</p>
+
+<h2>4. Optional sync between your devices</h2>
+<p>Sync is off by default. If you turn it on, you choose a passphrase. Tabroost encrypts your tab sets on your device (AES-GCM with a 256-bit key protected by a key derived from your passphrase using PBKDF2-SHA256) and writes the encrypted data into your browser's bookmarks, in a folder named <code>Tabroost sync data - do not edit</code> under "Other bookmarks".</p>
+<p>The entries in that folder are bookmarks to addresses that start with <code>https://cmr.invalid/</code>. The <code>.invalid</code> domain is reserved and can never be opened. The "bookmarks" only carry encrypted text so that the browser's own bookmark sync (if you use Chrome sync) can move it to your other devices. They are not real websites, and Tabroost never contacts them. Please do not edit, move or delete this folder while sync is on.</p>
+<p>The developer has no access to this data. Your passphrase is never stored or sent. If you forget it, the synced data cannot be recovered, but the list on each device is not affected. If you use browser sync, the encrypted bookmarks are handled by your browser vendor under its own policy.</p>
+
+<h2>5. No analytics, ads, sale or transfer</h2>
+<p>Tabroost does not include analytics, advertising, tracking or crash-reporting tools. We do not sell your data. We do not transfer or share it with third parties, except as the browser's own sync does when you turn it on (see section 4). We do not use data to decide credit or lending, and we do not use it for anything other than the extension's single purpose: managing your tabs and reducing memory use.</p>
+
+<h2>6. Limited Use</h2>
+<p>The use of information received from Chrome APIs adheres to the <a href="https://developer.chrome.com/docs/webstore/program-policies/limited-use" rel="noopener">Chrome Web Store User Data Policy</a>, including the Limited Use requirements. Data is used only to provide and improve the user-facing features described here, is not transferred except as stated, is not used for personalized or other advertising, and is not read by humans.</p>
+
+<h2>7. Security</h2>
+<p>No code is loaded from outside the extension. Synced data is end-to-end encrypted as described above. By default, data stored locally is not encrypted by Tabroost; it is protected by your operating system account and browser profile, and anyone who can use your browser profile can read your saved list. You can turn on a password lock in Settings (off by default). With it on, Tabroost encrypts the saved list on this computer: tab titles and links, sites, notes, tab set names, the trash, the saved copies used to recover lost tabs, the backup copy, and your site rules. The password is never stored or sent anywhere. The lock protects against someone using your unlocked computer and against someone who copies your browser profile folder or disk. It does not hide when a set was saved, how many tabs it has or that it exists, and it does not help against malware running on your computer while you are unlocked. Someone holding a copy of the files can try passwords much faster than the waiting time inside the app allows, so use a long password. If you forget the password, you can open the list with the recovery key, or with a backup password or a passkey (or security key) that you set up in Settings. If you have none of these, the list cannot be opened again (saving tabs still works). A passkey stays in your device or key; Tabroost keeps only its public id and a random value, never a secret, and nothing is sent anywhere. Older data may stay in unused disk space until Chrome cleans up its files. Keep your device secure. The lock and sync work together: synced data stays encrypted in the sync folder with your sync passphrase, the lock key protects the data on this computer, and sync pauses while the list is locked and carries on after you unlock. Before you erase everything after losing a password, you can save an encrypted backup file (.tabroost) that opens only with the old password, recovery key, backup password or passkey and can be imported again later.</p>
+
+<h2>8. Your controls</h2>
+<ul>
+<li>Export all your data to a file at any time, and import it again.</li>
+<li>Delete items, empty the trash, or delete everything from the list page. Deleted items wait in the trash for the number of days you choose, then are removed.</li>
+<li>Turn off statistics, favicons, crash-recovery notes, auto-sleep and sync in settings.</li>
+<li>Uninstalling the extension removes its local data. Delete the sync folder from your bookmarks to remove encrypted sync data.</li>
+</ul>
+
+<h2>9. Retention</h2>
+<p>Data stays until you delete it. Trash items are purged after the retention days in settings. Daily statistics are kept for the number of days in settings (default 400 days) or until you turn them off.</p>
+
+<h2>10. Children</h2>
+<p>Tabroost is a general-purpose tool and is not directed at children under 13. It does not knowingly collect personal information from anyone.</p>
+
+<h2>11. Changes to this policy</h2>
+<p>If this policy changes, the new version will be posted at this address with a new effective date. Material changes will also be noted in the extension's release notes.</p>
+
+<h2>12. Contact</h2>
+<p>{{DEVELOPER_NAME}} &middot; <a href="mailto:{{CONTACT_EMAIL}}">{{CONTACT_EMAIL}}</a></p>
+<p class="meta">Tabroost is an independent project and is not affiliated with or endorsed by Google.</p>
+</main>
+
+<!-- ============================ THAI ============================ -->
+<main data-l="th">
+<h1>นโยบายความเป็นส่วนตัว</h1>
+<p class="meta">ส่วนขยาย: Tabroost &middot; มีผลตั้งแต่: {{EFFECTIVE_DATE}} &middot; ผู้พัฒนา: {{DEVELOPER_NAME}} &middot; ติดต่อ: <a href="mailto:{{CONTACT_EMAIL}}">{{CONTACT_EMAIL}}</a></p>
+
+<div class="card soft"><strong>สรุป:</strong> Tabroost เก็บข้อมูลไว้ในเครื่องของคุณ ไม่มีเซิร์ฟเวอร์ ไม่มีบัญชี ไม่มีการวิเคราะห์การใช้งาน และไม่มีโฆษณา เราไม่เก็บรวบรวม ขาย หรือแบ่งปันข้อมูลของคุณ และผู้พัฒนาไม่ได้รับข้อมูลนั้น</div>
+
+<h2>1. Tabroost จัดการข้อมูลอะไรบ้าง</h2>
+<ul>
+<li>ที่อยู่ (URL) และชื่อของแท็บที่คุณเลือกเก็บ รวมถึงบันทึกย่อ หมวดหมู่ ธงปักหมุด/ติดดาว และชื่อกับสีของกลุ่มแท็บ Chrome ของแท็บเหล่านั้น</li>
+<li>บันทึกสั้น ๆ ของแท็บที่เปิดอยู่ ซึ่งจดทุกไม่กี่นาที เพื่อกู้คืนแท็บหลังเบราว์เซอร์ล่ม</li>
+<li>การตั้งค่าของคุณ (เช่น เวลาพักแท็บ เว็บไซต์ที่กันไว้ ภาษา ธีม)</li>
+<li>สถิติการใช้งานในเครื่องที่เป็นตัวเลือก (เช่น เวลาที่ใช้แท็บที่เก็บไว้ล่าสุด และตัวนับรายวัน) ปิดได้ในการตั้งค่า</li>
+<li>ค่าแรมที่เหลือที่เบราว์เซอร์รายงาน ใช้เพื่อปรับจังหวะการปิดและเปิดแท็บเท่านั้น และไม่ถูกเก็บ</li>
+</ul>
+<p>Tabroost ไม่ขอชื่อ อีเมล ตำแหน่งที่อยู่ ข้อมูลการชำระเงิน หรือบัญชีใด ๆ</p>
+
+<h2>2. ข้อมูลถูกเก็บที่ไหน</h2>
+<p>ข้อมูลทั้งหมดข้างต้นเก็บในเครื่องของคุณ ภายในเบราว์เซอร์ (IndexedDB และ chrome.storage ของส่วนขยาย) ไม่ถูกส่งให้ผู้พัฒนาหรือบุคคลที่สาม Tabroost ไม่ส่งคำขอเครือข่ายเอง ไอคอนเว็บมาจากแคชไอคอนของเบราว์เซอร์เอง</p>
+
+<h2>3. การตรวจแท็บก่อนพัก</h2>
+<p>ถ้าคุณเปิดการพักอัตโนมัติ Tabroost จะรันฟังก์ชันสั้น ๆ ที่มากับส่วนขยายในแท็บที่กำลังจะถูกพัก ฟังก์ชันตรวจแค่สองอย่าง คือ หน้านั้นมีข้อมูลในฟอร์มที่ยังไม่บันทึกหรือไม่ และกำลังเล่นสื่ออยู่หรือไม่ คำตอบเป็นใช่หรือไม่ใช่ ใช้ทันที ไม่อ่านออกมา ไม่เก็บ และไม่ส่งเนื้อหาของหน้า นี่คือเหตุผลที่ส่วนขยายขอสิทธิ์เข้าถึงทุกเว็บไซต์</p>
+
+<h2>4. ซิงค์ระหว่างเครื่อง (ตัวเลือก)</h2>
+<p>ปิดอยู่เป็นค่าเริ่มต้น ถ้าเปิด คุณตั้งรหัสผ่านเอง Tabroost จะเข้ารหัสชุดแท็บในเครื่องของคุณ (AES-GCM คีย์ 256 บิตที่ป้องกันด้วยคีย์ที่สร้างจากรหัสผ่านด้วย PBKDF2-SHA256) แล้วเขียนข้อมูลที่เข้ารหัสลงในบุ๊กมาร์กของเบราว์เซอร์ ในโฟลเดอร์ชื่อ <code>Tabroost sync data - do not edit</code> ภายใต้ "Other bookmarks"</p>
+<p>รายการในโฟลเดอร์นั้นคือบุ๊กมาร์กที่ชี้ไปยังที่อยู่ขึ้นต้นด้วย <code>https://cmr.invalid/</code> โดเมน <code>.invalid</code> เป็นโดเมนสงวนที่เปิดไม่ได้ "บุ๊กมาร์ก" เหล่านี้เก็บแค่ข้อความที่เข้ารหัส เพื่อให้การซิงค์บุ๊กมาร์กของเบราว์เซอร์ (ถ้าคุณใช้ Chrome sync) พาไปยังเครื่องอื่นของคุณได้ ไม่ใช่เว็บไซต์จริง และ Tabroost ไม่เคยติดต่อที่อยู่เหล่านั้น โปรดอย่าแก้ ย้าย หรือลบโฟลเดอร์นี้ขณะเปิดซิงค์</p>
+<p>ผู้พัฒนาเข้าถึงข้อมูลนี้ไม่ได้ รหัสผ่านไม่ถูกเก็บและไม่ถูกส่ง ถ้าลืมรหัสผ่าน ข้อมูลที่ซิงค์จะกู้ไม่ได้ แต่รายการในแต่ละเครื่องไม่ได้รับผลกระทบ ถ้าคุณใช้การซิงค์ของเบราว์เซอร์ บุ๊กมาร์กที่เข้ารหัสจะอยู่ในการดูแลของผู้ให้บริการเบราว์เซอร์ตามนโยบายของเขา</p>
+
+<h2>5. ไม่มีการวิเคราะห์ โฆษณา การขาย หรือการโอนข้อมูล</h2>
+<p>Tabroost ไม่มีเครื่องมือวิเคราะห์ โฆษณา ติดตาม หรือรายงานข้อขัดข้อง เราไม่ขายข้อมูลของคุณ ไม่โอนหรือแบ่งปันให้บุคคลที่สาม ยกเว้นสิ่งที่การซิงค์ของเบราว์เซอร์ทำเองเมื่อคุณเปิด (ดูข้อ 4) เราไม่ใช้ข้อมูลเพื่อตัดสินเครดิตหรือการให้กู้ และไม่ใช้เพื่อสิ่งอื่นนอกจากวัตถุประสงค์เดียวของส่วนขยาย คือจัดการแท็บและลดการใช้แรม</p>
+
+<h2>6. การใช้อย่างจำกัด (Limited Use)</h2>
+<p>การใช้ข้อมูลที่ได้รับจาก Chrome API เป็นไปตาม <a href="https://developer.chrome.com/docs/webstore/program-policies/limited-use" rel="noopener">นโยบายข้อมูลผู้ใช้ของ Chrome Web Store</a> รวมถึงข้อกำหนด Limited Use ข้อมูลถูกใช้เพื่อให้บริการฟีเจอร์ที่ผู้ใช้เห็นตามที่อธิบายไว้เท่านั้น ไม่ถูกโอนนอกจากที่ระบุ ไม่ถูกใช้เพื่อโฆษณาแบบเจาะจงหรือแบบอื่น และไม่มีมนุษย์อ่านข้อมูลนั้น</p>
+
+<h2>7. ความปลอดภัย</h2>
+<p>ไม่มีการโหลดโค้ดจากภายนอกส่วนขยาย ข้อมูลที่ซิงค์เข้ารหัสตลอดทางตามที่อธิบายข้างต้น โดยปกติข้อมูลที่เก็บในเครื่อง Tabroost ไม่ได้เข้ารหัส ข้อมูลถูกปกป้องด้วยบัญชีระบบปฏิบัติการและโปรไฟล์เบราว์เซอร์ของคุณ ผู้ที่ใช้โปรไฟล์เบราว์เซอร์ของคุณได้ก็อ่านรายการที่เก็บไว้ได้ คุณเปิดรหัสผ่านได้ในการตั้งค่า (ปิดอยู่เป็นค่าเริ่มต้น) เมื่อเปิด Tabroost จะเข้ารหัสรายการที่เก็บไว้ในเครื่องนี้ ทั้งชื่อหน้าและลิงก์ เว็บไซต์ โน้ต ชื่อชุดแท็บ ถังขยะ ชุดสำรองที่ใช้กู้แท็บที่หายไป สำเนาสำรอง และกฎเกี่ยวกับเว็บไซต์ของคุณ รหัสผ่านไม่ถูกเก็บและไม่ถูกส่งไปไหน ล็อกนี้กันได้เฉพาะคนที่ใช้เครื่องที่ปลดล็อกอยู่ และคนที่ก๊อปโฟลเดอร์โปรไฟล์หรือดิสก์ไป แต่ไม่ซ่อนเวลาที่เก็บ จำนวนแท็บ หรือการมีอยู่ของชุดแท็บ และไม่ช่วยถ้ามีโปรแกรมร้ายทำงานในเครื่องตอนที่ปลดล็อกอยู่ คนที่ถือสำเนาไฟล์ลองเดารหัสผ่านได้เร็วกว่าเวลารอในแอปมาก จึงควรตั้งรหัสผ่านยาวๆ ถ้าลืมรหัสผ่าน เปิดรายการด้วยรหัสกู้คืน หรือด้วยรหัสผ่านสำรองหรือพาสคีย์ (หรือกุญแจความปลอดภัย) ที่ตั้งไว้ในการตั้งค่าได้ ถ้าไม่มีสักอย่าง จะเปิดรายการไม่ได้อีก (แต่ยังเก็บแท็บได้) พาสคีย์อยู่ในอุปกรณ์หรือกุญแจของคุณ Tabroost เก็บแค่รหัสอ้างอิงสาธารณะกับค่าสุ่ม ไม่เก็บความลับ และไม่ส่งอะไรไปไหน ข้อมูลเก่าอาจค้างในพื้นที่ว่างของดิสก์อยู่พักหนึ่งจนกว่า Chrome จะเก็บกวาดไฟล์ ควรรักษาความปลอดภัยของอุปกรณ์ด้วย ล็อกกับซิงค์ใช้ร่วมกันได้ ข้อมูลในโฟลเดอร์ซิงค์ยังเข้ารหัสด้วยรหัสผ่านซิงค์ ส่วนกุญแจของล็อกปกป้องข้อมูลในเครื่องนี้ ซิงค์จะหยุดพักตอนล็อกและทำงานต่อหลังปลดล็อก ก่อนลบทุกอย่างเพราะลืมรหัสผ่าน คุณบันทึกไฟล์สำรองที่เข้ารหัส (.tabroost) ไว้ได้ ไฟล์นี้เปิดได้ด้วยรหัสผ่านเดิม รหัสกู้คืน รหัสผ่านสำรอง หรือพาสคีย์ของตอนนั้นเท่านั้น และนำเข้ากลับมาทีหลังได้</p>
+
+<h2>8. สิ่งที่คุณควบคุมได้</h2>
+<ul>
+<li>ส่งออกข้อมูลทั้งหมดเป็นไฟล์ได้ทุกเมื่อ และนำเข้ากลับมาได้</li>
+<li>ลบรายการ ล้างถังขยะ หรือลบทั้งหมดได้จากหน้ารายการ ของที่ลบจะรออยู่ในถังขยะตามจำนวนวันที่คุณเลือก แล้วถูกลบถาวร</li>
+<li>ปิดสถิติ ไอคอนเว็บ การจดแท็บไว้กู้คืน การพักอัตโนมัติ และการซิงค์ได้ในการตั้งค่า</li>
+<li>ถอนการติดตั้งส่วนขยายจะลบข้อมูลในเครื่อง ลบโฟลเดอร์ซิงค์ออกจากบุ๊กมาร์กเพื่อลบข้อมูลซิงค์ที่เข้ารหัส</li>
+</ul>
+
+<h2>9. ระยะเวลาเก็บข้อมูล</h2>
+<p>ข้อมูลอยู่จนกว่าคุณจะลบ ของในถังขยะถูกลบตามจำนวนวันในการตั้งค่า สถิติรายวันเก็บตามจำนวนวันในการตั้งค่า (ค่าเริ่มต้น 400 วัน) หรือจนกว่าคุณจะปิดสถิติ</p>
+
+<h2>10. เด็ก</h2>
+<p>Tabroost เป็นเครื่องมือทั่วไปและไม่ได้มุ่งเป้าไปที่เด็กอายุต่ำกว่า 13 ปี และไม่เก็บข้อมูลส่วนบุคคลของใครโดยเจตนา</p>
+
+<h2>11. การเปลี่ยนแปลงนโยบาย</h2>
+<p>ถ้านโยบายเปลี่ยน เราจะประกาศฉบับใหม่ที่ที่อยู่นี้พร้อมวันที่มีผลใหม่ การเปลี่ยนที่สำคัญจะระบุในบันทึกการออกรุ่นของส่วนขยายด้วย</p>
+
+<h2>12. ติดต่อ</h2>
+<p>{{DEVELOPER_NAME}} &middot; <a href="mailto:{{CONTACT_EMAIL}}">{{CONTACT_EMAIL}}</a></p>
+<p class="meta">Tabroost เป็นโครงการอิสระ ไม่มีส่วนเกี่ยวข้องหรือได้รับการรับรองจาก Google</p>
+</main>
+</div>
+<script>
+(function(){
+  var d=document.documentElement;
+  function set(l){d.lang=l;try{localStorage.setItem('lang',l)}catch(e){}
+    document.querySelectorAll('.tog button').forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.set===l))});}
+  document.querySelectorAll('.tog button').forEach(function(b){b.addEventListener('click',function(){set(b.dataset.set)})});
+  var l='';try{l=localStorage.getItem('lang')||''}catch(e){}
+  if(!l)l=/^th/i.test(navigator.language||'')?'th':'en';
+  set(l);
+})();
+</script>
+<noscript><style>[data-l]{display:block!important}.tog{display:none}</style></noscript>
+</body>
+</html>

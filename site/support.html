@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tabroost Support</title>
+<meta name="description" content="Help, FAQ, how to export your data and how to report a problem for Tabroost.">
+<link rel="icon" href="icon.png">
+<style>:root{--bg:#fbfbfd;--card:#fff;--ink:#1b1d24;--mute:#5b6070;--line:#e3e5ec;--accent:#5b4bd6;--accent-ink:#fff;--soft:#f0eefc}
+@media (prefers-color-scheme:dark){:root{--bg:#14151a;--card:#1c1e26;--ink:#eceef4;--mute:#a3a8b8;--line:#2d303b;--accent:#9d90ff;--accent-ink:#14151a;--soft:#25233a}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 system-ui,-apple-system,"Segoe UI","Noto Sans Thai","Leelawadee UI",Tahoma,sans-serif}
+.wrap{max-width:46rem;margin:0 auto;padding:1.5rem 1rem 4rem}
+header{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:1rem}
+.brand{display:flex;align-items:center;gap:.6rem;font-weight:700;font-size:1.15rem;color:var(--ink);text-decoration:none}
+.brand img{width:32px;height:32px;border-radius:8px}
+nav{display:flex;gap:1rem;flex-wrap:wrap;font-size:.95rem}
+.tog{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden;background:var(--card)}
+.tog button{font:inherit;font-size:.9rem;border:0;background:none;color:var(--ink);padding:.35rem .9rem;cursor:pointer}
+.tog button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
+.tog button:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+h1{font-size:1.9rem;line-height:1.25;margin:.4rem 0 .2rem}
+h2{font-size:1.2rem;margin:2rem 0 .4rem}
+p,li{margin:.4rem 0}ul{padding-left:1.3rem}
+.meta{color:var(--mute);font-size:.92rem}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:1rem 1.2rem;margin:0}
+.grid{display:grid;gap:.8rem;grid-template-columns:repeat(auto-fit,minmax(14rem,1fr));margin:1.2rem 0}
+.btn{display:inline-block;background:var(--accent);color:var(--accent-ink);padding:.6rem 1.1rem;border-radius:10px;text-decoration:none;font-weight:600}
+.btn.alt{background:none;color:var(--accent);border:1px solid var(--accent)}
+code{font:.9em ui-monospace,Consolas,monospace;background:var(--soft);padding:.05rem .3rem;border-radius:4px}
+a{color:var(--accent)}
+footer{margin-top:3rem;color:var(--mute);font-size:.9rem}
+[data-l]{display:none}
+html[lang="en"] main[data-l="en"],html[lang="th"] main[data-l="th"]{display:block}
+html[lang="en"] span[data-l="en"],html[lang="th"] span[data-l="th"]{display:inline}</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+<a class="brand" href="index.html"><img src="icon.png" alt="" width="32" height="32">Tabroost</a>
+<nav><a href="index.html"><span data-l="en">Home</span><span data-l="th">หน้าแรก</span></a><a href="privacy.html"><span data-l="en">Privacy</span><span data-l="th">ความเป็นส่วนตัว</span></a><a href="terms.html"><span data-l="en">Terms</span><span data-l="th">ข้อกำหนด</span></a><a href="support.html"><span data-l="en">Support</span><span data-l="th">ช่วยเหลือ</span></a></nav>
+<div class="tog" role="group" aria-label="Language / ภาษา"><button type="button" data-set="en" aria-pressed="true">English</button><button type="button" data-set="th" aria-pressed="false">ไทย</button></div>
+</header>
+<main data-l="en">
+<h1>Support</h1>
+<p>Contact: <a href="mailto:{{CONTACT_EMAIL}}">{{CONTACT_EMAIL}}</a>. Bug reports and ideas: the issues page of this project on GitHub ({{REPO_URL}}/issues).</p>
+<h2>How do I export my data?</h2><p>Open the saved list (click the toolbar icon, or press Alt+Shift+O), then use <strong>Export</strong> (Settings, Export / import). Save the file somewhere safe. To bring it back use <strong>Import</strong> and choose the file.</p>
+<h2>I installed from the store and my old tabs are gone</h2><p>The store version has a different extension ID than a copy loaded from a folder, so data does not carry over. Open the old copy, export, then import in the new one.</p>
+<h2>Why does it ask for access to all websites?</h2><p>Only for a short check before a tab is put to sleep: does the page have unsaved typing or playing media? Nothing is read, stored or sent.</p>
+<h2>What is the "Tabroost sync data" bookmark folder?</h2><p>It exists only if you turned on sync. It holds encrypted data in bookmarks pointing to <code>https://cmr.invalid/</code> (a reserved address that never opens). Do not edit it. Turn off sync in Settings to remove it.</p>
+<h2>I forgot my sync passphrase</h2><p>It cannot be recovered. Turn off sync, delete the folder, and set up sync again; your local list on each device is unaffected.</p>
+<h2>A tab I was typing in was put to sleep</h2><p>Add that site to the protected list in Settings, and tell us which site so we can improve the check.</p>
+<h2>How do I report a bug?</h2><p>Open an issue with your Tabroost version, Chrome version and steps to reproduce. Please do not include private URLs.</p>
+</main>
+<main data-l="th">
+<h1>ช่วยเหลือ</h1>
+<p>ติดต่อ: <a href="mailto:{{CONTACT_EMAIL}}">{{CONTACT_EMAIL}}</a> แจ้งบั๊กหรือเสนอความคิดได้ที่หน้า issues บน GitHub ของโครงการ ({{REPO_URL}}/issues)</p>
+<h2>ส่งออกข้อมูลอย่างไร</h2><p>เปิดรายการที่เก็บไว้ (กดไอคอนบนแถบเครื่องมือ หรือกด Alt+Shift+O) แล้วใช้ <strong>ส่งออก</strong> (การตั้งค่า, ส่งออกและนำเข้า) บันทึกไฟล์ไว้ในที่ปลอดภัย จะนำกลับมาให้ใช้ <strong>นำเข้า</strong> แล้วเลือกไฟล์</p>
+<h2>ติดตั้งจากสโตร์แล้วแท็บเก่าหาย</h2><p>ส่วนขยายจากสโตร์มี ID ต่างจากชุดที่โหลดจากโฟลเดอร์ ข้อมูลจึงไม่ย้ายตามกัน เปิดชุดเก่า ส่งออก แล้วนำเข้าในชุดใหม่</p>
+<h2>ทำไมขอเข้าถึงทุกเว็บไซต์</h2><p>ใช้ตรวจสั้น ๆ ก่อนพักแท็บเท่านั้น ว่าหน้านั้นมีข้อมูลที่พิมพ์ค้างหรือกำลังเล่นสื่อหรือไม่ ไม่อ่าน ไม่เก็บ ไม่ส่งอะไร</p>
+<h2>โฟลเดอร์บุ๊กมาร์ก "Tabroost sync data" คืออะไร</h2><p>มีเฉพาะเมื่อคุณเปิดซิงค์ เก็บข้อมูลที่เข้ารหัสในบุ๊กมาร์กที่ชี้ไป <code>https://cmr.invalid/</code> (ที่อยู่สงวนที่เปิดไม่ได้) อย่าแก้ไข ปิดซิงค์ในการตั้งค่าเพื่อลบโฟลเดอร์</p>
+<h2>ลืมรหัสผ่านซิงค์</h2><p>กู้คืนไม่ได้ ให้ปิดซิงค์ ลบโฟลเดอร์ แล้วตั้งซิงค์ใหม่ รายการในแต่ละเครื่องไม่ได้รับผลกระทบ</p>
+<h2>แท็บที่กำลังพิมพ์ถูกพัก</h2><p>เพิ่มเว็บไซต์นั้นในรายการที่กันไว้ในการตั้งค่า และแจ้งชื่อเว็บไซต์มาเพื่อให้เราปรับการตรวจ</p>
+<h2>แจ้งบั๊กอย่างไร</h2><p>เปิด issue พร้อมรุ่นของ Tabroost รุ่นของ Chrome และขั้นตอนที่ทำให้เกิดซ้ำ โปรดอย่าใส่ URL ส่วนตัว</p>
+</main>
+<footer>Tabroost is an independent project, not affiliated with or endorsed by Google. &middot; Tabroost เป็นโครงการอิสระ ไม่มีส่วนเกี่ยวข้องกับ Google<br>Contact / ติดต่อ: <a href="mailto:{{CONTACT_EMAIL}}">{{CONTACT_EMAIL}}</a> &middot; {{DEVELOPER_NAME}}</footer>
+</div>
+<script>(function(){var d=document.documentElement;function set(l){d.lang=l;try{localStorage.setItem('lang',l)}catch(e){}document.querySelectorAll('.tog button').forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.set===l))})}
+document.querySelectorAll('.tog button').forEach(function(b){b.addEventListener('click',function(){set(b.dataset.set)})});
+var l='';try{l=localStorage.getItem('lang')||''}catch(e){}if(!l)l=/^th/i.test(navigator.language||'')?'th':'en';set(l)})();</script>
+<noscript><style>[data-l]{display:block!important}.tog{display:none}</style></noscript>
+</body>
+</html>

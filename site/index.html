@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tabroost - save tabs, use less memory</title>
+<meta name="description" content="Tabroost saves your open tabs into a searchable list and puts idle tabs to sleep. Local, private, no account.">
+<link rel="icon" href="icon.png">
+<style>:root{--bg:#fbfbfd;--card:#fff;--ink:#1b1d24;--mute:#5b6070;--line:#e3e5ec;--accent:#5b4bd6;--accent-ink:#fff;--soft:#f0eefc}
+@media (prefers-color-scheme:dark){:root{--bg:#14151a;--card:#1c1e26;--ink:#eceef4;--mute:#a3a8b8;--line:#2d303b;--accent:#9d90ff;--accent-ink:#14151a;--soft:#25233a}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 system-ui,-apple-system,"Segoe UI","Noto Sans Thai","Leelawadee UI",Tahoma,sans-serif}
+.wrap{max-width:46rem;margin:0 auto;padding:1.5rem 1rem 4rem}
+header{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:1rem}
+.brand{display:flex;align-items:center;gap:.6rem;font-weight:700;font-size:1.15rem;color:var(--ink);text-decoration:none}
+.brand img{width:32px;height:32px;border-radius:8px}
+nav{display:flex;gap:1rem;flex-wrap:wrap;font-size:.95rem}
+.tog{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden;background:var(--card)}
+.tog button{font:inherit;font-size:.9rem;border:0;background:none;color:var(--ink);padding:.35rem .9rem;cursor:pointer}
+.tog button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
+.tog button:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+h1{font-size:1.9rem;line-height:1.25;margin:.4rem 0 .2rem}
+h2{font-size:1.2rem;margin:2rem 0 .4rem}
+p,li{margin:.4rem 0}ul{padding-left:1.3rem}
+.meta{color:var(--mute);font-size:.92rem}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:1rem 1.2rem;margin:0}
+.grid{display:grid;gap:.8rem;grid-template-columns:repeat(auto-fit,minmax(14rem,1fr));margin:1.2rem 0}
+.btn{display:inline-block;background:var(--accent);color:var(--accent-ink);padding:.6rem 1.1rem;border-radius:10px;text-decoration:none;font-weight:600}
+.btn.alt{background:none;color:var(--accent);border:1px solid var(--accent)}
+code{font:.9em ui-monospace,Consolas,monospace;background:var(--soft);padding:.05rem .3rem;border-radius:4px}
+a{color:var(--accent)}
+footer{margin-top:3rem;color:var(--mute);font-size:.9rem}
+[data-l]{display:none}
+html[lang="en"] main[data-l="en"],html[lang="th"] main[data-l="th"]{display:block}
+html[lang="en"] span[data-l="en"],html[lang="th"] span[data-l="th"]{display:inline}</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+<a class="brand" href="index.html"><img src="icon.png" alt="" width="32" height="32">Tabroost</a>
+<nav><a href="index.html"><span data-l="en">Home</span><span data-l="th">หน้าแรก</span></a><a href="privacy.html"><span data-l="en">Privacy</span><span data-l="th">ความเป็นส่วนตัว</span></a><a href="terms.html"><span data-l="en">Terms</span><span data-l="th">ข้อกำหนด</span></a><a href="support.html"><span data-l="en">Support</span><span data-l="th">ช่วยเหลือ</span></a></nav>
+<div class="tog" role="group" aria-label="Language / ภาษา"><button type="button" data-set="en" aria-pressed="true">English</button><button type="button" data-set="th" aria-pressed="false">ไทย</button></div>
+</header>
+<main data-l="en">
+<h1>Give your tabs a place to rest.</h1>
+<p>Tabroost saves all your open tabs into a searchable list with one click, and puts idle tabs to sleep so your browser uses less memory. Your data stays on your device.</p>
+<p><a class="btn" href="{{STORE_URL}}">Add to Chrome</a> <a class="btn alt" href="support.html">Help</a></p>
+<div class="grid">
+<div class="card"><strong>Save with one click</strong><p>All windows become one tab set. Big lists are closed gradually so the browser does not freeze.</p></div>
+<div class="card"><strong>Restore in small steps</strong><p>Tabs reopen in small steps and stay asleep until you click them.</p></div>
+<div class="card"><strong>Sleep idle tabs</strong><p>Skips tabs playing media, tabs with unsaved typing, and sites you protect.</p></div>
+<div class="card"><strong>Find and organize</strong><p>Fuzzy search, sort, group, categories, Chrome tab groups, trash and crash recovery.</p></div>
+<div class="card"><strong>Stays on your device</strong><p>No servers, accounts, analytics or ads. No network requests of its own.</p></div>
+<div class="card"><strong>Optional encrypted sync</strong><p>Off by default. Uses your browser's bookmarks to carry encrypted data between your devices.</p></div>
+</div>
+<p class="meta">Includes a local time and activity dashboard that you can turn off.</p>
+<p><a href="privacy.html">Privacy policy</a> &middot; <a href="terms.html">Terms</a> &middot; <a href="support.html">Support</a> &middot; <a href="{{REPO_URL}}/blob/main/THIRD-PARTY-NOTICES.md">Credits and licences</a></p>
+</main>
+<main data-l="th">
+<h1>ให้แท็บได้พัก ให้เครื่องได้หายใจ</h1>
+<p>Tabroost เก็บทุกแท็บที่เปิดอยู่ไว้ในรายการที่ค้นหาได้ด้วยการกดครั้งเดียว และพักแท็บที่ไม่ได้ใช้ เบราว์เซอร์จึงใช้แรมน้อยลง ข้อมูลอยู่ในเครื่องของคุณ</p>
+<p><a class="btn" href="{{STORE_URL}}">เพิ่มใน Chrome</a> <a class="btn alt" href="support.html">ช่วยเหลือ</a></p>
+<div class="grid">
+<div class="card"><strong>เก็บด้วยการกดครั้งเดียว</strong><p>ทุกหน้าต่างกลายเป็นชุดแท็บหนึ่งชุด รายการใหญ่จะค่อย ๆ ปิด เบราว์เซอร์จะไม่ค้าง</p></div>
+<div class="card"><strong>เปิดกลับทีละน้อย</strong><p>แท็บเปิดทีละน้อยและอยู่ในสถานะพักจนกว่าคุณจะคลิก</p></div>
+<div class="card"><strong>พักแท็บที่ไม่ได้ใช้</strong><p>ข้ามแท็บที่เล่นสื่อ แท็บที่พิมพ์ค้างไว้ และเว็บไซต์ที่คุณกันไว้</p></div>
+<div class="card"><strong>ค้นหาและจัดระเบียบ</strong><p>ค้นหาแบบยืดหยุ่น เรียง จัดกลุ่ม หมวดหมู่ กลุ่มแท็บของ Chrome ถังขยะ และกู้คืนหลังล่ม</p></div>
+<div class="card"><strong>อยู่ในเครื่องของคุณ</strong><p>ไม่มีเซิร์ฟเวอร์ บัญชี การวิเคราะห์ หรือโฆษณา ไม่ส่งคำขอเครือข่ายเอง</p></div>
+<div class="card"><strong>ซิงค์แบบเข้ารหัส (ตัวเลือก)</strong><p>ปิดเป็นค่าเริ่มต้น ใช้บุ๊กมาร์กของเบราว์เซอร์พาข้อมูลที่เข้ารหัสไปยังเครื่องอื่นของคุณ</p></div>
+</div>
+<p class="meta">มีแดชบอร์ดเวลาและกิจกรรมในเครื่อง (ปิดได้)</p>
+<p><a href="privacy.html">นโยบายความเป็นส่วนตัว</a> &middot; <a href="terms.html">ข้อกำหนด</a> &middot; <a href="support.html">ช่วยเหลือ</a> &middot; <a href="{{REPO_URL}}/blob/main/THIRD-PARTY-NOTICES.md">เครดิตและสัญญาอนุญาต</a></p>
+</main>
+<footer>Tabroost is an independent project, not affiliated with or endorsed by Google. &middot; Tabroost เป็นโครงการอิสระ ไม่มีส่วนเกี่ยวข้องกับ Google<br>Contact / ติดต่อ: <a href="mailto:{{CONTACT_EMAIL}}">{{CONTACT_EMAIL}}</a> &middot; {{DEVELOPER_NAME}}</footer>
+</div>
+<script>(function(){var d=document.documentElement;function set(l){d.lang=l;try{localStorage.setItem('lang',l)}catch(e){}document.querySelectorAll('.tog button').forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.set===l))})}
+document.querySelectorAll('.tog button').forEach(function(b){b.addEventListener('click',function(){set(b.dataset.set)})});
+var l='';try{l=localStorage.getItem('lang')||''}catch(e){}if(!l)l=/^th/i.test(navigator.language||'')?'th':'en';set(l)})();</script>
+<noscript><style>[data-l]{display:block!important}.tog{display:none}</style></noscript>
+</body>
+</html>

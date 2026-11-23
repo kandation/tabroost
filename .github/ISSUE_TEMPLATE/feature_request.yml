@@ -1,0 +1,27 @@
+name: Feature request
+description: Suggest an idea
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem do you want to solve?
+    validations:
+      required: true
+  - type: textarea
+    id: idea
+    attributes:
+      label: What would you like Tabroost to do?
+    validations:
+      required: true
+  - type: textarea
+    id: alt
+    attributes:
+      label: Alternatives you considered
+  - type: checkboxes
+    id: rules
+    attributes:
+      label: Fit with the project
+      options:
+        - label: This does not need a server, analytics or a new network request
+        - label: I understand new permissions need a good reason

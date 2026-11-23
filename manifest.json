@@ -1,0 +1,79 @@
+{
+  "manifest_version": 3,
+  "name": "__MSG_extName__",
+  "version": "1.0.0",
+  "minimum_chrome_version": "121",
+  "default_locale": "en",
+  "description": "__MSG_extDesc__",
+  "background": {
+    "service_worker": "sw.js",
+    "type": "module"
+  },
+  "action": {
+    "default_title": "__MSG_actionTitle__",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "options_ui": {
+    "page": "stash.html",
+    "open_in_tab": true
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "permissions": [
+    "tabs",
+    "tabGroups",
+    "storage",
+    "unlimitedStorage",
+    "alarms",
+    "contextMenus",
+    "scripting",
+    "favicon",
+    "system.memory",
+    "idle"
+  ],
+  "optional_permissions": [
+    "bookmarks",
+    "sessions"
+  ],
+  "optional_host_permissions": [
+    "<all_urls>"
+  ],
+  "commands": {
+    "_execute_action": {
+      "description": "__MSG_cmdExecuteAction__"
+    },
+    "stash-now": {
+      "suggested_key": {
+        "default": "Alt+Shift+S"
+      },
+      "description": "__MSG_cmdStashNow__"
+    },
+    "stash-tab": {
+      "suggested_key": {
+        "default": "Alt+Shift+X"
+      },
+      "description": "__MSG_cmdStashTab__"
+    },
+    "open-list": {
+      "suggested_key": {
+        "default": "Alt+Shift+O"
+      },
+      "description": "__MSG_cmdOpenList__"
+    },
+    "stash-all": {
+      "suggested_key": {
+        "default": "Alt+Shift+A"
+      },
+      "description": "__MSG_cmdStashAll__"
+    }
+  }
+}

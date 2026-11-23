@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tabroost · เกี่ยวกับ</title>
+  <link rel="icon" href="icons/icon32.png">
+  <script src="themeboot.js"></script>
+  <link rel="stylesheet" href="tokens.css">
+  <link rel="stylesheet" href="about.css">
+</head>
+<body>
+  <div class="wrap">
+    <header class="top">
+      <a id="back" class="btn" href="stash.html#settings" data-s="back"></a>
+    </header>
+
+    <section class="hero">
+      <img src="icons/logo.svg" width="64" height="64" alt="">
+      <div>
+        <h1 id="appName">Tabroost</h1>
+        <p id="ver" class="muted"></p>
+        <p id="purpose" data-s="purpose"></p>
+      </div>
+    </section>
+
+    <nav class="toc" aria-labelledby="tocTitle">
+      <b id="tocTitle" data-s="toc"></b>
+      <a href="#privacy" data-s="tocPrivacy"></a>
+      <a href="#where" data-s="tocWhere"></a>
+      <a href="#control" data-s="tocControl"></a>
+      <a href="#policy" data-s="tocPolicy"></a>
+      <a href="#credits" data-s="tocCredits"></a>
+      <a href="#license" data-s="tocLicense"></a>
+      <a href="#links" data-s="tocLinks"></a>
+      <a href="#keys" data-s="tocKeys"></a>
+    </nav>
+
+    <section class="card" id="privacy" aria-labelledby="privH">
+      <h2 id="privH" data-s="privH"></h2>
+      <p class="lead" data-s="privLead"></p>
+
+      <h3 id="where" data-s="whereH"></h3>
+      <div class="tw">
+        <table>
+          <thead><tr><th scope="col" data-s="colPlace"></th><th scope="col" data-s="colWhat"></th><th scope="col" data-s="colNow"></th></tr></thead>
+          <tbody>
+            <tr><th scope="row" data-s="rowIdb"></th><td data-s="rowIdbWhat"></td><td id="nowIdb"></td></tr>
+            <tr><th scope="row" data-s="rowStore"></th><td data-s="rowStoreWhat"></td><td id="nowStore"></td></tr>
+            <tr><th scope="row" data-s="rowBm"></th><td data-s="rowBmWhat"></td><td data-s="rowBmNow"></td></tr>
+            <tr><th scope="row" data-s="rowNet"></th><td data-s="rowNetWhat"></td><td data-s="rowNetNow"></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="muted" id="nowTotal"></p>
+
+      <h3 id="control" data-s="ctrlH"></h3>
+      <ul class="ctrl">
+        <li><div><b data-s="ctrlExport"></b><p class="muted" data-s="ctrlExportD"></p></div><a class="btn" href="stash.html#settings" data-s="ctrlOpen"></a></li>
+        <li><div><b data-s="ctrlStats"></b><p class="muted" data-s="ctrlStatsD"></p></div><a class="btn" href="stash.html#settings" data-s="ctrlOpen"></a></li>
+        <li><div><b data-s="ctrlAll"></b><p class="muted" data-s="ctrlAllD"></p></div></li>
+      </ul>
+    </section>
+
+    <section class="card" id="policy" aria-labelledby="policyH">
+      <h2 id="policyH" data-s="policyH"></h2>
+      <p class="muted" id="policyMeta"></p>
+      <div class="summary"><b id="inShort"></b> <span id="policySummary"></span></div>
+      <div id="policyBody"></div>
+      <p class="muted" id="policyNote"></p>
+    </section>
+
+    <section class="card" id="credits" aria-labelledby="creditsH">
+      <h2 id="creditsH" data-s="creditsH"></h2>
+      <p data-s="creditsLead"></p>
+      <div id="noticeBody"></div>
+    </section>
+
+    <section class="card" id="license" aria-labelledby="mitH">
+      <h2 id="mitH" data-s="mitH"></h2>
+      <p data-s="mitLead"></p>
+      <pre id="mitText" tabindex="0"></pre>
+    </section>
+
+    <section class="card" id="links" aria-labelledby="linksH">
+      <h2 id="linksH" data-s="linksH"></h2>
+      <ul class="links" id="linkList"></ul>
+    </section>
+
+    <section class="card" id="keys" aria-labelledby="keysH">
+      <h2 id="keysH" data-s="keysH"></h2>
+      <ul class="keys" id="keyList"></ul>
+      <p><button type="button" class="btn" id="editKeys" data-s="keysEdit"></button> <span class="muted" id="keysMsg" role="status"></span></p>
+    </section>
+
+    <p class="muted foot" data-s="trademark"></p>
+  </div>
+  <script type="module" src="about.js"></script>
+</body>
+</html>

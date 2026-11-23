@@ -1,0 +1,55 @@
+# dependencies, build output
+node_modules/
+dist/
+coverage/
+*.zip
+*.crx
+*.pem
+
+# logs and temp
+*.log
+npm-debug.log*
+*.tmp
+*.bak
+*.heapsnapshot
+*.cpuprofile
+
+# local Chrome profiles and scratch folders used for testing (never commit: they hold browsing data)
+prof-*/
+cmr-*/
+chrome-profile*/
+user-data*/
+profile*/
+scratch*/
+tmp/
+temp/
+
+# tool/agent working folders and personal notes
+.claude/
+graphify-out/
+CLAUDE.md
+.vscode/
+.idea/
+
+# secrets
+.env
+.env.*
+*.key
+*.p12
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# store assets: old pre-rename icons are not needed in the public repo (decision: ignored)
+store-assets/old-icons/
+
+# internal planning docs (kept local, not published)
+docs/spec-*.md
+
+# internal handoff notes (kept local; contain session references)
+knowledge/
+
+# unrelated extension kept beside this project, not part of Tabroost
+fullpage-screenshot/

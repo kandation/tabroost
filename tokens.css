@@ -1,0 +1,94 @@
+/* Design tokens shared by the list page, the popup and the settings view.
+   Light first; dark follows prefers-color-scheme unless the page sets data-theme="light" / "dark". */
+:root {
+  --bg: #f6f7f9;
+  --surface: #ffffff;
+  --surface-2: #f0f2f5;
+  --border: #e3e6eb;
+  --text: #1c2230;
+  --muted: #5d6676;
+  --accent: #2f6bdc;
+  --accent-weak: #e8f0ff;
+  --accent-ink: #1f55c0; /* accent text on --accent-weak / --surface (>= 4.5:1) */
+  --accent-text: #ffffff;
+  --danger: #c93a3a;
+  --warn: #b7791f;
+  --ok: #25784a;
+  --star: #b8860b; /* filled star (>= 3:1 on --surface) */
+  --skel: #e6e9ee;
+  --shadow-2: 0 1px 2px rgba(0, 0, 0, .06), 0 8px 24px rgba(0, 0, 0, .12);
+  --toast-bg: #1c2230;
+  --toast-text: #ffffff;
+  /* Chrome tab-group colours (>= 3:1 on --surface) */
+  --c-grey: #5f6368; --c-blue: #1a73e8; --c-red: #d93025; --c-yellow: #c98a00; --c-green: #188038; --c-pink: #d01884; --c-purple: #9334e6; --c-cyan: #007b83; --c-orange: #d9620a;
+
+  --sp-1: 4px; --sp-2: 8px; --sp-3: 12px; --sp-4: 16px; --sp-5: 24px; --sp-6: 32px;
+  --r-1: 6px; --r-2: 10px; --r-3: 14px;
+  --font: "Leelawadee UI", "Noto Sans Thai", "Sarabun", system-ui, "Segoe UI", Roboto, Tahoma, sans-serif;
+  --fs-s: 12px; --fs-m: 13px; --fs-b: 14px; --fs-l: 16px; --fs-xl: 20px; --fs-xxl: 24px;
+
+  /* row geometry (the list page overrides them for the compact density) */
+  --h-bucket: 40px; --h-group: 56px; --h-item: 38px; --h-sub: 30px;
+
+  /* legacy names still used by older rules */
+  --card: var(--surface); --line: var(--border); --hover: var(--surface-2); --shadow: 0 1px 2px rgba(0, 0, 0, .05);
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #111418; --surface: #181c22; --surface-2: #20252d; --border: #2b313b; --text: #e7eaf0; --muted: #9aa3b3;
+    --accent: #6f9fff; --accent-weak: #1d2a44; --accent-ink: #a9c5ff; --accent-text: #0b1220; --danger: #ff7b7b; --warn: #f0b44d; --ok: #5fd08f; --star: #f5c542; --skel: #272d36;
+    --shadow-2: 0 1px 2px rgba(0, 0, 0, .4), 0 8px 24px rgba(0, 0, 0, .5);
+    --toast-bg: #e7eaf0; --toast-text: #111418;
+    --c-grey: #9aa0a6; --c-blue: #8ab4f8; --c-red: #f28b82; --c-yellow: #fdd663; --c-green: #81c995; --c-pink: #ff8bcb; --c-purple: #c58af9; --c-cyan: #78d9ec; --c-orange: #fcad70;
+    --shadow: 0 1px 2px rgba(0, 0, 0, .35);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #111418; --surface: #181c22; --surface-2: #20252d; --border: #2b313b; --text: #e7eaf0; --muted: #9aa3b3;
+  --accent: #6f9fff; --accent-weak: #1d2a44; --accent-ink: #a9c5ff; --accent-text: #0b1220; --danger: #ff7b7b; --warn: #f0b44d; --ok: #5fd08f; --star: #f5c542; --skel: #272d36;
+  --shadow-2: 0 1px 2px rgba(0, 0, 0, .4), 0 8px 24px rgba(0, 0, 0, .5);
+  --toast-bg: #e7eaf0; --toast-text: #111418;
+  --c-grey: #9aa0a6; --c-blue: #8ab4f8; --c-red: #f28b82; --c-yellow: #fdd663; --c-green: #81c995; --c-pink: #ff8bcb; --c-purple: #c58af9; --c-cyan: #78d9ec; --c-orange: #fcad70;
+  --shadow: 0 1px 2px rgba(0, 0, 0, .35);
+  color-scheme: dark;
+}
+:root[data-density="compact"] { --h-bucket: 36px; --h-group: 48px; --h-item: 30px; --h-sub: 26px; }
+
+/* Chrome tab-group colours (set through data-c) */
+[data-c="grey"] { --tgc: var(--c-grey); }
+[data-c="blue"] { --tgc: var(--c-blue); }
+[data-c="red"] { --tgc: var(--c-red); }
+[data-c="yellow"] { --tgc: var(--c-yellow); }
+[data-c="green"] { --tgc: var(--c-green); }
+[data-c="pink"] { --tgc: var(--c-pink); }
+[data-c="purple"] { --tgc: var(--c-purple); }
+[data-c="cyan"] { --tgc: var(--c-cyan); }
+[data-c="orange"] { --tgc: var(--c-orange); }
+
+/* ---------- scrollbars: thin, token-coloured, same in light and dark (every page) ---------- */
+* { scrollbar-width: thin; scrollbar-color: color-mix(in srgb, var(--muted) 55%, transparent) transparent; }
+*::-webkit-scrollbar { width: 10px; height: 10px; }
+*::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--muted) 45%, transparent); border-radius: 8px; border: 2px solid transparent; background-clip: content-box; }
+*::-webkit-scrollbar-thumb:hover { background: color-mix(in srgb, var(--muted) 70%, transparent); background-clip: content-box; }
+*::-webkit-scrollbar-track { background: transparent; }
+
+/* accent colours (setting "accent", set as data-accent on <html>; blue is the default tokens above) */
+:root[data-accent="teal"] { --accent: #0b7a7c; --accent-weak: #e0f4f4; --accent-ink: #0b6b6d; }
+:root[data-accent="green"] { --accent: #25784a; --accent-weak: #e4f4ea; --accent-ink: #1f6b41; }
+:root[data-accent="orange"] { --accent: #c2540a; --accent-weak: #fdeede; --accent-ink: #9a4207; }
+:root[data-accent="pink"] { --accent: #c2177a; --accent-weak: #fde8f4; --accent-ink: #9a1262; }
+:root[data-accent="violet"] { --accent: #7c4dde; --accent-weak: #efe9fd; --accent-ink: #5b34b8; }
+@media (prefers-color-scheme: dark) {
+  :root[data-accent="teal"]:not([data-theme="light"]) { --accent: #4fd1d3; --accent-weak: #12302f; --accent-ink: #9be8e9; }
+  :root[data-accent="green"]:not([data-theme="light"]) { --accent: #5fd08f; --accent-weak: #15301f; --accent-ink: #a5e8c1; }
+  :root[data-accent="orange"]:not([data-theme="light"]) { --accent: #ff9a4d; --accent-weak: #3a2412; --accent-ink: #ffc799; }
+  :root[data-accent="pink"]:not([data-theme="light"]) { --accent: #ff7cc4; --accent-weak: #3b1830; --accent-ink: #ffb8dd; }
+  :root[data-accent="violet"]:not([data-theme="light"]) { --accent: #a98bff; --accent-weak: #2a2145; --accent-ink: #cdbcff; }
+}
+:root[data-accent="teal"][data-theme="dark"] { --accent: #4fd1d3; --accent-weak: #12302f; --accent-ink: #9be8e9; }
+:root[data-accent="green"][data-theme="dark"] { --accent: #5fd08f; --accent-weak: #15301f; --accent-ink: #a5e8c1; }
+:root[data-accent="orange"][data-theme="dark"] { --accent: #ff9a4d; --accent-weak: #3a2412; --accent-ink: #ffc799; }
+:root[data-accent="pink"][data-theme="dark"] { --accent: #ff7cc4; --accent-weak: #3b1830; --accent-ink: #ffb8dd; }
+:root[data-accent="violet"][data-theme="dark"] { --accent: #a98bff; --accent-weak: #2a2145; --accent-ink: #cdbcff; }

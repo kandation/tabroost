@@ -1,0 +1,437 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tabroost</title>
+  <script src="themeboot.js"></script>
+  <link rel="stylesheet" href="tokens.css">
+  <link rel="stylesheet" href="stash.css">
+  <link rel="stylesheet" href="selection.css">
+  <link rel="stylesheet" href="lock.css">
+  <script type="module" src="stash.js"></script>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-all" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10" fill="none" stroke="currentColor" stroke-linecap="round"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M9 3h6l-1 6 3 3v2H7v-2l3-3-1-6zM12 14v7" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-linecap="round"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9L12 3z" fill="none" stroke="currentColor" stroke-linejoin="round"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor"/><path d="M12 8v4l3 2" fill="none" stroke="currentColor" stroke-linecap="round"/></symbol>
+    <symbol id="i-box" viewBox="0 0 24 24"><path d="M4 7h16v3H4zM6 10v9h12v-9M10 14h4" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-linecap="round"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M5 7h14M9 7V4h6v3M7 7l1 13h8l1-13" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-linecap="round"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor"/><path d="M12 11v5.5" fill="none" stroke="currentColor" stroke-linecap="round"/><circle cx="12" cy="7.8" r="1" fill="currentColor"/></symbol>
+    <symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3" fill="none" stroke="currentColor"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1" fill="none" stroke="currentColor" stroke-linecap="round"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6" fill="none" stroke="currentColor"/><path d="M16 16l4 4" stroke="currentColor" stroke-linecap="round"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-linecap="round"/></symbol>
+    <symbol id="i-sort" viewBox="0 0 24 24"><path d="M7 5v14M7 19l-3-3M7 19l3-3M17 19V5M17 5l-3 3M17 5l3 3" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-filter" viewBox="0 0 24 24"><path d="M4 5h16l-6 8v6l-4-2v-4L4 5z" fill="none" stroke="currentColor" stroke-linejoin="round"/></symbol>
+    <symbol id="i-expand" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-collapse" viewBox="0 0 24 24"><path d="M6 15l6-6 6 6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-linecap="round"/></symbol>
+    <symbol id="i-cloud" viewBox="0 0 24 24"><path d="M7 18a4 4 0 0 1-.6-7.96A5.5 5.5 0 0 1 17 8.5a4.75 4.75 0 0 1 .5 9.5H7z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></symbol>
+    <symbol id="i-flat" viewBox="0 0 24 24"><path d="M5 6h14M5 10h14M5 14h14M5 18h14" fill="none" stroke="currentColor" stroke-linecap="round"/></symbol>
+
+    <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2" fill="none" stroke="currentColor"/><path d="M4 10h16M9 3v4M15 3v4" fill="none" stroke="currentColor" stroke-linecap="round"/></symbol>
+    <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor"/><path d="M3.5 12h17M12 3.5c3 3 3 14 0 17M12 3.5c-3 3-3 14 0 17" fill="none" stroke="currentColor"/></symbol>
+    <symbol id="i-layers" viewBox="0 0 24 24"><path d="M12 4l8 4-8 4-8-4 8-4zM4 12l8 4 8-4M4 16l8 4 8-4" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-linecap="round"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M19 14.5A7.5 7.5 0 019.5 5a7.5 7.5 0 109.5 9.5z" fill="none" stroke="currentColor" stroke-linejoin="round"/></symbol>
+    <symbol id="i-chip" viewBox="0 0 24 24"><rect x="7" y="7" width="10" height="10" rx="2" fill="none" stroke="currentColor"/><path d="M10 3v4M14 3v4M10 17v4M14 17v4M3 10h4M3 14h4M17 10h4M17 14h4" fill="none" stroke="currentColor" stroke-linecap="round"/></symbol>
+    <symbol id="i-chart" viewBox="0 0 24 24"><path d="M5 20V11M12 20V4M19 20v-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-hash" viewBox="0 0 24 24"><path d="M9 4L7 20M17 4l-2 16M4 9h16M3 15h16" fill="none" stroke="currentColor" stroke-linecap="round"/></symbol>
+    <symbol id="i-folder" viewBox="0 0 24 24"><path d="M3 7a2 2 0 012-2h4l2 2h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V7z" fill="none" stroke="currentColor" stroke-linejoin="round"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2" fill="none" stroke="currentColor"/><path d="M8 11V8a4 4 0 018 0v3" fill="none" stroke="currentColor"/></symbol>
+    <symbol id="i-open" viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 01-1 1H5a1 1 0 01-1-1V7a1 1 0 011-1h5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-window" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor"/><path d="M3 9h18" fill="none" stroke="currentColor"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2" fill="none" stroke="currentColor"/><path d="M16 8V6a2 2 0 00-2-2H6a2 2 0 00-2 2v8a2 2 0 002 2h2" fill="none" stroke="currentColor"/></symbol>
+    <symbol id="i-edit" viewBox="0 0 24 24"><path d="M4 20l1-4L16 5l3 3L8 19l-4 1zM14 7l3 3" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-linecap="round"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-note" viewBox="0 0 24 24"><path d="M6 3h9l4 4v13a1 1 0 01-1 1H6a1 1 0 01-1-1V4a1 1 0 011-1zM14 3v5h5M8 13h8M8 17h5" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-linecap="round"/></symbol>
+    <symbol id="i-dedupe" viewBox="0 0 24 24"><rect x="4" y="4" width="11" height="11" rx="2" fill="none" stroke="currentColor"/><path d="M9 20h9a2 2 0 002-2V9M8 8l3 3M11 8l-3 3" fill="none" stroke="currentColor" stroke-linecap="round"/></symbol>
+    <symbol id="i-import" viewBox="0 0 24 24"><path d="M12 4v11M7.5 10.5L12 15l4.5-4.5M4 19h16" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 12a8 8 0 11-2.6-5.9M20 4v5h-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-incog" viewBox="0 0 24 24"><path d="M3 12h18M6 12l1.5-6h9L18 12M8 16.5a2 2 0 104 0M12 16.5a2 2 0 104 0" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 14a4 4 0 005.7 0l3-3a4 4 0 00-5.7-5.7L12 6.3M14 10a4 4 0 00-5.7 0l-3 3A4 4 0 0011 18.7l1-1" fill="none" stroke="currentColor" stroke-linecap="round"/></symbol>
+    <symbol id="i-rows" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-linecap="round"/></symbol>
+    <symbol id="i-tab" viewBox="0 0 24 24"><path d="M4 8a2 2 0 012-2h4l2 2h6a2 2 0 012 2v7a2 2 0 01-2 2H6a2 2 0 01-2-2V8z" fill="none" stroke="currentColor" stroke-linejoin="round"/></symbol>
+    <symbol id="i-palette" viewBox="0 0 24 24"><path d="M12 3a9 9 0 100 18c1.5 0 2-1 1.5-2-.6-1.3.1-2.5 1.6-2.5H17a4 4 0 004-4c0-5-4-9.5-9-9.5z" fill="none" stroke="currentColor" stroke-linejoin="round"/><circle cx="8" cy="11" r="1" fill="currentColor"/><circle cx="12" cy="7.5" r="1" fill="currentColor"/><circle cx="16" cy="10" r="1" fill="currentColor"/></symbol>
+    <symbol id="i-arrow-up" viewBox="0 0 24 24"><path d="M12 19V5M6 11l6-6 6 6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-arrow-down" viewBox="0 0 24 24"><path d="M12 5v14M6 13l6 6 6-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-dots" viewBox="0 0 24 24"><circle cx="5.5" cy="12" r="1.6" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.6" fill="currentColor" stroke="none"/><circle cx="18.5" cy="12" r="1.6" fill="currentColor" stroke="none"/></symbol>
+    <symbol id="i-star-fill" viewBox="0 0 24 24"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9L12 3z" fill="currentColor" stroke="currentColor" stroke-linejoin="round"/></symbol>
+    <symbol id="i-split" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="14" rx="2" fill="none" stroke="currentColor"/><path d="M12 5v14" fill="none" stroke="currentColor"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-linecap="round"/></symbol>
+  </defs>
+</svg>
+
+<div class="shell" id="shell">
+  <aside class="side" id="side" aria-label="เมนูหลัก">
+    <div class="brand"><span class="logo" aria-hidden="true"></span><span class="bname" data-s="appName"></span></div>
+    <nav id="nav" class="nav" aria-label="มุมมอง">
+      <button type="button" class="navi" data-act="navTo" data-nav="all"><svg><use href="#i-all"/></svg><span class="nl" data-s="navAll"></span><span class="nc" data-nc="all"></span></button>
+      <button type="button" class="navi" data-act="navTo" data-nav="pinned"><svg><use href="#i-pin"/></svg><span class="nl" data-s="navPinned"></span><span class="nc" data-nc="pinned"></span></button>
+      <button type="button" class="navi" data-act="navTo" data-nav="starred"><svg><use href="#i-star"/></svg><span class="nl" data-s="navStarred"></span><span class="nc" data-nc="starred"></span></button>
+      <button type="button" class="navi" data-act="navTo" data-nav="stale"><svg><use href="#i-clock"/></svg><span class="nl" data-s="navStale"></span><span class="nc" data-nc="stale"></span></button>
+      <button type="button" class="navi" data-act="navTo" data-nav="pending"><svg><use href="#i-clock"/></svg><span class="nl" data-s="navPending"></span><span class="nc" data-nc="pending"></span></button>
+      <div class="navhead"><span data-s="navCats"></span><button type="button" class="ib sm" data-act="catAdd" data-sa="catAdd" aria-label="เพิ่มหมวดหมู่"><svg><use href="#i-plus"/></svg></button></div>
+      <div id="catList" class="catlist"></div>
+      <button type="button" class="navi" data-act="navTo" data-nav="uncat"><span class="dot" aria-hidden="true"></span><span class="nl" data-s="navUncat"></span><span class="nc" data-nc="uncat"></span></button>
+      <div class="sep"></div>
+      <button type="button" class="navi" data-act="navTo" data-nav="archived"><svg><use href="#i-box"/></svg><span class="nl" data-s="navArchived"></span><span class="nc" data-nc="archived"></span></button>
+      <button type="button" class="navi" data-act="navTo" data-nav="trash"><svg><use href="#i-trash"/></svg><span class="nl" data-s="navTrash"></span><span class="nc" data-nc="trash"></span></button>
+      <button type="button" class="navi" data-act="nav" data-view="snaps"><svg><use href="#i-clock"/></svg><span class="nl" data-s="navSnaps"></span><span class="nc" data-nc="snaps"></span></button>
+    </nav>
+    <div class="sidefoot">
+      <button type="button" class="stats" id="statBlock" data-act="nav" data-view="dash" data-st="statTip">
+        <span class="stile" data-tile="sets"><svg aria-hidden="true"><use href="#i-layers"/></svg><b id="stSets">0</b><small data-s="stSets"></small></span>
+        <span class="stile" data-tile="tabs"><svg aria-hidden="true"><use href="#i-tab"/></svg><b id="stTabs">0</b><small data-s="stTabs"></small></span>
+        <span class="stile" data-tile="sleep"><svg aria-hidden="true"><use href="#i-moon"/></svg><b id="stSleep">0</b><small data-s="stSleep"></small></span>
+        <span class="stile" data-tile="ram"><svg aria-hidden="true"><use href="#i-chip"/></svg><b id="stRam">&#8212;</b><small data-s="stRam"></small></span>
+      </button>
+      <div id="totals" class="sr-only" aria-live="polite"></div>
+      <span id="econ" class="badge" hidden data-s="econMode" data-st="econTip"></span>
+      <button type="button" class="navi syncrow" id="syncRow" data-act="syncOpen" hidden><svg aria-hidden="true"><use href="#i-cloud"/></svg><span class="nl" id="syncLbl"></span><span id="syncDot" class="sdot" data-tone="off"></span></button>
+      <div class="hair" aria-hidden="true"></div>
+      <button type="button" class="navi" data-act="nav" data-view="dash"><svg aria-hidden="true"><use href="#i-chart"/></svg><span class="nl" data-s="navDash"></span></button>
+      <button type="button" class="navi" data-act="nav" data-view="settings"><svg aria-hidden="true"><use href="#i-gear"/></svg><span class="nl" data-s="settings"></span></button>
+      <button type="button" class="navi" data-act="openAbout"><svg aria-hidden="true"><use href="#i-info"/></svg><span class="nl" data-s="navAbout"></span></button>
+    </div>
+  </aside>
+  <div class="scrim" id="scrim" hidden data-act="closeSide"></div>
+
+  <main class="main" id="main">
+    <header class="topbar">
+      <button type="button" class="ib narrow-only" data-act="toggleSide" data-sa="menu" aria-label="เมนู"><svg><use href="#i-menu"/></svg></button>
+      <h1 class="vtitle" id="viewTitle"></h1>
+      <div class="searchbox" role="search">
+        <svg class="si" aria-hidden="true"><use href="#i-search"/></svg>
+        <input id="search" type="search" autofocus autocomplete="off" data-sp="searchPh" data-sa="searchPh">
+      </div>
+      <div class="tools">
+        <button type="button" class="tb" id="btnFlat" data-act="flatToggle" aria-pressed="false"><svg><use href="#i-flat"/></svg><span class="tl" data-s="flatBtn"></span></button>
+        <span class="pill" id="sessSplit" role="group" aria-label="เรียงชุดแท็บ">
+          <button type="button" class="pb" id="btnSortDir" data-act="sessDirToggle"></button><button type="button" class="pb" id="btnView" data-act="viewMenu" aria-haspopup="menu"><svg><use href="#i-sort"/></svg><span class="tl" data-s="viewBtn"></span><svg class="chev"><use href="#i-expand"/></svg></button>
+        </span>
+        <button type="button" class="tb" id="btnFilter" data-act="filterMenu" aria-haspopup="menu"><svg><use href="#i-filter"/></svg><span class="tl" data-s="filterBtn"></span></button>
+        <span class="vsep" aria-hidden="true"></span>
+        <button type="button" class="ib" data-act="expandAll" data-sa="expandAll" aria-label="ขยายทั้งหมด" title="ขยายทั้งหมด"><svg><use href="#i-expand"/></svg></button>
+        <button type="button" class="ib" data-act="collapseAll" data-sa="collapseAll" aria-label="ยุบทั้งหมด" title="ยุบทั้งหมด"><svg><use href="#i-collapse"/></svg></button>
+        <button type="button" class="tb" id="btnUndoStash" data-act="undoStash" hidden><svg><use href="#i-refresh"/></svg><span class="tl" data-s="undoStash"></span></button>
+        <button type="button" class="tb tonal" id="btnOpenAll" data-act="openAll"><svg><use href="#i-open"/></svg><span class="tl" data-s="openAll"></span></button>
+      </div>
+    </header>
+    <div id="chips" class="chips" hidden></div>
+    <div id="searchInfo" class="muted infoline" hidden></div>
+
+    <div id="panels">
+      <div id="banner" class="banner err" role="alert" hidden></div>
+      <div id="bannerVault" class="banner warn" hidden></div>
+      <div id="bannerMig" class="banner warn" hidden></div>
+      <div id="bannerSnap" class="banner warn" role="status" hidden></div>
+      <div id="bannerStale" class="banner" role="status" hidden></div>
+      <div id="bannerAct" class="banner" role="status" hidden></div>
+      <div id="permBanner" class="banner warn" role="status" hidden></div>
+
+      <section id="drainPanel" class="panel drain" hidden aria-live="polite">
+        <div id="drainText" class="drain-text"></div>
+        <div class="bar-track"><div id="drainBar" class="bar-fill"></div></div>
+        <div id="drainSkipped" class="muted" hidden></div>
+        <div class="row">
+          <button type="button" id="btnDrainPause" data-act="drainPause" data-s="drainPause"></button>
+          <button type="button" id="btnDrainResume" data-act="drainResume" data-s="drainResume" hidden></button>
+          <button type="button" data-act="drainStop" data-s="drainStop"></button>
+          <button type="button" data-act="drainStopDrop" data-s="drainStopDrop"></button>
+        </div>
+      </section>
+
+      <section id="restartPanel" class="panel drain" hidden>
+        <div id="restartText"></div>
+        <div class="row">
+          <button type="button" data-act="drainContinueRestart" data-s="restartContinue"></button>
+          <button type="button" data-act="drainStop" data-s="restartLeave"></button>
+        </div>
+      </section>
+
+      <section id="jobPanel" class="panel drain" hidden aria-live="polite">
+        <div id="jobText" class="drain-text"></div>
+        <div class="bar-track"><div id="jobBar" class="bar-fill"></div></div>
+        <div class="row">
+          <button type="button" data-act="jobContinue" data-s="jobContinue"></button>
+          <button type="button" data-act="jobRunAll" data-s="jobRunAll"></button>
+          <button type="button" data-act="jobStop" data-s="jobStop"></button>
+        </div>
+      </section>
+
+      <section id="refreshPanel" class="panel drain" hidden aria-live="polite">
+        <div id="refreshText" class="drain-text"></div>
+        <div class="bar-track"><div id="refreshBar" class="bar-fill"></div></div>
+        <div class="row"><button type="button" data-act="refreshCancel" data-s="refreshCancel"></button></div>
+      </section>
+
+      <section id="welcome" class="panel" hidden>
+        <h2 data-s="welcomeTitle"></h2>
+        <p data-s="welcomeBody1"></p>
+        <p class="muted" id="permWelcome"></p>
+        <details class="more"><summary data-s="seeMore"></summary>
+          <p data-s="welcomeBody2"></p>
+          <p data-s="welcomeBody3"></p>
+          <p><a href="about.html" data-s="aboutLink"></a></p>
+        </details>
+        <button type="button" data-act="closeWelcome" data-s="gotIt"></button>
+      </section>
+    </div>
+
+    <!-- ===== list view ===== -->
+    <div id="vwrap" class="view">
+      <div id="sticky" class="stickyhead" hidden></div>
+      <div id="scroller" tabindex="0" role="list" aria-label="รายการที่เก็บไว้">
+        <div id="spacer"></div>
+      </div>
+      <div id="emptyMsg" class="empty" hidden></div>
+    </div>
+
+    <!-- ===== trash view ===== -->
+    <div id="trashView" class="view pagebox" hidden>
+      <div class="card">
+        <div class="cardhead"><h2 data-s="trashTitle"></h2><button type="button" class="btn danger" data-act="trashClearType" data-reason="" id="btnClearType"></button></div>
+        <div class="seg" id="trashSeg" role="tablist">
+          <button type="button" role="tab" data-act="trashTab" data-tab="all" id="tabAll"></button>
+          <button type="button" role="tab" data-act="trashTab" data-tab="deleted" id="tabDeleted"></button>
+          <button type="button" role="tab" data-act="trashTab" data-tab="opened" id="tabOpened"></button>
+        </div>
+        <p class="muted" id="trashNote"></p>
+        <div class="trbar" id="trashBar">
+          <label class="trsel"><input type="checkbox" id="trashAll"><span data-s="selectAll"></span></label>
+          <span id="trashSelN" class="muted"></span>
+          <button type="button" class="btn" data-act="trashRecoverSel" id="bulkRecover" disabled></button>
+          <button type="button" class="btn" data-act="trashOpenSel" id="bulkOpen" disabled></button>
+          <button type="button" class="btn danger" data-act="trashPurgeSel" id="bulkPurge" disabled></button>
+        </div>
+        <div id="trashList" class="rows trlist"></div>
+      </div>
+    </div>
+
+    <!-- ===== open-tabs history (crash-recovery snapshots) ===== -->
+    <div id="snapView" class="view pagebox" hidden>
+      <div class="card">
+        <div class="cardhead"><h2 data-s="snapTitle"></h2><button type="button" class="btn" data-act="snapNow" data-s="snapNow"></button></div>
+        <p class="muted" data-s="snapNote"></p>
+        <div id="snapList" class="rows"></div>
+      </div>
+    </div>
+
+    <!-- ===== dashboard view (filled by dashboard.js on first open) ===== -->
+    <div id="dashView" class="view pagebox" hidden aria-label="แดชบอร์ด"></div>
+
+    <!-- ===== settings view ===== -->
+    <div id="settingsView" class="view pagebox" hidden>
+      <div class="settingsgrid">
+        <nav class="snav" aria-label="หมวดการตั้งค่า" id="snav">
+          <a href="#s-appearance" data-s="sAppearance"></a>
+          <a href="#s-privacy" data-s="sPrivacy"></a>
+          <a href="#s-storing" data-s="sStoring"></a>
+          <a href="#s-opening" data-s="sOpening"></a>
+          <a href="#s-organise" data-s="sOrganise"></a>
+          <a href="#s-deleted" data-s="sDeleted"></a>
+          <a href="#s-suspend" data-s="suspendTitle"></a>
+          <a href="#s-shortcuts" data-s="sShortcuts"></a>
+          <a href="#s-lock" data-s="sLockNav"></a>
+          <a href="#s-sync" data-s="sSync"></a>
+          <a href="#s-perms" id="navPerms"></a>
+          <a href="#s-backup" data-s="sBackup"></a>
+          <a href="about.html" data-s="aboutLink"></a>
+        </nav>
+        <div class="settings" id="panelSettings">
+          <section class="card" id="s-appearance">
+            <h2 data-s="sAppearance"></h2>
+            <label class="srow"><span class="sl"><b data-s="sLanguage"></b></span><select id="selLanguage" data-k="language"></select></label>
+            <label class="srow"><span class="sl"><b data-s="sTheme"></b></span><select id="selTheme" data-k="theme"></select></label>
+            <label class="srow"><span class="sl"><b data-s="sAccent"></b></span><select id="selAccent" data-k="accent"></select></label>
+            <label class="srow"><span class="sl"><b data-s="sCelebrate"></b></span><input type="checkbox" class="switch" data-k="celebrate"></label>
+            <label class="srow"><span class="sl"><b data-s="sDensity"></b></span><select id="selDensity" data-k="density"></select></label>
+            <label class="srow"><span class="sl"><b data-s="sUrlDisplay"></b><small data-s="sUrlDisplayD"></small></span><select id="selUrlDisplay" data-k="urlDisplay"></select></label>
+            <label class="srow"><span class="sl"><b data-s="sShowFavicons"></b></span><input type="checkbox" class="switch" data-k="showFavicons"></label>
+            <label class="srow"><span class="sl"><b data-s="sSetLook"></b><small data-s="sSetLookD"></small></span><input type="checkbox" class="switch" data-k="setLook"></label>
+            <label class="srow"><span class="sl"><b data-s="sPeek"></b><small data-s="sPeekD"></small></span><input type="checkbox" class="switch" data-k="peekOnHover"></label>
+            <label class="srow"><span class="sl"><b data-s="sCover"></b><small data-s="sCoverD"></small></span><input type="checkbox" class="switch" data-k="sessionCover"></label>
+            <label class="srow"><span class="sl"><b data-s="sHoverActions"></b><small data-s="sHoverActionsD"></small></span><select id="selHoverActions" data-k="hoverActions"></select></label>
+            <label class="srow"><span class="sl"><b data-s="sTimeDisplay"></b><small data-s="sTimeDisplayD"></small></span><select id="selTimeDisplay" data-k="timeDisplay"></select></label>
+            <label class="srow"><span class="sl"><b data-s="sDateCal"></b></span><select id="selDateCal" data-k="dateCalendar"></select></label>
+          </section>
+
+          <section class="card" id="s-privacy">
+            <h2 data-s="sPrivacy"></h2>
+            <label class="srow"><span class="sl"><b data-s="sActTrack"></b><small data-s="sActTrackD"></small></span><input type="checkbox" class="switch" id="cbActTrack" data-k="activityTracking"></label>
+            <label class="srow"><span class="sl"><b data-s="sPrecise"></b><small data-s="sPreciseD"></small></span><input type="checkbox" class="switch" data-k="preciseOpenTime"></label>
+            <label class="srow"><span class="sl"><b data-s="sRetention"></b></span><select id="selRetention" data-k="retentionDays" data-num></select></label>
+            <label class="srow"><span class="sl"><b data-s="sRamCal"></b><small id="ramCalInfo"></small></span><input type="checkbox" class="switch" data-k="ramCalibrate"></label>
+            <div class="row"><button type="button" class="btn" data-act="ramReset" data-s="ramResetBtn"></button><button type="button" class="btn" data-act="actExport" data-s="actExportBtn"></button><button type="button" class="btn danger" data-act="actPurgeAll" data-s="actPurgeBtn"></button></div>
+            <p class="muted" id="actPurgeProg" hidden></p>
+            <ul class="privlist"><li data-s="actKept"></li><li data-s="actNot"></li><li data-s="actNever"></li></ul>
+          </section>
+
+          <section class="card" id="s-storing">
+            <h2 data-s="sStoring"></h2>
+            <label class="srow"><span class="sl"><b data-s="sIconAction"></b></span><select id="selIconAction" data-k="iconClickAction"></select></label>
+            <label class="srow"><span class="sl"><b data-s="sIconScope"></b></span><select id="selIconScope" data-k="iconScope"></select></label>
+            <label class="srow"><span class="sl"><b data-s="sGrouping"></b></span><select id="selGrouping" data-k="stashGrouping"></select></label>
+            <label class="srow"><span class="sl"><b data-s="sCloseOwnPages"></b><small data-s="sCloseOwnPagesD"></small></span><input type="checkbox" class="switch" data-k="closeOwnPages"></label>
+            <label class="srow"><span class="sl"><b data-s="sKeepTabGroups"></b><small data-s="sKeepTabGroupsD"></small></span><input type="checkbox" class="switch" data-k="keepTabGroups"></label>
+            <label class="srow"><span class="sl"><b data-s="sDedupe"></b><small data-s="sDedupeD"></small></span><input type="checkbox" class="switch" data-k="dedupeOnStash"></label>
+            <label class="srow"><span class="sl"><b data-s="sIncludePinned"></b><small data-s="sIncludePinnedD"></small></span><input type="checkbox" class="switch" data-k="includePinned"></label>
+            <label class="srow"><span class="sl"><b data-s="sWarnAudible"></b><small data-s="sWarnAudibleD"></small></span><input type="checkbox" class="switch" data-k="warnAudibleStash"></label>
+            <label class="srow"><span class="sl"><b data-s="sAutoSnapshot"></b><small data-s="sAutoSnapshotD"></small></span><input type="checkbox" class="switch" data-k="autoSnapshot"></label>
+            <label class="srow"><span class="sl"><b data-s="sSnapshotMin"></b><small data-s="sSnapshotMinD"></small></span><select id="selSnapshotMin" data-k="snapshotMinutes" data-num></select></label>
+            <label class="srow stack"><span class="sl"><b data-s="sExcludeSites"></b><small data-s="sExcludeSitesD"></small></span><textarea id="txtExclude" data-k="excludeSites" rows="3" spellcheck="false"></textarea></label>
+            <label class="srow"><span class="sl"><b data-s="ipTitle"></b><small data-s="ipHelp"></small></span><select id="selInternal" data-k="internalPages"></select></label>
+            <h3 data-s="dupTitle"></h3>
+            <label class="srow"><span class="sl"><b data-s="sCloseDup"></b><small data-s="sCloseDupD"></small></span><select id="selCloseDup" data-k="closeDuplicates"></select></label>
+            <label class="srow"><span class="sl"><b data-s="sDupMin"></b></span><select id="selDupMin" data-k="dupAutoMinutes" data-num></select></label>
+            <label class="srow"><span class="sl" data-st="sDupUtmTip"><b data-s="sDupUtm"></b><small data-s="sDupUtmD"></small></span><input type="checkbox" class="switch" data-k="dupIgnoreUtm"></label>
+            <div class="row">
+              <button type="button" class="btn" data-act="dupNow" data-s="dupNow"></button>
+              <button type="button" class="btn" data-act="cleanAll" data-s="cleanAll"></button>
+              <span id="dupCount" class="muted"></span>
+            </div>
+            <div id="dupLog" class="rows"></div>
+          </section>
+
+          <section class="card" id="s-opening">
+            <h2 data-s="sOpening"></h2>
+            <label class="srow"><span class="sl"><b data-s="sRestoreMode"></b><small data-s="rmWarn"></small></span><select id="selRestoreMode" data-k="restoreMode"></select></label>
+            <label class="srow"><span class="sl"><b data-s="sDiscardOnRestore"></b><small data-s="sDiscardOnRestoreD"></small></span><input type="checkbox" class="switch" data-k="discardOnRestore"></label>
+            <label class="srow"><span class="sl"><b data-s="sRestoreRemovesGroup"></b><small data-s="sRestoreRemovesD"></small></span><input type="checkbox" class="switch" data-k="restoreRemovesGroup"></label>
+            <label class="srow"><span class="sl"><b data-s="sRestoreRemovesItem"></b><small data-s="sRestoreRemovesItemD"></small></span><input type="checkbox" class="switch" data-k="restoreRemovesItem"></label>
+            <label class="srow"><span class="sl"><b data-s="sSingleRestore"></b><small data-s="sSingleRestoreD"></small></span><select id="selSingleRestore" data-k="singleRestore"></select></label>
+            <label class="srow"><span class="sl"><b data-s="sGroupRestore"></b></span><select id="selGroupRestore" data-k="groupRestore"></select></label>
+            <label class="srow"><span class="sl"><b data-s="sTitleClick"></b></span><select id="selTitleClick" data-k="titleClick"></select></label>
+            <label class="srow"><span class="sl"><b data-s="sRestoreChunk"></b><small data-s="sRestoreChunkD"></small></span><select id="selRestoreChunk" data-k="restoreChunk" data-num></select></label>
+            <label class="srow"><span class="sl"><b data-s="sRefreshRediscard"></b><small data-s="sRefreshRediscardD"></small></span><input type="checkbox" class="switch" data-k="refreshRediscard"></label>
+            <div class="row"><button type="button" class="btn" data-act="refreshWindow" data-s="refreshAll"></button></div>
+          </section>
+
+          <section class="card" id="s-organise">
+            <h2 data-s="sOrganise"></h2>
+            <label class="srow"><span class="sl"><b data-s="sDefaultExpand"></b></span><select id="selDefaultExpand" data-k="defaultExpand"></select></label>
+            <label class="srow"><span class="sl"><b data-s="sAutoRules"></b><small data-s="sAutoRulesD"></small></span><input type="checkbox" class="switch" data-k="autoRulesOn"></label>
+            <label class="srow stack"><span class="sl"><b data-s="sAutoRulesList"></b><small data-s="sAutoRulesListD"></small></span><textarea id="txtRules" data-k="autoRulesText" rows="4" spellcheck="false"></textarea></label>
+            <label class="srow"><span class="sl"><b data-s="sCopyFormat"></b></span><select id="selCopyFormat" data-k="copyFormat"></select></label>
+          </section>
+
+          <section class="card" id="s-deleted">
+            <h2 data-s="sDeleted"></h2>
+            <label class="srow"><span class="sl"><b data-s="sTrashDaysDeleted"></b><small data-s="sTrashDaysDeletedD"></small></span><select id="selTrashDaysDeleted" data-k="trashDaysDeleted" data-num></select></label>
+            <div class="row"><button type="button" class="btn danger" data-act="trashClearType" data-reason="deleted" id="btnClearDeleted"></button></div>
+            <label class="srow"><span class="sl"><b data-s="sTrashDaysOpened"></b><small data-s="sTrashDaysOpenedD"></small></span><select id="selTrashDaysOpened" data-k="trashDaysOpened" data-num></select></label>
+            <div class="row"><button type="button" class="btn danger" data-act="trashClearType" data-reason="opened" id="btnClearOpened"></button></div>
+            <div class="row"><button type="button" class="btn" data-act="nav" data-view="trash" data-s="openTrash"></button></div>
+          </section>
+
+          <section class="card" id="s-suspend">
+            <h2 data-s="suspendTitle"></h2>
+            <p class="muted" data-s="suspendIntro"></p>
+            <div id="permSleepHint" class="permhint" hidden></div>
+            <label class="srow"><span class="sl"><b data-s="sAutoSuspend"></b></span><input type="checkbox" class="switch" data-k="autoSuspend"></label>
+            <label class="srow"><span class="sl"><b data-s="sSuspendAfter"></b><small data-s="sSuspendAfterD"></small></span><select id="selSuspendAfter" data-k="suspendAfterMin" data-num></select></label>
+            <label class="srow"><span class="sl"><b data-s="sMediaProtect"></b><small data-s="sMediaProtectD"></small></span><input type="checkbox" class="switch" data-k="mediaProtect"></label>
+            <label class="srow"><span class="sl"><b data-s="sMediaGrace"></b><small data-s="sMediaGraceD"></small></span><select id="selMediaGrace" data-k="mediaGraceMin" data-num></select></label>
+            <label class="srow"><span class="sl"><b data-s="sMediaEnded"></b><small data-s="sMediaEndedD"></small></span><select id="selMediaEnded" data-k="mediaEndedMin" data-num></select></label>
+            <label class="srow"><span class="sl"><b data-s="sStartupDiscard"></b><small data-s="sStartupDiscardD"></small></span><input type="checkbox" class="switch" data-k="startupDiscard"></label>
+            <label class="srow stack"><span class="sl"><b data-s="sWhitelist"></b><small data-s="sWhitelistD"></small></span><textarea id="txtWhitelist" data-k="whitelist" rows="5" spellcheck="false"></textarea></label>
+            <label class="srow"><span class="sl"><b data-s="sAutoStash"></b><small data-s="sAutoStashD"></small></span><select id="selAutoStash" data-k="autoStashDays" data-num></select></label>
+          </section>
+
+          <section class="card" id="s-shortcuts">
+            <h2 data-s="sShortcuts"></h2>
+            <p class="muted" data-s="sShortcutsD"></p>
+            <label class="srow"><span class="sl"><b data-s="sKbMaster"></b><small data-s="sKbMasterD"></small></span><input type="checkbox" class="switch" data-k="shortcutsOn"></label>
+            <div id="kbList">
+              <label class="srow"><span class="sl"><b data-s="sKbSearch"></b></span><kbd class="kbk">/</kbd><input type="checkbox" class="switch" data-k="kbSearch"></label>
+              <label class="srow"><span class="sl"><b data-s="sKbPalette"></b></span><kbd class="kbk">Ctrl+K</kbd><input type="checkbox" class="switch" data-k="kbPalette"></label>
+              <label class="srow"><span class="sl"><b data-s="sKbUndo"></b></span><kbd class="kbk">Ctrl+Z</kbd><input type="checkbox" class="switch" data-k="kbUndo"></label>
+              <label class="srow"><span class="sl"><b data-s="sKbRename"></b></span><kbd class="kbk">F2</kbd><input type="checkbox" class="switch" data-k="kbRename"></label>
+              <label class="srow"><span class="sl"><b data-s="sKbSelect"></b></span><kbd class="kbk">Space ↑ ↓ Ctrl+A</kbd><input type="checkbox" class="switch" data-k="kbSelect"></label>
+              <label class="srow"><span class="sl"><b data-s="sKbDelete"></b></span><kbd class="kbk">Delete</kbd><input type="checkbox" class="switch" data-k="kbDelete"></label>
+            </div>
+            <h3 data-s="sKbGlobal"></h3>
+            <p class="muted" data-s="sKbGlobalD"></p>
+            <table class="keys" aria-labelledby="s-shortcuts"><tbody id="cmdTable"></tbody></table>
+            <div class="row"><button type="button" class="btn" data-act="openShortcuts" data-s="sShortcutsBtn"></button></div>
+          </section>
+
+          <section class="card" id="s-lock"></section>
+
+          <section class="card" id="s-sync">
+            <h2 data-s="sSync"></h2>
+            <p class="muted" data-s="sSyncD"></p>
+            <p class="muted" data-s="sSyncD2"></p>
+          </section>
+
+          <section class="card" id="s-perms"></section>
+
+          <section class="card" id="s-backup">
+            <h2 data-s="sBackup"></h2>
+            <p class="muted" data-s="sBackupD"></p>
+            <div class="row">
+              <button type="button" class="btn" data-act="exportNdjson" data-s="exportNdjson"></button>
+              <button type="button" class="btn" data-act="exportOneTab" data-s="exportOneTab"></button>
+              <button type="button" class="btn" data-act="copyOneTab" data-s="copyOneTab"></button>
+              <span id="exportStatus" class="muted" role="status"></span>
+            </div>
+            <label class="check"><input id="expTime" type="checkbox"><span data-s="expTime"></span></label>
+            <h3 data-s="importTitle"></h3>
+            <div class="row">
+              <label class="filebtn btn"><span data-s="importFile"></span>
+                <input id="importFile" type="file" accept=".json,.txt,.ndjson,.gz" hidden>
+              </label>
+            </div>
+            <textarea id="importText" rows="6" data-sp="importPh" data-sa="importPh" spellcheck="false"></textarea>
+            <div class="row">
+              <button type="button" class="btn" data-act="importText" data-s="importBtn"></button>
+              <span id="importStatus" class="muted" role="status"></span>
+            </div>
+            <p class="muted" data-s="oneTabNote"></p>
+            <p id="storageInfo" class="muted"></p>
+            <div class="row"><button type="button" class="btn" data-act="rebuildIndex" data-s="rebuildIndex"></button><span id="indexInfo" class="muted"></span></div>
+            <p id="vaultInfo" class="muted"></p>
+            <h3 data-s="dangerTitle"></h3>
+            <div class="row"><button type="button" data-act="dbReset" class="btn danger" data-s="dbReset"></button></div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div id="moreMenu" class="menu" hidden role="menu" aria-label="ชุดแท็บ"></div>
+<div id="viewMenu" class="menu wide" hidden role="menu" aria-label="เรียง / จัดกลุ่ม"></div>
+<div id="filterMenu" class="menu wide" hidden role="dialog" aria-label="ตัวกรอง"></div>
+<div id="itemSortMenu" class="menu" hidden role="menu" aria-label="เรียงแท็บ"></div>
+<div id="catMenu" class="menu" hidden role="menu" aria-label="หมวดหมู่"></div>
+<div id="menuScrim" class="mscrim" hidden></div>
+<div id="snapDialog" class="dlgwrap" hidden>
+  <div class="dlg" role="dialog" aria-modal="true" aria-labelledby="snapDlgTitle">
+    <div class="menuhead"><span id="snapDlgTitle"></span><button type="button" class="ib sm" data-act="snapClose" aria-label="close"><svg><use href="#i-close"/></svg></button></div>
+    <p class="muted" id="snapDlgSub"></p>
+    <div class="row">
+      <button type="button" class="btn" data-act="snapAll" data-s="snapSelAll"></button>
+      <button type="button" class="btn" data-act="snapNone" data-s="snapSelNone"></button>
+      <label class="check"><input type="checkbox" id="snapShowAll"><span data-s="snapShowAll"></span></label>
+    </div>
+    <div id="snapDlgList" class="snaplist"></div>
+    <div class="row"><button type="button" class="btn primary" id="snapGo" data-act="snapGo"></button><button type="button" class="btn" data-act="snapClose" data-s="snapCancel"></button></div>
+  </div>
+</div>
+<div id="actDialog" class="dlgwrap" hidden>
+  <div class="dlg" role="dialog" aria-modal="true" aria-labelledby="actDlgTitle">
+    <div class="menuhead"><span id="actDlgTitle" data-s="actOffTitle"></span></div>
+    <p class="muted" id="actDlgBody"></p>
+    <div class="row"><button type="button" class="btn danger" data-act="actOffDel" data-s="actOffDel"></button><button type="button" class="btn" data-act="actOffKeep" data-s="actOffKeep"></button><button type="button" class="btn" data-act="actOffCancel" data-s="actOffCancel"></button></div>
+  </div>
+</div>
+<div id="toast" role="status" aria-live="polite" hidden>
+  <span id="toastText"></span>
+  <button id="toastAction" type="button" data-act="toastAction" hidden></button>
+</div>
+</body>
+</html>

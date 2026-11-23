@@ -1,0 +1,10 @@
+{
+  "extName": { "message": "Tabroost", "description": "ชื่อส่วนขยาย" },
+  "extDesc": { "message": "เก็บแท็บที่เปิดอยู่เป็นรายการที่ค้นหาได้ เปิดกลับมาใช้ทีหลัง และพักแท็บที่ไม่ได้ใช้เพื่อให้ Chrome ใช้แรมน้อยลง", "description": "คำอธิบายสั้น ไม่เกิน 132 ตัวอักษร" },
+  "actionTitle": { "message": "Tabroost – คลิกเพื่อเก็บแท็บ", "description": "ข้อความเมื่อชี้ที่ปุ่มบนแถบเครื่องมือ" },
+  "cmdExecuteAction": { "message": "เปิด Tabroost จากไอคอนบนแถบเครื่องมือ", "description": "ชื่อปุ่มลัด" },
+  "cmdStashNow": { "message": "เก็บแท็บทันที ไม่ถามก่อน", "description": "ชื่อปุ่มลัด" },
+  "cmdStashTab": { "message": "เก็บแท็บที่เปิดอยู่นี้", "description": "ชื่อปุ่มลัด" },
+  "cmdOpenList": { "message": "เปิดรายการที่เก็บไว้", "description": "ชื่อปุ่มลัด" },
+  "cmdStashAll": { "message": "เก็บทุกหน้าต่าง", "description": "ชื่อปุ่มลัด" }
+}

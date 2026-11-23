@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tabroost Terms</title>
+<meta name="description" content="Terms of use and disclaimer for the Tabroost extension.">
+<link rel="icon" href="icon.png">
+<style>:root{--bg:#fbfbfd;--card:#fff;--ink:#1b1d24;--mute:#5b6070;--line:#e3e5ec;--accent:#5b4bd6;--accent-ink:#fff;--soft:#f0eefc}
+@media (prefers-color-scheme:dark){:root{--bg:#14151a;--card:#1c1e26;--ink:#eceef4;--mute:#a3a8b8;--line:#2d303b;--accent:#9d90ff;--accent-ink:#14151a;--soft:#25233a}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 system-ui,-apple-system,"Segoe UI","Noto Sans Thai","Leelawadee UI",Tahoma,sans-serif}
+.wrap{max-width:46rem;margin:0 auto;padding:1.5rem 1rem 4rem}
+header{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:1rem}
+.brand{display:flex;align-items:center;gap:.6rem;font-weight:700;font-size:1.15rem;color:var(--ink);text-decoration:none}
+.brand img{width:32px;height:32px;border-radius:8px}
+nav{display:flex;gap:1rem;flex-wrap:wrap;font-size:.95rem}
+.tog{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden;background:var(--card)}
+.tog button{font:inherit;font-size:.9rem;border:0;background:none;color:var(--ink);padding:.35rem .9rem;cursor:pointer}
+.tog button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
+.tog button:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+h1{font-size:1.9rem;line-height:1.25;margin:.4rem 0 .2rem}
+h2{font-size:1.2rem;margin:2rem 0 .4rem}
+p,li{margin:.4rem 0}ul{padding-left:1.3rem}
+.meta{color:var(--mute);font-size:.92rem}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:1rem 1.2rem;margin:0}
+.grid{display:grid;gap:.8rem;grid-template-columns:repeat(auto-fit,minmax(14rem,1fr));margin:1.2rem 0}
+.btn{display:inline-block;background:var(--accent);color:var(--accent-ink);padding:.6rem 1.1rem;border-radius:10px;text-decoration:none;font-weight:600}
+.btn.alt{background:none;color:var(--accent);border:1px solid var(--accent)}
+code{font:.9em ui-monospace,Consolas,monospace;background:var(--soft);padding:.05rem .3rem;border-radius:4px}
+a{color:var(--accent)}
+footer{margin-top:3rem;color:var(--mute);font-size:.9rem}
+[data-l]{display:none}
+html[lang="en"] main[data-l="en"],html[lang="th"] main[data-l="th"]{display:block}
+html[lang="en"] span[data-l="en"],html[lang="th"] span[data-l="th"]{display:inline}</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+<a class="brand" href="index.html"><img src="icon.png" alt="" width="32" height="32">Tabroost</a>
+<nav><a href="index.html"><span data-l="en">Home</span><span data-l="th">หน้าแรก</span></a><a href="privacy.html"><span data-l="en">Privacy</span><span data-l="th">ความเป็นส่วนตัว</span></a><a href="terms.html"><span data-l="en">Terms</span><span data-l="th">ข้อกำหนด</span></a><a href="support.html"><span data-l="en">Support</span><span data-l="th">ช่วยเหลือ</span></a></nav>
+<div class="tog" role="group" aria-label="Language / ภาษา"><button type="button" data-set="en" aria-pressed="true">English</button><button type="button" data-set="th" aria-pressed="false">ไทย</button></div>
+</header>
+<main data-l="en">
+<h1>Terms of use</h1>
+<p class="meta">Effective date: {{EFFECTIVE_DATE}}</p>
+<h2>As is</h2><p>Tabroost is free software released under the MIT License. It is provided "as is", without warranty of any kind. To the extent the law allows, the developer is not liable for loss of data or any other damage from using it.</p>
+<h2>Your data is local</h2><p>Saved tabs, settings and statistics live in your browser on your device. If you remove the extension, clear browser data, or the profile is damaged, they can be lost. You are responsible for your backups: use <strong>Export</strong> in the list page regularly. The Chrome Web Store version has a different extension ID than a copy loaded from a folder, so data does not carry over between them; export first and import after.</p>
+<h2>Sleeping and closing tabs</h2><p>Tabroost closes tabs when you save them and puts idle tabs to sleep when you enable auto-sleep. It tries to skip tabs with unsaved input or playing media, but it cannot detect everything (for example unsaved work inside some web apps). Add important sites to the protected list.</p>
+<h2>Sync and encryption</h2><p>Optional sync encrypts data with a passphrase you choose. If you forget the passphrase the synced data cannot be recovered. The local list is not encrypted by Tabroost (see the privacy policy). Do not edit or delete the sync bookmark folder while sync is on. Sync depends on your browser's own bookmark sync and its availability.</p>
+<h2>Password lock</h2><p>If you turn on the optional password lock, a forgotten password cannot be recovered by the developer, and you may lose access to the locked list unless you have the recovery key, a backup password or passkey you set up, or an encrypted backup file (.tabroost) made before you erase. The lock works together with sync: synced data stays encrypted with the sync passphrase and the lock key protects the data on this computer.</p>
+<h2>Acceptable use</h2><p>Use Tabroost lawfully. Do not use it to break the rules of websites you visit.</p>
+<h2>Changes and contact</h2><p>These terms may change; the current version is on this page. Questions: {{CONTACT_EMAIL}}.</p>
+</main>
+<main data-l="th">
+<h1>ข้อกำหนดการใช้งาน</h1>
+<p class="meta">มีผลตั้งแต่: {{EFFECTIVE_DATE}}</p>
+<h2>ตามสภาพ</h2><p>Tabroost เป็นซอฟต์แวร์เสรีภายใต้สัญญาอนุญาต MIT ให้ใช้ "ตามสภาพ" โดยไม่มีการรับประกันใด ๆ เท่าที่กฎหมายอนุญาต ผู้พัฒนาไม่รับผิดต่อข้อมูลสูญหายหรือความเสียหายอื่นจากการใช้งาน</p>
+<h2>ข้อมูลอยู่ในเครื่อง</h2><p>แท็บที่เก็บไว้ การตั้งค่า และสถิติ อยู่ในเบราว์เซอร์บนเครื่องของคุณ ถ้าถอนส่วนขยาย ล้างข้อมูลเบราว์เซอร์ หรือโปรไฟล์เสียหาย ข้อมูลอาจหายได้ คุณรับผิดชอบการสำรองข้อมูลเอง โปรด<strong>ส่งออก</strong>จากหน้ารายการเป็นประจำ ส่วนขยายจาก Chrome Web Store มี ID ต่างจากชุดที่โหลดจากโฟลเดอร์ ข้อมูลจึงไม่ย้ายตามกัน ให้ส่งออกก่อนแล้วนำเข้าทีหลัง</p>
+<h2>การพักและปิดแท็บ</h2><p>Tabroost ปิดแท็บเมื่อคุณเก็บ และพักแท็บที่ไม่ได้ใช้เมื่อคุณเปิดการพักอัตโนมัติ โดยพยายามข้ามแท็บที่มีข้อมูลยังไม่บันทึกหรือกำลังเล่นสื่อ แต่ตรวจได้ไม่ทุกกรณี (เช่น งานที่ยังไม่บันทึกในเว็บแอปบางตัว) ควรเพิ่มเว็บไซต์สำคัญในรายการที่กันไว้</p>
+<h2>ซิงค์และการเข้ารหัส</h2><p>การซิงค์ที่เป็นตัวเลือกเข้ารหัสข้อมูลด้วยรหัสผ่านที่คุณตั้ง ถ้าลืมรหัสผ่าน ข้อมูลที่ซิงค์จะกู้ไม่ได้ รายการในเครื่อง Tabroost ไม่ได้เข้ารหัส (ดูนโยบายความเป็นส่วนตัว) อย่าแก้หรือลบโฟลเดอร์บุ๊กมาร์กซิงค์ขณะเปิดซิงค์ การซิงค์ขึ้นกับการซิงค์บุ๊กมาร์กของเบราว์เซอร์และความพร้อมของบริการนั้น</p>
+<h2>ล็อกด้วยรหัสผ่าน</h2><p>ถ้าคุณเปิดล็อกด้วยรหัสผ่าน (ตัวเลือก) ผู้พัฒนากู้รหัสผ่านที่ลืมให้ไม่ได้ และคุณอาจเข้ารายการที่ล็อกไม่ได้ ถ้าไม่มีรหัสกู้คืน รหัสผ่านสำรอง พาสคีย์ หรือไฟล์สำรองที่เข้ารหัส (.tabroost) ที่ทำไว้ก่อนลบ ล็อกใช้ร่วมกับซิงค์ได้ ข้อมูลที่ซิงค์ยังเข้ารหัสด้วยรหัสผ่านซิงค์ และกุญแจของล็อกปกป้องข้อมูลในเครื่องนี้</p>
+<h2>การใช้งานที่เหมาะสม</h2><p>ใช้ Tabroost อย่างถูกกฎหมาย และไม่ใช้เพื่อฝ่าฝืนกติกาของเว็บไซต์ที่คุณเข้า</p>
+<h2>การเปลี่ยนแปลงและการติดต่อ</h2><p>ข้อกำหนดอาจเปลี่ยน ฉบับปัจจุบันอยู่ในหน้านี้ สอบถามได้ที่ {{CONTACT_EMAIL}}</p>
+</main>
+<footer>Tabroost is an independent project, not affiliated with or endorsed by Google. &middot; Tabroost เป็นโครงการอิสระ ไม่มีส่วนเกี่ยวข้องกับ Google<br>Contact / ติดต่อ: <a href="mailto:{{CONTACT_EMAIL}}">{{CONTACT_EMAIL}}</a> &middot; {{DEVELOPER_NAME}}</footer>
+</div>
+<script>(function(){var d=document.documentElement;function set(l){d.lang=l;try{localStorage.setItem('lang',l)}catch(e){}document.querySelectorAll('.tog button').forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.set===l))})}
+document.querySelectorAll('.tog button').forEach(function(b){b.addEventListener('click',function(){set(b.dataset.set)})});
+var l='';try{l=localStorage.getItem('lang')||''}catch(e){}if(!l)l=/^th/i.test(navigator.language||'')?'th':'en';set(l)})();</script>
+<noscript><style>[data-l]{display:block!important}.tog{display:none}</style></noscript>
+</body>
+</html>

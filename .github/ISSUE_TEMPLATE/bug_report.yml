@@ -1,0 +1,58 @@
+name: Bug report
+description: Something does not work as expected
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting. Please do not paste private URLs or tab titles. For security problems use the Security tab instead of this form.
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: What did you do, what did you expect, what happened instead?
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: "1. Open 20 tabs\n2. Click the Tabroost icon\n3. ..."
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Tabroost version
+      description: Shown on chrome://extensions
+    validations:
+      required: true
+  - type: input
+    id: chrome
+    attributes:
+      label: Chrome version
+      description: From chrome://version
+    validations:
+      required: true
+  - type: dropdown
+    id: os
+    attributes:
+      label: Operating system
+      options: [Windows, macOS, Linux, ChromeOS, Other]
+    validations:
+      required: true
+  - type: input
+    id: tabs
+    attributes:
+      label: Roughly how many tabs / saved tab sets?
+  - type: dropdown
+    id: sync
+    attributes:
+      label: Is sync turned on?
+      options: ["No", "Yes", "Not sure"]
+  - type: textarea
+    id: logs
+    attributes:
+      label: Errors from the console (optional)
+      description: "chrome://extensions > Tabroost > service worker (Inspect). Remove private data first."
+      render: text

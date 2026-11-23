@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tabroost</title>
+  <script src="themeboot.js"></script>
+  <link rel="stylesheet" href="tokens.css">
+  <link rel="stylesheet" href="popup.css">
+  <link rel="stylesheet" href="lock.css">
+  <script type="module" src="popup.js"></script>
+</head>
+<body>
+<main class="pop">
+  <div id="lockBox" class="lk-pop" hidden role="status"><span id="lockTxt"></span><button type="button" id="lockBtn"></button></div>
+  <div class="head">
+    <h1><span class="logo" aria-hidden="true"></span><span data-s="appName"></span></h1>
+    <div class="meter" aria-live="polite"><span id="meterTxt"></span><div class="mt"><div id="meterFill" class="mf"></div></div></div>
+  </div>
+
+  <section id="drain" class="box" hidden aria-live="polite">
+    <div id="drainText" class="strong"></div>
+    <div class="track"><div id="drainBar" class="fill"></div></div>
+    <div class="row">
+      <button type="button" id="btnPause" data-act="pause" data-icon="pause" data-s="pause"></button>
+      <button type="button" id="btnResume" data-act="resume" data-icon="play" data-s="resume" hidden></button>
+      <button type="button" data-act="stop" data-icon="stop" data-s="stop"></button>
+    </div>
+  </section>
+
+  <section id="refresh" class="box" hidden aria-live="polite">
+    <div id="refreshText" class="strong"></div>
+    <div class="track"><div id="refreshBar" class="fill"></div></div>
+    <div class="row"><button type="button" data-act="refreshCancel" data-icon="stop" data-s="refreshCancel"></button></div>
+  </section>
+
+  <section class="col">
+    <button type="button" class="primary" data-act="stashAll" data-icon="layers" data-s="stashAll"></button>
+    <div class="rowb">
+      <button type="button" data-act="stashTab" data-icon="tab" data-s="stashTab"></button>
+      <button type="button" data-act="stashWindow" data-icon="window" data-s="stashWindow"></button>
+    </div>
+    <label class="check"><input id="chkPinned" type="checkbox"><span data-s="includePinned"></span></label>
+    <button type="button" data-act="dupNow" data-icon="dedupe" data-s="dupNow"></button>
+    <button type="button" data-act="cleanAll" data-icon="broom" data-s="cleanAll"></button>
+    <button type="button" data-act="refreshAll" data-icon="refresh" data-s="refreshAll"></button>
+    <button type="button" data-act="openList" data-icon="open" data-s="openList"></button>
+  </section>
+
+  <section class="stats" aria-label="สถานะ">
+    <div><span id="stLinks" class="num">–</span><span data-s="stLinks"></span></div>
+    <div><span id="stDisc" class="num">–</span><span data-s="stDisc"></span></div>
+    <div><span id="stFree" class="num">–</span><span data-s="stFree"></span></div>
+  </section>
+  <section class="box" id="permHint" hidden></section>
+  <section class="recent" id="protBox" hidden><h2 data-s="protTitle"></h2><div id="protList"></div></section>
+  <section class="recent" id="sleepBox" hidden><h2 data-s="sleepTitle"></h2><div id="sleepList"></div></section>
+  <section class="recent" id="recentBox" hidden><h2 data-s="recentTitle"></h2><div id="recent"></div></section>
+  <div id="msg" class="muted" role="status"></div>
+</main>
+</body>
+</html>

@@ -1,0 +1,53 @@
+# Fast checks that need no browser. The Chrome (CDP) UI tests in tests/ui are NOT run here.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Syntax check all JavaScript
+        run: |
+          set -e
+          find . -path ./node_modules -prune -o -path ./.git -prune -o \( -name '*.js' -o -name '*.mjs' \) -print0 | xargs -0 -n1 node --check
+
+      - name: Validate manifest.json
+        run: |
+          node -e "
+          const m = JSON.parse(require('fs').readFileSync('manifest.json','utf8'));
+          if (m.manifest_version !== 3) throw new Error('manifest_version must be 3');
+          if (!/^\d+(\.\d+){0,3}\$/.test(m.version)) throw new Error('bad version ' + m.version);
+          if ((m.description||'').length > 132) throw new Error('description over 132 chars');
+          if ((m.name||'').length > 75) throw new Error('name over 75 chars');
+          console.log('manifest ok', m.name, m.version);
+          "
+
+      - name: Import graph
+        run: node tools/check-imports.mjs
+
+      - name: Format tests
+        run: node tools/test-formats.mjs
+
+      - name: Unit tests
+        run: |
+          node tests/query-test.mjs
+          node tests/search-test.mjs
+          node tests/snapshot-test.mjs
+
+      - name: Sync core tests
+        run: node tests/sync/run.mjs
+
+      - name: Forbidden-pattern scan (eval, new Function, remote scripts)
+        run: node tools/scan-forbidden.mjs

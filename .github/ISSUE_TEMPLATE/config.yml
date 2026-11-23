@@ -1,0 +1,9 @@
+blank_issues_enabled: false
+contact_links:
+  # Replace <user>/<repo> after creating the repository, and enable Discussions in Settings > General > Features.
+  - name: Questions and ideas (Discussions)
+    url: https://github.com/<user>/<repo>/discussions
+    about: Ask how to use Tabroost or talk about ideas before opening an issue.
+  - name: Security problem
+    url: https://github.com/<user>/<repo>/security/advisories/new
+    about: Report vulnerabilities privately here, not in a public issue.

@@ -1,0 +1,82 @@
+/* Dashboard view (lazy-loaded by stash.js on first open). Every rule is scoped to #dashView so nothing leaks into the list / settings. */
+#dashView .dsub { margin: 0; color: var(--muted); font-size: var(--fs-s, 12px); flex-basis: 100%; }
+#dashView .dgrid { padding: 0; display: grid; gap: 14px; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+@container (max-width: 899px) { #dashView .dgrid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@container (max-width: 559px) { #dashView .dgrid { grid-template-columns: minmax(0, 1fr); } }
+#dashView .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; min-height: var(--h, 180px); display: flex; flex-direction: column; gap: 10px; min-width: 0; contain: layout paint; }
+#dashView .card[data-span="2"] { grid-column: span 2; }
+#dashView .card[data-span="3"] { grid-column: span 3; }
+#dashView .card[data-span="4"] { grid-column: span 4; }
+@container (max-width: 899px) { #dashView .card[data-span="3"], #dashView .card[data-span="4"] { grid-column: span 2; } }
+@container (max-width: 559px) { #dashView .card[data-span] { grid-column: auto; } }
+#dashView .card h2 { margin: 0; font-size: var(--fs-m, 13px); font-weight: 600; color: var(--muted); letter-spacing: .01em; }
+#dashView .card.skel .body { background: linear-gradient(90deg, var(--skel) 25%, var(--surface-2) 50%, var(--skel) 75%); border-radius: 8px; flex: 1; min-height: 80px; }
+@media (prefers-reduced-motion: no-preference) { #dashView .card.skel .body { background-size: 200% 100%; animation: sk 1.4s linear infinite; } @keyframes sk { to { background-position: -200% 0; } } }
+#dashView .big { font-size: 26px; font-weight: 650; font-variant-numeric: tabular-nums; line-height: 1.15; }
+#dashView .kv { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 10px 14px; }
+#dashView .kv .k { color: var(--muted); font-size: var(--fs-s, 12px); }
+#dashView .kv .v { font-size: 18px; font-weight: 600; font-variant-numeric: tabular-nums; }
+#dashView .note { color: var(--muted); font-size: var(--fs-s, 12px); margin: 0; }
+#dashView .btn { font: inherit; font-size: var(--fs-m, 13px); border: 1px solid var(--border); background: var(--surface); color: var(--text); border-radius: 8px; padding: 6px 12px; cursor: pointer; text-decoration: none; display: inline-block; }
+#dashView .btn:hover { background: var(--surface-2); }
+#dashView .btn.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-text); }
+#dashView .btn.primary:hover { filter: brightness(1.08); background: var(--accent); }
+#dashView .btn:focus-visible, #dashView .linkbtn:focus-visible, #dashView a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+#dashView .row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+#dashView .seg { display: inline-flex; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+#dashView .seg button { font: inherit; font-size: var(--fs-s, 12px); background: transparent; color: var(--muted); border: 0; padding: 4px 10px; cursor: pointer; }
+#dashView .seg button[aria-pressed="true"] { background: var(--accent-weak); color: var(--accent-ink); font-weight: 600; }
+#dashView .linkbtn { font: inherit; font-size: var(--fs-s, 12px); background: none; border: 0; color: var(--accent-ink); cursor: pointer; padding: 2px 0; align-self: flex-start; }
+#dashView .linkbtn:hover { text-decoration: underline; }
+#dashView .empty { color: var(--muted); display: flex; flex-direction: column; gap: 10px; align-items: flex-start; justify-content: center; flex: 1; }
+#dashView figure.chart { margin: 0; display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+#dashView .bars { display: flex; align-items: flex-end; gap: 2px; width: 100%; padding-bottom: 14px; position: relative; }
+#dashView .bcol { flex: 1 1 0; min-width: 0; height: 100%; display: flex; align-items: flex-end; position: relative; }
+#dashView .bar { display: block; width: 100%; background: var(--accent); border-radius: 2px 2px 0 0; min-width: 1px; opacity: .85; }
+#dashView .bcol:hover .bar { opacity: 1; }
+#dashView .blabel { position: absolute; bottom: -14px; left: 0; font-size: 10px; color: var(--muted); white-space: nowrap; }
+#dashView .hbars { display: flex; flex-direction: column; gap: 6px; }
+#dashView .hrow { display: grid; grid-template-columns: 18px minmax(70px, 1.2fr) minmax(40px, 2fr) 42px 22px; gap: 8px; align-items: center; font-size: var(--fs-s, 12px); }
+#dashView .hrow:not(:has(.fav)) { grid-template-columns: minmax(70px, 1.2fr) minmax(40px, 2fr) 42px 22px; }
+#dashView .hrow .hl { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+#dashView .htrack { height: 8px; background: var(--surface-2); border-radius: 4px; overflow: hidden; }
+#dashView .hfill { display: block; height: 100%; border-radius: 4px; }
+#dashView .hv { text-align: right; color: var(--muted); font-variant-numeric: tabular-nums; }
+#dashView .hx { text-align: center; font-size: 12px; }
+#dashView .hx.up { color: var(--ok); }
+#dashView .hx.down { color: var(--danger); }
+#dashView .fav { width: 16px; height: 16px; border-radius: 4px; display: grid; place-items: center; font-size: 10px; font-weight: 700; color: #fff; background: var(--accent); }
+#dashView .donutwrap { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
+#dashView .donut { width: 110px; height: 110px; flex: none; transform: rotate(0deg); }
+#dashView .donutn { font-size: 7px; font-weight: 700; fill: var(--text); }
+#dashView .legend { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; font-size: var(--fs-s, 12px); flex: 1; min-width: 120px; }
+#dashView .legend li { display: flex; align-items: center; gap: 8px; }
+#dashView .legend .sw { width: 10px; height: 10px; border-radius: 3px; flex: none; }
+#dashView .legend .lt { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+#dashView .legend .lv { color: var(--muted); font-variant-numeric: tabular-nums; }
+#dashView .stackwrap { display: flex; flex-direction: column; gap: 10px; }
+#dashView .stackbar { display: flex; height: 18px; border-radius: 6px; overflow: hidden; background: var(--surface-2); gap: 1px; }
+#dashView .stackbar .sg { display: block; min-width: 2px; border: 0; }
+#dashView .heat { display: grid; gap: 2px; align-items: center; }
+#dashView .hhead, #dashView .hwd { font-size: 10px; color: var(--muted); }
+#dashView .hwd { padding-right: 6px; }
+#dashView .hcell { aspect-ratio: 1.3; border-radius: 3px; background: var(--surface-2); min-height: 10px; }
+#dashView .hcell.l1 { background: color-mix(in srgb, var(--accent) 25%, var(--surface-2)); }
+#dashView .hcell.l2 { background: color-mix(in srgb, var(--accent) 45%, var(--surface-2)); }
+#dashView .hcell.l3 { background: color-mix(in srgb, var(--accent) 70%, var(--surface-2)); }
+#dashView .hcell.l4 { background: var(--accent); }
+#dashView .ctable { border-collapse: collapse; font-size: var(--fs-s, 12px); width: 100%; }
+#dashView .ctable th, #dashView .ctable td { text-align: left; padding: 3px 6px; border-bottom: 1px solid var(--border); font-weight: 400; }
+#dashView .ctable td.num { text-align: right; font-variant-numeric: tabular-nums; }
+#dashView .list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; font-size: var(--fs-s, 12px); }
+#dashView .list li { display: flex; gap: 8px; align-items: baseline; justify-content: space-between; min-width: 0; }
+#dashView .list .t { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; min-width: 0; }
+#dashView .list .w { color: var(--muted); white-space: nowrap; font-variant-numeric: tabular-nums; }
+#dashView .list a { color: var(--accent-ink); text-decoration: none; white-space: nowrap; }
+#dashView .list a:hover { text-decoration: underline; }
+#dashView { padding: 8px 20px 40px; container-type: inline-size; }
+#dashView > * { max-width: 1320px; margin-left: auto; margin-right: auto; }
+@media (prefers-reduced-motion: reduce) { #dashView * { animation: none !important; transition: none !important; } }
+#dashView .dsub { margin: 0 0 10px; color: var(--muted); font-size: var(--fs-s, 12px); }
+#dashView .list li { align-items: center; }
+#dashView .list .btn.sm { padding: 2px 10px; font-size: var(--fs-s, 12px); line-height: 20px; flex: none; }
