@@ -17,7 +17,7 @@ const MAX_TEXT = 3 * 1024 * 1024;
 
 // Built from pieces so this file does not flag itself.
 const DEV_EMAIL = ['akkhaporn', '2559', '@', 'gmail', '.com'].join('');
-const OK_EMAIL = /(@example\.(com|org)|noreply@|@users\.noreply\.github\.com|\{\{CONTACT_EMAIL\}\}|you@|name@|user@|email@|support@example)/i;
+const OK_EMAIL = /(@example\.(com|org)|noreply@|@users\.noreply\.github\.com|you@|name@|user@|email@|support@example)/i;
 
 const findings = []; // {sev, kind, file, line, text}
 const add = (sev, kind, file, line, text) => findings.push({ sev, kind, file: path.relative(ROOT, file).split(path.sep).join('/'), line, text: String(text || '').slice(0, 140) });

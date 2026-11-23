@@ -13,14 +13,14 @@ Packaging: `node tools/package.mjs` (from the repo root) creates `dist/tabroost-
 
 ## Hosting the privacy policy for free (needed: a public URL)
 
-1. Fill `{{DEVELOPER_NAME}}`, `{{CONTACT_EMAIL}}`, `{{EFFECTIVE_DATE}}` in `site/privacy.html` (and copy the final text back here, or treat `site/` as the source of truth and delete the copy).
+1. Fill `{{DEVELOPER_NAME}}`, `{{REPO_URL}}`, `{{EFFECTIVE_DATE}}` in `site/privacy.html` (and copy the final text back here, or treat `site/` as the source of truth and delete the copy).
 2. Push the repo to GitHub (public), then enable Pages with source **GitHub Actions** (workflow `.github/workflows/pages.yml` is included). See `GITHUB-SETUP.md`.
 3. The URL is `https://<user>.github.io/<repo>/privacy.html`. Paste it in the dashboard (Privacy policy field). Alternatives: Cloudflare Pages, Netlify, or any static host.
 4. The URL must stay online and match what the extension does. Update it whenever data handling changes.
 
 ## Open items for the developer
 
-- Developer name, contact email, effective date (placeholders).
+- Developer name, repository URL (contact is its Issues page), effective date (placeholders).
 - Public hosting URL for the policy and the homepage/support URLs.
 - Own trademark and Web Store name search for "Tabroost" (classes 9 and 42; USPTO, WIPO, Thai DIP, Web Store, domain, social handles).
 - Take 5 screenshots 1280x800 with dummy tabs.

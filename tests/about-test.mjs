@@ -45,16 +45,19 @@ const { TH, EN, POLICY_TH, POLICY_EN, renderPolicy, fill, inlineParts } = str;
 
 // ---- 2. placeholders -------------------------------------------------------------------------------------------------
 {
-  const filled = { DEVELOPER_NAME: 'Test Dev', CONTACT_EMAIL: 'privacy@example.com', EFFECTIVE_DATE: '2030-01-02' };
+  const filled = { DEVELOPER_NAME: 'Test Dev', ISSUES_URL: 'https://github.com/example/tabroost/issues', EFFECTIVE_DATE: '2030-01-02' };
   for (const lang of ['th', 'en']) {
     const empty = JSON.stringify(renderPolicy(lang, {}));
     check(`${lang}: unset values never show raw braces`, !/\{\{|\}\}/.test(empty));
     check(`${lang}: unset values show "${(lang === 'th' ? TH : EN).notSet}"`, empty.includes((lang === 'th' ? TH : EN).notSet));
-    const todo = JSON.stringify(renderPolicy(lang, { DEVELOPER_NAME: 'TODO name', CONTACT_EMAIL: '{{CONTACT_EMAIL}}', EFFECTIVE_DATE: '' }));
+    const todo = JSON.stringify(renderPolicy(lang, { DEVELOPER_NAME: 'TODO name', ISSUES_URL: '{{ISSUES_URL}}', EFFECTIVE_DATE: '' }));
     check(`${lang}: TODO / brace values count as unset`, !/\{\{|\}\}|TODO/.test(todo));
     const full = JSON.stringify(renderPolicy(lang, filled));
     check(`${lang}: filled info leaves no {{placeholders}} and no "not set" text`, !/\{\{|\}\}/.test(full) && !full.includes((lang === 'th' ? TH : EN).notSet));
-    check(`${lang}: filled values appear`, full.includes('Test Dev') && full.includes('privacy@example.com') && full.includes('2030-01-02'));
+    check(`${lang}: filled values appear`, full.includes('Test Dev') && full.includes('https://github.com/example/tabroost/issues') && full.includes('2030-01-02'));
+    const bare = renderPolicy(lang, {});
+    check(`${lang}: contact section needs no email and shows no "not set" text`, !/@|mailto/i.test(JSON.stringify(bare.sections.at(-1))) && !JSON.stringify(bare.sections.at(-1)).includes((lang === 'th' ? TH : EN).notSet));
+    check(`${lang}: developer name is omitted from the meta line when unset`, !/Developer|ผู้พัฒนา/.test(bare.meta) && /Developer|ผู้พัฒนา/.test(renderPolicy(lang, filled).meta));
   }
   check('fill() leaves ordinary text alone', fill('a {{DEVELOPER_NAME}} b', filled, 'x') === 'a Test Dev b' && fill('no marks', {}, 'x') === 'no marks');
   const parts = inlineParts('see [site](https://example.com/x) and [bad](javascript:alert(1)) and `code` and [m](mailto:name@example.com)');
@@ -146,7 +149,7 @@ let shipped = [];
 {
   const devMail = ['akkhaporn', '2559', '@', 'gmail', '.com'].join('');
   const bad = [];
-  const OK_MAIL = /(@example\.(com|org)|noreply@|\{\{CONTACT_EMAIL\}\})/i;
+  const OK_MAIL = /(@example\.(com|org)|noreply@)/i;
   for (const f of shipped) {
     if (!/\.(js|html|css|json|md)$|^(LICENSE|NOTICE)$/.test(f)) continue;
     const txt = fs.readFileSync(R(f), 'utf8');

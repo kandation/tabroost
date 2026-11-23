@@ -94,8 +94,6 @@ function renderLinks() {
     if (u) { v = el('a', '', u); v.href = u; v.rel = 'noopener'; v.target = '_blank'; } else v = el('span', 'muted', S.notSet);
     ul.append(el('li', '', el('span', '', label), v));
   }
-  const mail = fill('{{CONTACT_EMAIL}}', INFO, '');
-  if (mail && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail)) { const a = el('a', '', mail); a.href = 'mailto:' + mail; ul.append(el('li', '', el('span', '', lang === 'th' ? 'อีเมล' : 'Email'), a)); }
 }
 
 function fmtBytes(n) {

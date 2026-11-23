@@ -4,10 +4,10 @@ Placeholders: `<user>` your GitHub name, `<repo>` the repository name (for examp
 
 ## 0. Clean the tree first
 
-1. Fill the placeholders: `{{DEVELOPER_NAME}}` in `LICENSE`, the policy pages and `site/*.html`; `{{CONTACT_EMAIL}}`; `{{EFFECTIVE_DATE}}`; `{{REPO_URL}}`; `{{STORE_URL}}` (use the store link after publishing; until then point the button at the repo).
+1. Fill the placeholders: `{{DEVELOPER_NAME}}` in `LICENSE`, the policy pages and `site/*.html`; `{{EFFECTIVE_DATE}}`; `{{REPO_URL}}`; `{{STORE_URL}}` (use the store link after publishing; until then point the button at the repo).
 2. Run `node tools/audit-repo.mjs` and resolve every HIGH item (for example `store-assets/tools/render.mjs` has a hard-coded machine path; the internal `docs/spec-*.md` mention local paths). Either fix the text, move internal specs to a folder you ignore in `.gitignore`, or edit them. Run it again until HIGH is 0.
 3. Run the tests listed in the README.
-4. Use a public contact address on purpose. The audit flags personal addresses so you notice them; only keep the one you want public. Prefer a dedicated project mailbox.
+4. The contact for everything is the repository Issues page (`{{REPO_URL}}/issues`); no email address is published. The audit flags personal addresses so you notice them. The Chrome Web Store dashboard asks for a contact email separately; enter it there only.
 
 ## 1. Create the repository
 

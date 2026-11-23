@@ -14,4 +14,4 @@ This applies to issues, pull requests, discussions and any space where someone r
 
 ## Enforcement
 
-Maintainers may edit, hide or remove comments, close issues or ban people who break this code. Report problems privately to {{CONTACT_EMAIL}}. Reports are handled in confidence.
+Maintainers may edit, hide or remove comments, close issues or ban people who break this code. Report problems by opening an issue at {{REPO_URL}}/issues (do not post private data there; for something sensitive, open a minimal issue asking for a private way to talk).

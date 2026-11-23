@@ -20,7 +20,7 @@ Policy names and dashboard labels change. For every point: verify on the current
 | Minimum Chrome version | `minimum_chrome_version` is 121. Confirm every API used exists in 121 (tabGroups, scripting, optional permissions and `chrome.permissions.onAdded/onRemoved`, favicon permission, `chrome.sessions`, `system.memory`, ES modules in SW, `_locales`). Test on that version if you can. | [ ] |
 | MV3 and CSP | `manifest_version` 3; no `content_security_policy` loosening (`unsafe-eval`, remote origins); no inline scripts in HTML pages (CSP default blocks them). `node tools/package.mjs` checks scripts and eval. | [ ] |
 | Quality | No console errors on load; works after browser restart (service worker wakes); uninstall leaves nothing. Icons 16/32/48/128 present. | [ ] |
-| Account | Developer account is registered (one-time fee, verify current amount), contact email verified, 2-step verification enabled, trader/non-trader status declared (EU rules; verify current dashboard). | [ ] |
+| Account | Developer account is registered (one-time fee, verify current amount), contact email verified (this email is entered by you in the developer dashboard only; it is not in the extension, the policy pages or the repo, which use the GitHub Issues page as contact), 2-step verification enabled, trader/non-trader status declared (EU rules; verify current dashboard). | [ ] |
 
 ## 2. Risk list: what could cause rejection or a slower review
 
@@ -73,7 +73,7 @@ The ID can be kept stable between your own builds by adding a `key` to manifest.
 
 ## 6. Last look (human)
 
-- [ ] Placeholders replaced: developer name, contact email, effective date, hosting URL.
+- [ ] Placeholders replaced: developer name, repository URL (`{{REPO_URL}}`; the Issues page is the contact), effective date, hosting URL.
 - [ ] Screenshots taken with dummy data, 1280x800.
 - [ ] Description and policy re-read in Thai and English.
 - [ ] `node tools/audit-repo.mjs` shows no personal data in the public repo.

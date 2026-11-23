@@ -6,7 +6,7 @@ Only the latest release on the Chrome Web Store (and the `main` branch) receives
 
 ## Reporting a vulnerability
 
-Please do not open a public issue for security problems. Use GitHub's "Report a vulnerability" (private security advisory) on the Security tab of this repository, or email {{CONTACT_EMAIL}}. Include the version, steps to reproduce, and the impact. You should get a first reply within about 7 days (best effort; this is a small project). We will credit you in the release notes if you wish.
+Please do not open a public issue for security problems. Use GitHub's private vulnerability reporting ("Report a vulnerability" on the Security tab of this repository), or, if that is not available, open a minimal issue at {{REPO_URL}}/issues that says you have a security problem but gives no details, and we will arrange a private way to continue. Include the version, steps to reproduce, and the impact. You should get a first reply within about 7 days (best effort; this is a small project). We will credit you in the release notes if you wish.
 
 ## Threat model (summary)
 
