@@ -160,7 +160,7 @@ const STR = {
   refreshText: (d, t, s, why) => (why === 'memory' ? `แรมเหลือน้อย จึงหยุดรีเฟรชชั่วคราว ${d}/${t}` : `กำลังรีเฟรช ${d}/${t}${s ? ` · ข้าม ${s}` : ''}`),
   refreshNone: 'ไม่มีแท็บที่ต้องรีเฟรช',
   refreshStarted: (n) => `เริ่มรีเฟรช ${n} แท็บแล้ว (ทำอยู่เบื้องหลัง ไม่รบกวนแท็บที่คุณใช้อยู่)`,
-  refreshDone: (t, s, w) => `รีเฟรชแล้ว ${t - s} แท็บ${s ? ` · ข้าม ${s} แท็บ` + skipWhy(w, 'th') : ''}`,
+  refreshDone: (t, s, w) => `รีเฟรชแล้ว ${t - s} แท็บ${s ? ` · ข้าม ${s} แท็บ` + skipWhy(w) : ''}`,
   refreshNoAccess: (n) => `ข้าม ${n} แท็บที่เปิดอยู่ เพราะยังไม่ได้อนุญาตให้ตรวจฟอร์มค้างก่อนรีเฟรช (เปิดได้ในหน้าตั้งค่า)`,
   refreshCancel: 'ยกเลิก',
   // navigation / toolbar
@@ -266,6 +266,12 @@ const STR = {
   trConfirmClear: (label, s, t) => `ลบถาวร “${label}”: ${s} ชุดแท็บ และ ${t} แท็บ ลบแล้วเอากลับมาไม่ได้ ต้องการลบหรือไม่?`,
   trConfirmClearAll: (s, t) => `ล้างถังขยะทั้งหมด: ${s} ชุดแท็บ และ ${t} แท็บ จะถูกลบถาวร เอากลับมาไม่ได้ ต้องการล้างหรือไม่?`,
   trConfirmPurge: (n) => `ลบถาวร ${n} รายการที่เลือก? ลบแล้วเอากลับมาไม่ได้`,
+  internalSite: '(ภายใน)',
+  aSide: 'เมนูหลัก', aViews: 'มุมมอง', aSessSort: 'เรียงชุดแท็บ', aList: 'รายการที่เก็บไว้', aSettingsNav: 'หมวดการตั้งค่า', aSetMenu: 'ชุดแท็บ', aItemSort: 'เรียงแท็บ',
+  trConfirmTabs: (n) => ` (${n} แท็บ)`,
+  syncRowTip: (s) => `ซิงค์: ${s}`,
+  skipForm: 'กำลังกรอกฟอร์ม', skipMedia: 'เล่นสื่ออยู่', skipAccess: 'ยังไม่ได้อนุญาต',
+  importBadFile: 'อ่านไฟล์ไม่ได้ ไฟล์อาจเสียหาย หรือไม่ใช่ไฟล์ที่ส่งออกจากส่วนขยายนี้หรือ OneTab',
   trRecovered: (n) => `กู้คืน ${n} แท็บเข้ารายการแล้ว`, trEmpty: 'ยังไม่มีอะไรในหมวดนี้',
   flatPrep: (p) => `กำลังเตรียมการเรียง… ${p}%`,
   trShowTabs: 'ดูแท็บในรายการนี้', trHideTabs: 'ซ่อนรายการแท็บ', trRange: (a, b, n) => `แท็บที่ ${a}–${b} จาก ${n}`, trPrev: 'ก่อนหน้า', trNext: 'ถัดไป', trNoDetail: 'ไม่มีรายละเอียดแท็บให้แสดง',
@@ -369,6 +375,7 @@ import {
   classifyUrl, hostOf, fmtDate, fmtStamp, ndjsonHeader, ndjsonGroup, ndjsonItem, oneTabLine, parseNdjsonLine,
   parseOneTab, readLines, validateImportJson,
 } from './lib/formats.js';
+import { siteLabel } from './lib/site.js';
 import * as db from './lib/db.js';
 import { getSettings } from './lib/settings.js';
 import * as bus from './lib/bus.js';
@@ -546,7 +553,7 @@ function paintSyncDot(st) {
   row.hidden = !SYNC.enabled; // off: nothing to show in the sidebar
   d.dataset.tone = stateTone(st);
   $('#syncLbl').textContent = stateLabel(st);
-  row.title = 'ซิงค์: ' + stateLabel(st);
+  row.title = STR.syncRowTip(stateLabel(st));
   row.setAttribute('aria-label', row.title);
 }
 watchSyncStatus(paintSyncDot);
@@ -586,6 +593,7 @@ async function loadData() {
   const [meta, settings, groups, cats] = await Promise.all([db.getMeta(), getSettings(), db.listGroups(), db.listCategories()]);
   S.meta = meta;
   S.settings = settings;
+  applyLang(settings.language); // before the first recompute() below, so banners and rows are never drawn in the wrong language
   S.cats = cats;
   S.allGroups = groups.filter((g) => g.phase !== 'writing');
   recompute();
@@ -615,15 +623,14 @@ async function refreshStorage() {
   if (v.ok) $('#vaultInfo').textContent = STR.vaultInfo(v.groups, v.at ? fmtDate(v.at) : '');
 }
 
-/** Reasons loaded tabs were skipped by "refresh all", in plain words: ' (กำลังกรอกฟอร์ม / เล่นสื่อ / ยังไม่ได้อนุญาต)'. */
-function skipWhy(w, lang) {
+/** Reasons loaded tabs were skipped by "refresh all", in plain words, as a suffix like ' (typing in a form / playing media)'. Uses the current STR. */
+function skipWhy(w) {
   if (!w) return '';
-  const en = lang === 'en';
   const parts = [];
-  if (w.form) parts.push(en ? 'typing in a form' : 'กำลังกรอกฟอร์ม');
-  if (w.media) parts.push(en ? 'playing media' : 'เล่นสื่ออยู่');
-  if (w.access) parts.push(en ? 'access not allowed yet' : 'ยังไม่ได้อนุญาต');
-  return parts.length ? ' (' + parts.join(en ? ' / ' : ' / ') + ')' : '';
+  if (w.form) parts.push(STR.skipForm);
+  if (w.media) parts.push(STR.skipMedia);
+  if (w.access) parts.push(STR.skipAccess);
+  return parts.length ? ' (' + parts.join(' / ') + ')' : '';
 }
 /** Friendly first-run empty state: small tab-card illustration, one sentence, the primary action, import, and the shortcut. Built once per language. */
 function renderEmptyState(box) {
@@ -1177,7 +1184,7 @@ function paintStack(n, g) {
   }
   const extra = (g.agg ? g.agg.nSites : 0) - hosts.length;
   n._more2.textContent = extra > 0 ? '+' + extra : '';
-  n._stack.title = hosts.length ? STR.stackTip(top.slice(0, 5).map((x) => x[0]).join(', '), Math.max(0, (g.agg.nSites || 0) - Math.min(5, top.length))) : '';
+  n._stack.title = hosts.length ? STR.stackTip(top.slice(0, 5).map((x) => siteLabel(x[0], STR.internalSite)).join(', '), Math.max(0, (g.agg.nSites || 0) - Math.min(5, top.length))) : '';
   n._stack.setAttribute('aria-label', n._stack.title);
 }
 
@@ -1760,7 +1767,7 @@ function setBanner(id, text, buttons) {
   for (const [act, label] of buttons || []) el.appendChild(actBtn(act, label));
 }
 
-// Long notices never grow without bound and never get their own scrollbar: past ~3 lines they are clamped with a 'ดูเพิ่ม' toggle.
+// Long notices never grow without bound and never get their own scrollbar: past ~3 lines they are clamped with a "show more" toggle.
 function fitBanners() {
   const P = $('#panels');
   P.classList.remove('tight', 'foldon');
@@ -1768,7 +1775,7 @@ function fitBanners() {
   const old = P.querySelector(':scope > .foldbar'); if (old) old.remove();
   fitBannerPass(3);
   if (P.offsetHeight > innerHeight * 0.45) { P.classList.add('tight'); fitBannerPass(1); } // too many notices at once: one line each, so the list below always keeps room
-  if (P.offsetHeight > innerHeight * 0.45) { // still too tall: show the first two, fold the rest behind one 'ดูเพิ่ม' row
+  if (P.offsetHeight > innerHeight * 0.45) { // still too tall: show the first two, fold the rest behind one "show more" row
     const vis = [...P.children].filter((c) => !c.hidden);
     if (vis.length > 2) {
       const expanded = P.classList.contains('expanded');
@@ -2099,7 +2106,7 @@ async function renderTrash() {
   syncClearButtons(all);
 }
 
-/** Settings page 'ล้างตอนนี้' buttons carry the exact counts. */
+/** Settings page "Clear now" buttons carry the exact counts. */
 function syncClearButtons(all) {
   const d = trashCounts(all, 'deleted'); const o = trashCounts(all, 'opened');
   const bd = $('#btnClearDeleted'); const bo = $('#btnClearOpened');
@@ -2125,7 +2132,7 @@ async function trashDo(what, rows) {
   const tids = rows.flatMap((r) => r.tids);
   if (what === 'purge') {
     const tabs = rows.reduce((a, r) => a + r.n, 0);
-    if (!confirm(STR.trConfirmPurge(rows.length) + (tabs ? ` (${tabs} แท็บ)` : ''))) return null;
+    if (!confirm(STR.trConfirmPurge(rows.length) + (tabs ? STR.trConfirmTabs(tabs) : ''))) return null;
     const r = await send({ type: 'trashPurge', gids, tids });
     if (!r.ok) return toastError(r);
   } else if (what === 'recover') {
@@ -2410,8 +2417,13 @@ function applySettingsToUi() {
   $('#shell').dataset.hover = st.hoverActions === 'always' ? 'always' : 'hover';
   try { const fm = st.favMode === 'img' || st.favMode === 'atlas' ? st.favMode : ''; if (fm) localStorage.setItem('cmrFavMode', fm); else localStorage.removeItem('cmrFavMode'); } catch { /* ignore */ }
   favs.setEnabled(favsOn());
-  const lang = applyLanguage(STR, Q.L, st.language);
-  if (S.lang !== lang) { S.lang = lang; setSyncLang(lang); applyStrings(); if (syncCard) { syncCard = null; const sy = $('#s-sync'); if (sy) { sy.textContent = ''; if (S.view === 'settings') syncCard = mountSyncCard(sy, { send, toast }); } } }
+  applyLang(st.language);
+}
+
+/** Overlays the chosen language on STR / Q.L and redraws the static labels. Must run BEFORE anything renders text from STR (loadData, banners, menus). */
+function applyLang(pref) {
+  const lang = applyLanguage(STR, Q.L, pref);
+  if (S.lang !== lang) { S.lang = lang; setSyncLang(lang); applyStrings(); if (S.allGroups) { renderViewTitle(); renderNav(); renderStaleBanner(); renderActBanner(); } if (syncCard) { syncCard = null; const sy = $('#s-sync'); if (sy) { sy.textContent = ''; if (S.view === 'settings') syncCard = mountSyncCard(sy, { send, toast }); } } }
 }
 
 // ----- recompute: nav -> filters -> sort -> group-by -----
@@ -2615,7 +2627,7 @@ function renderChips() {
     c.appendChild(x);
     box.appendChild(c);
   };
-  for (const s of f.sites) add(s, () => { f.sites = f.sites.filter((x) => x !== s); });
+  for (const s of f.sites) add(siteLabel(s, STR.internalSite), () => { f.sites = f.sites.filter((x) => x !== s); });
   for (const id of f.cats) add((id ? (catById(id) || {}).name : STR.navUncat) || id, () => { f.cats = f.cats.filter((x) => x !== id); });
   for (const k of f.tgs) add(k, () => { f.tgs = f.tgs.filter((x) => x !== k); });
   if (f.dateFrom || f.dateTo) add(rangeLabel(f.dateFrom, f.dateTo, S.lang || 'th', S.settings.dateCalendar) + (f.dateBasis === 'active' ? ' · ' + STR.fBasisActive : ''), () => { f.dateFrom = null; f.dateTo = null; });
@@ -4159,7 +4171,7 @@ async function importLines(lines) {
     if (mode === 'json') {
       let v = { ok: false };
       try { v = validateImportJson(JSON.parse(rest.join('\n'))); } catch { /* not valid */ }
-      if (!v.ok) throw new Error('อ่านไฟล์ไม่ได้ ไฟล์อาจเสียหาย หรือไม่ใช่ไฟล์ที่ส่งออกจากส่วนขยายนี้หรือ OneTab');
+      if (!v.ok) throw new Error(STR.importBadFile);
       imp.skipped += v.skipped;
       for (const g of v.groups) {
         await imp.startGroup({ title: g.title, starred: g.starred, locked: g.locked, tabGroups: g.tabGroups, color: g.color, emoji: g.emoji });
@@ -4472,6 +4484,7 @@ async function init() {
   const t0 = performance.now();
   await lockGate({ beforeLock: () => { try { SRCH.client && SRCH.client.post({ type: 'lock' }); } catch { /* ignore */ } } }); // password lock: resolves at once when it is off; shows the lock screen (and nothing else) while locked
   try { const r = await chrome.storage.local.get('view'); if (r.view) S.vs = { ...Q.DEFAULT_VIEW, ...r.view }; } catch { /* defaults */ }
+  try { applyLang((await getSettings()).language); } catch { /* Thai until the settings can be read */ }
   applyStrings();
   const syncLockBtn = () => { const b = $('#lockNowRow'); if (b) b.hidden = !(lockrt.enabled() && !lockrt.isLocked()); };
   syncLockBtn(); lockrt.onChange(syncLockBtn);

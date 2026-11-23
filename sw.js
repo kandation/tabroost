@@ -1,7 +1,8 @@
 // Service worker entry: listeners + routing only. All listeners are registered synchronously at top level.
 // The worker is the ONLY writer of the database; every mutation goes through runExclusive (lib/queue.js).
 
-import { KEYS, ALARMS, STR_SW, STASH_PAGE, APPEND_CHUNK, TRASH_DAYS, PURGE_CHUNK } from './lib/constants.js';
+import { swStr, swLang } from './lib/swstr.js';
+import { KEYS, ALARMS, STASH_PAGE, APPEND_CHUNK, TRASH_DAYS, PURGE_CHUNK } from './lib/constants.js';
 import { hostOf, normItem } from './lib/formats.js';
 import { debugDisableSplit, canSplit } from './lib/splitview.js';
 import * as db from './lib/db.js';
@@ -147,20 +148,25 @@ async function openList(windowId, query = '') {
   await chrome.windows.update(wid, { focused: true });
 }
 
-function createMenus() {
+let menuGen = 0;
+async function createMenus() {
+  const gen = ++menuGen;
+  const S = await swStr();
+  if (gen !== menuGen) return; // a newer rebuild is already running
   chrome.contextMenus.removeAll(() => {
+    if (gen !== menuGen) return;
     const items = [
-      ['open-list', STR_SW.menuOpen],
-      ['stash-tab', STR_SW.menuTab],
-      ['stash-others', STR_SW.menuOthers],
-      ['stash-right', STR_SW.menuRight],
-      ['stash-allwin', STR_SW.menuAll],
-      ['whitelist-toggle', STR_SW.menuWhitelist],
+      ['open-list', S.menuOpen],
+      ['stash-tab', S.menuTab],
+      ['stash-others', S.menuOthers],
+      ['stash-right', S.menuRight],
+      ['stash-allwin', S.menuAll],
+      ['whitelist-toggle', S.menuWhitelist],
     ];
     for (const [id, title] of items) chrome.contextMenus.create({ id, title, contexts: ['action'] });
     // per-tab media-aware override (right-click on a page): session-only, see lib/suspend.js
-    chrome.contextMenus.create({ id: 'keep-tab', title: STR_SW.menuKeepTab, contexts: ['page'] });
-    chrome.contextMenus.create({ id: 'suspend-now', title: STR_SW.menuSuspendNow, contexts: ['page'] });
+    chrome.contextMenus.create({ id: 'keep-tab', title: S.menuKeepTab, contexts: ['page'] });
+    chrome.contextMenus.create({ id: 'suspend-now', title: S.menuSuspendNow, contexts: ['page'] });
   });
 }
 
@@ -323,6 +329,17 @@ function applyPreciseListener() {
   else { chrome.tabs.onCreated.removeListener(onTabCreated); firstseen.dropBuffer(); }
 }
 
+// ---------- language: menus, tooltips and lock messages follow the language setting (Auto / Thai / English) ----------
+const applySwLanguage = () => swLang().then((l) => { lockrt.setLang(l); }).catch(() => {});
+applySwLanguage();
+chrome.storage.onChanged.addListener((ch, area) => {
+  const next = ch[KEYS.SETTINGS] && ch[KEYS.SETTINGS].newValue;
+  const prev = ch[KEYS.SETTINGS] && ch[KEYS.SETTINGS].oldValue;
+  if (area !== 'local' || !next || (prev && prev.language === next.language)) return;
+  applySwLanguage();
+  createMenus().catch(() => {});
+  scheduleBadge();
+});
 // ---------- lifecycle ----------
 chrome.runtime.onInstalled.addListener((details) => {
   createMenus();
@@ -477,6 +494,7 @@ async function handleDebug(msg) {
     case 'debug:seedHosts': {
       const t0 = Date.now();
       const { groups = 100, itemsTotal = 10000, hosts = 2000, maxPer = 4000, spreadDays = 120, port = 8766, offset = 0 } = msg;
+      // i18n-allow: dev-only fake data for the debug hooks (gated by isDev), never shown to users
       const th = ['ข่าว', 'บทความ', 'ซื้อของ', 'วิธีทำ', 'รีวิว', 'สอนใช้งาน', 'ราคา', 'โปรแกรม', 'เรียนออนไลน์', 'หนังสือ'];
       const en = ['Dashboard', 'Pull request', 'Documentation', 'Video', 'Inbox', 'Search results', 'Article', 'Settings', 'Issue', 'Notebook'];
       const w = new Float64Array(hosts);
@@ -492,6 +510,7 @@ async function handleDebug(msg) {
         const per = Math.max(1, Math.min(maxPer, Math.round(avg * (0.2 + Math.random() * 1.6))));
         const withTg = Math.random() < 0.2;
         await ex(async () => {
+          // i18n-allow: dev-only fake data for the debug hooks (gated by isDev), never shown to users
           const tgList = withTg ? Array.from({ length: Math.max(1, Math.ceil(per / 12)) }, (_, k) => ({ i: k, title: k % 3 ? `กลุ่ม ${k}` : '', color: ['blue', 'red', 'green', 'orange', 'purple'][k % 5], collapsed: false, windowIdx: 1 })) : undefined;
           const created = Date.now() - Math.floor(((offset + g) / groups) * spreadDays * 86400000) - Math.floor(Math.random() * 3600000);
           const grp = await db.createGroup({ source: 'debug', tabGroups: tgList, title: Math.random() < 0.3 ? `${th[g % th.length]} ${g}` : '', createdAt: created, windowCount: 1 });

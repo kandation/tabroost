@@ -606,7 +606,7 @@ svg { stroke-width: 1.5; }
 .trlist-in, .snaplist, .nav, .menu { overscroll-behavior: contain; }
 .menu { max-height: min(70vh, 640px); }
 html, body { max-width: 100vw; }
-/* long notices: 3 lines + a 'ดูเพิ่ม' toggle, never an inner scrollbar */
+/* long notices: 3 lines + a "show more" toggle, never an inner scrollbar */
 .banner .bt { display: inline; }
 .banner.clamp .bt { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden; }
 .banner .bmore { margin-left: var(--sp-2); border: 0; background: transparent; color: var(--accent-ink, var(--accent)); cursor: pointer; padding: 0; text-decoration: underline; font: inherit; }

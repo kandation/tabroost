@@ -30,7 +30,7 @@ function rich(str) {
 
 function fillStatic() {
   for (const n of document.querySelectorAll('[data-s]')) { const v = S[n.dataset.s]; if (typeof v === 'string') n.textContent = v; }
-  document.title = 'Tabroost · ' + (lang === 'th' ? 'เกี่ยวกับ' : 'About');
+  document.title = 'Tabroost · ' + S.pageTitle;
   document.documentElement.lang = lang;
 }
 

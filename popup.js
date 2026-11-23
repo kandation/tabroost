@@ -1,4 +1,4 @@
-// Toolbar popup (only used when the setting "เมื่อกดไอคอน" = popup). Reads the DB read-only; changes go to the
+// Toolbar popup (only used when the setting "When the icon is clicked" = popup). Reads the DB read-only; changes go to the
 // service worker through runtime messages. No inline scripts.
 
 const STR = {
@@ -161,7 +161,7 @@ async function renderRecent() {
       b.dataset.act = 'openList';
       const t = document.createElement('span');
       t.className = 'rt';
-      t.textContent = g.title || new Date(g.createdAt).toLocaleString('th-TH', { dateStyle: 'medium', timeStyle: 'short' });
+      t.textContent = g.title || new Date(g.createdAt).toLocaleString(numLocale, { dateStyle: 'medium', timeStyle: 'short' });
       const c = document.createElement('span');
       c.className = 'rc';
       c.textContent = STR.tabsN(g.count);
@@ -178,7 +178,7 @@ async function renderStats() {
     const groups = await db.listGroups();
     let n = 0;
     for (const g of groups) if (g.phase !== 'writing') n += g.count;
-    $('#stLinks').textContent = n.toLocaleString('th-TH');
+    $('#stLinks').textContent = n.toLocaleString(numLocale);
   } catch { $('#stLinks').textContent = '–'; }
   try { $('#stDisc').textContent = String((await chrome.tabs.query({ discarded: true })).length); } catch { /* ignore */ }
   try {
@@ -287,8 +287,9 @@ async function lockState() {
 }
 bus.on((m) => { if (m && m.type === 'lock.state') { lockrt.refresh().then(() => { lockState(); renderStats(); }).catch(() => {}); } });
 
+let numLocale = 'th-TH'; // i18n-allow: default (Thai) locale for dates and numbers; switched to en-US in init() when the language is English
 async function init() {
-  try { if (resolveLang((await getSettings()).language) === 'en') { Object.assign(STR, POP_EN); document.documentElement.lang = 'en'; } } catch { /* Thai */ }
+  try { if (resolveLang((await getSettings()).language) === 'en') { Object.assign(STR, POP_EN); document.documentElement.lang = 'en'; numLocale = 'en-US'; } } catch { /* Thai */ }
   for (const el of document.querySelectorAll('[data-s]')) el.textContent = STR[el.dataset.s];
   const stl = document.querySelector('.stats'); if (stl) stl.setAttribute('aria-label', STR.statusLbl);
   await lockState();

@@ -49,5 +49,8 @@ jobs:
       - name: Sync core tests
         run: node tests/sync/run.mjs
 
+      - name: Language check (Thai/English tables match, no hard-coded Thai, no Thai in comments)
+        run: node tools/check-i18n.mjs
+
       - name: Forbidden-pattern scan (eval, new Function, remote scripts)
         run: node tools/scan-forbidden.mjs

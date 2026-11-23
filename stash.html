@@ -65,15 +65,15 @@
 </svg>
 
 <div class="shell" id="shell">
-  <aside class="side" id="side" aria-label="เมนูหลัก">
+  <aside class="side" id="side" data-sa="aSide">
     <div class="brand"><span class="logo" aria-hidden="true"></span><span class="bname" data-s="appName"></span></div>
-    <nav id="nav" class="nav" aria-label="มุมมอง">
+    <nav id="nav" class="nav" data-sa="aViews">
       <button type="button" class="navi" data-act="navTo" data-nav="all"><svg><use href="#i-all"/></svg><span class="nl" data-s="navAll"></span><span class="nc" data-nc="all"></span></button>
       <button type="button" class="navi" data-act="navTo" data-nav="pinned"><svg><use href="#i-pin"/></svg><span class="nl" data-s="navPinned"></span><span class="nc" data-nc="pinned"></span></button>
       <button type="button" class="navi" data-act="navTo" data-nav="starred"><svg><use href="#i-star"/></svg><span class="nl" data-s="navStarred"></span><span class="nc" data-nc="starred"></span></button>
       <button type="button" class="navi" data-act="navTo" data-nav="stale"><svg><use href="#i-clock"/></svg><span class="nl" data-s="navStale"></span><span class="nc" data-nc="stale"></span></button>
       <button type="button" class="navi" data-act="navTo" data-nav="pending"><svg><use href="#i-clock"/></svg><span class="nl" data-s="navPending"></span><span class="nc" data-nc="pending"></span></button>
-      <div class="navhead"><span data-s="navCats"></span><button type="button" class="ib sm" data-act="catAdd" data-sa="catAdd" aria-label="เพิ่มหมวดหมู่"><svg><use href="#i-plus"/></svg></button></div>
+      <div class="navhead"><span data-s="navCats"></span><button type="button" class="ib sm" data-act="catAdd" data-sa="catAdd" data-st="catAdd"><svg><use href="#i-plus"/></svg></button></div>
       <div id="catList" class="catlist"></div>
       <button type="button" class="navi" data-act="navTo" data-nav="uncat"><span class="dot" aria-hidden="true"></span><span class="nl" data-s="navUncat"></span><span class="nc" data-nc="uncat"></span></button>
       <div class="sep"></div>
@@ -102,7 +102,7 @@
 
   <main class="main" id="main">
     <header class="topbar">
-      <button type="button" class="ib narrow-only" data-act="toggleSide" data-sa="menu" aria-label="เมนู"><svg><use href="#i-menu"/></svg></button>
+      <button type="button" class="ib narrow-only" data-act="toggleSide" data-sa="menu"><svg><use href="#i-menu"/></svg></button>
       <h1 class="vtitle" id="viewTitle"></h1>
       <div class="searchbox" role="search">
         <svg class="si" aria-hidden="true"><use href="#i-search"/></svg>
@@ -110,13 +110,13 @@
       </div>
       <div class="tools">
         <button type="button" class="tb" id="btnFlat" data-act="flatToggle" aria-pressed="false"><svg><use href="#i-flat"/></svg><span class="tl" data-s="flatBtn"></span></button>
-        <span class="pill" id="sessSplit" role="group" aria-label="เรียงชุดแท็บ">
+        <span class="pill" id="sessSplit" role="group" data-sa="aSessSort">
           <button type="button" class="pb" id="btnSortDir" data-act="sessDirToggle"></button><button type="button" class="pb" id="btnView" data-act="viewMenu" aria-haspopup="menu"><svg><use href="#i-sort"/></svg><span class="tl" data-s="viewBtn"></span><svg class="chev"><use href="#i-expand"/></svg></button>
         </span>
         <button type="button" class="tb" id="btnFilter" data-act="filterMenu" aria-haspopup="menu"><svg><use href="#i-filter"/></svg><span class="tl" data-s="filterBtn"></span></button>
         <span class="vsep" aria-hidden="true"></span>
-        <button type="button" class="ib" data-act="expandAll" data-sa="expandAll" aria-label="ขยายทั้งหมด" title="ขยายทั้งหมด"><svg><use href="#i-expand"/></svg></button>
-        <button type="button" class="ib" data-act="collapseAll" data-sa="collapseAll" aria-label="ยุบทั้งหมด" title="ยุบทั้งหมด"><svg><use href="#i-collapse"/></svg></button>
+        <button type="button" class="ib" data-act="expandAll" data-sa="expandAll" data-st="expandAll"><svg><use href="#i-expand"/></svg></button>
+        <button type="button" class="ib" data-act="collapseAll" data-sa="collapseAll" data-st="collapseAll"><svg><use href="#i-collapse"/></svg></button>
         <button type="button" class="tb" id="btnUndoStash" data-act="undoStash" hidden><svg><use href="#i-refresh"/></svg><span class="tl" data-s="undoStash"></span></button>
         <button type="button" class="tb tonal" id="btnOpenAll" data-act="openAll"><svg><use href="#i-open"/></svg><span class="tl" data-s="openAll"></span></button>
       </div>
@@ -185,7 +185,7 @@
     <!-- ===== list view ===== -->
     <div id="vwrap" class="view">
       <div id="sticky" class="stickyhead" hidden></div>
-      <div id="scroller" tabindex="0" role="list" aria-label="รายการที่เก็บไว้">
+      <div id="scroller" tabindex="0" role="list" data-sa="aList">
         <div id="spacer"></div>
       </div>
       <div id="emptyMsg" class="empty" hidden></div>
@@ -222,12 +222,12 @@
     </div>
 
     <!-- ===== dashboard view (filled by dashboard.js on first open) ===== -->
-    <div id="dashView" class="view pagebox" hidden aria-label="แดชบอร์ด"></div>
+    <div id="dashView" class="view pagebox" hidden data-sa="navDash"></div>
 
     <!-- ===== settings view ===== -->
     <div id="settingsView" class="view pagebox" hidden>
       <div class="settingsgrid">
-        <nav class="snav" aria-label="หมวดการตั้งค่า" id="snav">
+        <nav class="snav" data-sa="aSettingsNav" id="snav">
           <a href="#s-appearance" data-s="sAppearance"></a>
           <a href="#s-privacy" data-s="sPrivacy"></a>
           <a href="#s-storing" data-s="sStoring"></a>
@@ -404,11 +404,11 @@
   </main>
 </div>
 
-<div id="moreMenu" class="menu" hidden role="menu" aria-label="ชุดแท็บ"></div>
-<div id="viewMenu" class="menu wide" hidden role="menu" aria-label="เรียง / จัดกลุ่ม"></div>
-<div id="filterMenu" class="menu wide" hidden role="dialog" aria-label="ตัวกรอง"></div>
-<div id="itemSortMenu" class="menu" hidden role="menu" aria-label="เรียงแท็บ"></div>
-<div id="catMenu" class="menu" hidden role="menu" aria-label="หมวดหมู่"></div>
+<div id="moreMenu" class="menu" hidden role="menu" data-sa="aSetMenu"></div>
+<div id="viewMenu" class="menu wide" hidden role="menu" data-sa="viewBtn"></div>
+<div id="filterMenu" class="menu wide" hidden role="dialog" data-sa="filterBtn"></div>
+<div id="itemSortMenu" class="menu" hidden role="menu" data-sa="aItemSort"></div>
+<div id="catMenu" class="menu" hidden role="menu" data-sa="navCats"></div>
 <div id="menuScrim" class="mscrim" hidden></div>
 <div id="snapDialog" class="dlgwrap" hidden>
   <div class="dlg" role="dialog" aria-modal="true" aria-labelledby="snapDlgTitle">

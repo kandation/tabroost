@@ -1,7 +1,7 @@
 {
   "extName": { "message": "Tabroost", "description": "Extension name (store listing and chrome://extensions)." },
   "extDesc": { "message": "Save open tabs to a searchable list, reopen them later, and put idle tabs to sleep so Chrome uses less memory.", "description": "Short description shown in the Chrome Web Store and chrome://extensions. Keep at or under 132 characters." },
-  "actionTitle": { "message": "Tabroost - click to save tabs", "description": "Tooltip of the toolbar button." },
+  "actionTitle": { "message": "Tabroost: click to save tabs", "description": "Tooltip of the toolbar button." },
   "cmdExecuteAction": { "message": "Open Tabroost from the toolbar icon", "description": "Keyboard shortcut label (chrome://extensions/shortcuts)." },
   "cmdStashNow": { "message": "Save tabs right away, no questions", "description": "Keyboard shortcut label." },
   "cmdStashTab": { "message": "Save the current tab", "description": "Keyboard shortcut label." },

@@ -86,7 +86,7 @@ const CARDS = [
     const all = [...D.values()].reduce((a, r) => a + (r.ram || 0), 0);
     const kv = mk('div', 'kv');
     for (const [l, v] of [[S.ramToday, ramToday], [S.ram7, sum(k, 'ram')], [S.ramAll, all]]) { const d = mk('div'); d.append(mk('div', 'k', l)); const vv = mk('div', 'v', '~' + fmtMB(v)); vv.title = S.ramTip(Math.round(v / mb), mb); d.appendChild(vv); kv.appendChild(d); }
-    b.append(kv, mk('p', 'note', S.ramNote + ' · ' + mb + ' MB/' + (lang === 'en' ? 'tab' : 'แท็บ')));
+    b.append(kv, mk('p', 'note', S.ramNote + ' · ' + mb + ' MB/' + S.perTab));
   } },
   { id: 'timeline', span: 2, h: 230, tags: ['activity'], star: true, render(b) {
     const box = mk('div'); const seg = mk('div', 'seg');
