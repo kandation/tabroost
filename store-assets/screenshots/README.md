@@ -34,6 +34,8 @@ English is the default listing language, so upload the `en/` set as the default 
 4. **Private by design**
    - EN line: Password lock and encrypted sync. No account, no servers, no tracking.
    - TH line: ล็อกด้วยรหัสผ่าน ซิงค์แบบเข้ารหัส ไม่มีบัญชี ไม่มีเซิร์ฟเวอร์ ไม่มีการติดตาม
+   - EN chip (on the sync card): Encrypted before it leaves your device
+   - TH chip: เข้ารหัสก่อนออกจากเครื่อง
    - EN caption: Optional password lock and passphrase-encrypted sync. No account, no servers, no analytics.
    - TH caption: ล็อกด้วยรหัสผ่านและซิงค์แบบเข้ารหัสด้วยวลีรหัสผ่าน (เลือกเปิดได้) ไม่มีบัญชี ไม่มีเซิร์ฟเวอร์ ไม่มีการเก็บสถิติ
 5. **Organise your way**
@@ -56,7 +58,7 @@ Taglines: "Give your tabs a place to rest." / "ให้แท็บได้พ
 
 ## What is real and what is drawn
 
-- Real captures: the list, search results, the toolbar popup, the settings cards, the dashboard cards, the lock screen and the drag in progress. They are crops of the running extension at 2x pixel density.
+- Real captures: the list, search results, the toolbar popup, the settings cards, the dashboard cards, the lock screen and the drag in progress. They are crops of the running extension at 2x pixel density. In picture 4 the "Sync between devices" card is two crops of the same capture stacked (its heading and its two buttons); the explanatory paragraphs between them are left out so the card stays readable when small.
 - Demo data: every tab title, tab set, category and number is invented (`../tools/demo-data.mjs`). Site names are well-known public sites; their icons are drawn letter tiles, not the sites' logos. The usage history behind the dashboard charts is generated.
 - Drawn: backgrounds, headlines, chips, the mouse pointer, the moon and stars, and the crowded "before" tab strip in picture 1 (86 tabs is an illustration, not a measurement).
 - Small helps during capture, none of them in the shipped extension: optional permissions are granted in a scratch copy of the manifest so no permission banner shows; notice banners are hidden; the "RAM saved" tile gets a slightly smaller font so its value is not cut off; per-row icons (`favMode: 'img'`) are used; the "asleep for" times in the popup are seeded.

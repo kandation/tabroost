@@ -20,14 +20,14 @@ const COPY = {
     {file: '01-save-every-tab', h: 'Save every tab<br>in one click.', p: 'A hundred open tabs become one tidy list, and your browser can breathe again.', before: 'Before · 86 open tabs', after: 'After · one tidy list', cap: 'Save every open tab with one click. They go into one tidy list and the browser gets lighter.'},
     {file: '02-find-any-tab', h: 'Find any tab<br>in a blink.', p: 'Typo-tolerant search across thousands of saved tabs, in English and Thai.', chip: 'Typo? Still found.', chip2: 'Thai works too', cap: 'Instant search across thousands of saved tabs. It forgives typos and understands Thai.'},
     {file: '03-idle-tabs-sleep', h: 'Idle tabs fall asleep<br>on their own.', p: 'Playing music or holding an unsaved form? Those tabs stay awake.', chip: 'Asleep, RAM freed', chip2: 'Kept awake, and why', cap: 'Idle tabs go to sleep automatically. Tabs playing media, unsaved forms and sites you protect stay awake.'},
-    {file: '04-private-by-design', h: 'Private<br>by design.', p: 'Password lock and encrypted sync. No account, no servers, no tracking.', pts: ['Lock your saved tabs with a password', 'Sync is encrypted with your passphrase', 'Your data stays in your browser'], cap: 'Optional password lock and passphrase-encrypted sync. No account, no servers, no analytics.'},
+    {file: '04-private-by-design', h: 'Private<br>by design.', p: 'Password lock and encrypted sync. No account, no servers, no tracking.', pts: ['Lock your saved tabs with a password', 'Sync is encrypted with your passphrase', 'Your data stays in your browser'], chip: 'Encrypted before it leaves your device', cap: 'Optional password lock and passphrase-encrypted sync. No account, no servers, no analytics.'},
     {file: '05-organise-your-way', h: 'Organise it your way.', p: 'Tab sets, categories, drag and drop. Reopen any set as tab groups, and see it all on a dashboard.', cap: 'Tab sets, categories and drag and drop. Reopen a set as Chrome tab groups. A local dashboard shows your habits.'},
   ],
   th: [
     {file: '01-save-every-tab', h: 'เก็บทุกแท็บ<br>ในคลิกเดียว', p: 'แท็บนับร้อยกลายเป็นรายการเดียวที่เป็นระเบียบ เบราว์เซอร์กลับมาเบาอีกครั้ง', before: 'ก่อน · เปิดค้างไว้ 86 แท็บ', after: 'หลัง · รายการเดียว เป็นระเบียบ', cap: 'เก็บทุกแท็บที่เปิดอยู่ด้วยการกดครั้งเดียว แท็บไปอยู่ในรายการเดียวที่เป็นระเบียบ เบราว์เซอร์เบาลง'},
     {file: '02-find-any-tab', h: 'หาแท็บไหนก็เจอ<br>ในพริบตา', p: 'พิมพ์ผิดนิดหน่อยก็ยังเจอ ค้นได้ทั้งไทยและอังกฤษ จากแท็บที่เก็บไว้หลายพันรายการ', chip: 'พิมพ์ผิดก็ยังเจอ', chip2: 'ค้นภาษาไทยได้', cap: 'ค้นหาแท็บที่เก็บไว้หลายพันรายการได้ทันที พิมพ์ผิดเล็กน้อยก็ยังเจอ และเข้าใจภาษาไทย'},
     {file: '03-idle-tabs-sleep', h: 'แท็บที่ไม่ได้ใช้<br>พักเองอัตโนมัติ', p: 'แท็บที่เล่นเพลงอยู่ หรือมีฟอร์มที่ยังไม่บันทึก จะไม่ถูกพัก', chip: 'พักอยู่ คืนแรมแล้ว', chip2: 'ไม่ถูกพัก พร้อมเหตุผล', cap: 'แท็บที่ไม่ได้ใช้จะพักเองอัตโนมัติ ส่วนแท็บที่เล่นสื่ออยู่ มีฟอร์มที่ยังไม่บันทึก หรือเว็บที่คุณกันไว้ จะไม่ถูกพัก'},
-    {file: '04-private-by-design', h: 'เป็นส่วนตัว<br>ตั้งแต่ออกแบบ', p: 'ล็อกด้วยรหัสผ่าน ซิงค์แบบเข้ารหัส ไม่มีบัญชี ไม่มีเซิร์ฟเวอร์ ไม่มีการติดตาม', pts: ['ล็อกรายการแท็บด้วยรหัสผ่าน', 'ซิงค์โดยเข้ารหัสด้วยวลีรหัสผ่านของคุณ', 'ข้อมูลอยู่ในเบราว์เซอร์ของคุณ'], cap: 'ล็อกด้วยรหัสผ่านและซิงค์แบบเข้ารหัสด้วยวลีรหัสผ่าน (เลือกเปิดได้) ไม่มีบัญชี ไม่มีเซิร์ฟเวอร์ ไม่มีการเก็บสถิติ'},
+    {file: '04-private-by-design', h: 'เป็นส่วนตัว<br>ตั้งแต่ออกแบบ', p: 'ล็อกด้วยรหัสผ่าน ซิงค์แบบเข้ารหัส ไม่มีบัญชี ไม่มีเซิร์ฟเวอร์ ไม่มีการติดตาม', pts: ['ล็อกรายการแท็บด้วยรหัสผ่าน', 'ซิงค์โดยเข้ารหัสด้วยวลีรหัสผ่านของคุณ', 'ข้อมูลอยู่ในเบราว์เซอร์ของคุณ'], chip: 'เข้ารหัสก่อนออกจากเครื่อง', cap: 'ล็อกด้วยรหัสผ่านและซิงค์แบบเข้ารหัสด้วยวลีรหัสผ่าน (เลือกเปิดได้) ไม่มีบัญชี ไม่มีเซิร์ฟเวอร์ ไม่มีการเก็บสถิติ'},
     {file: '05-organise-your-way', h: 'จัดระเบียบได้ตามใจ', p: 'ชุดแท็บ หมวดหมู่ ลากแล้ววาง เปิดกลับเป็นกลุ่มแท็บ และดูภาพรวมทั้งหมดในแดชบอร์ด', cap: 'ชุดแท็บ หมวดหมู่ และลากแล้ววาง เปิดชุดแท็บกลับเป็นกลุ่มแท็บของ Chrome มีแดชบอร์ดในเครื่องแสดงพฤติกรรมการใช้งาน'},
   ],
 };
@@ -129,19 +129,23 @@ ${win(`left:596px;top:${top - 62}px`, `<div style="background:#fff;padding:4px 0
 ${zs([[690, 150, 44, 0.95, -8], [742, 108, 30, 0.7, -8], [778, 80, 20, 0.45, -8]])}`);
 }
 function shot4(lang) {
-  const {R, crop, win, c} = ctx(lang); const t = c[3]; const L = R.lockCard; const P = R['s-privacy'];
-  const lock = {x: L.x - 60, y: L.y - 40, w: L.w + 120, h: L.h + 84};
-  // the "keep usage stats (on this device only)" row with its switch (row height differs per language)
-  const row = lang === 'th' ? {y: 104, h: 50} : {y: 102, h: 70};
-  return page(lang, `body{background:radial-gradient(90% 110% at 15% 0%,#3B2494 0%,#1D1250 50%,#0E0828 100%);color:${CREAM}}
-.sub{color:#CFC4F2}
-.pt{display:flex;align-items:center;gap:14px;font-family:"Prompt","Leelawadee UI",sans-serif;font-weight:500;font-size:${lang === 'th' ? 20 : 21}px;margin-top:18px;white-space:nowrap}`, `${stars(40, 11)}
-<div class="abs" style="left:640px;top:60px;width:680px;height:680px;border-radius:50%;background:radial-gradient(closest-side,rgba(127,82,232,.55),rgba(127,82,232,0))"></div>
-<div class="abs" style="left:64px;top:${lang === 'th' ? 52 : 60}px;width:540px"><h1>${t.h}</h1><p class="sub" style="width:${lang === 'th' ? 470 : 440}px">${t.p}</p>
-<div style="margin-top:${lang === 'th' ? 30 : 38}px">${t.pts.map((x) => `<div class="pt">${check()}<span>${x}</span></div>`).join('')}</div></div>
-${win('left:692px;top:112px', crop('locked', lock, 1))}
-<svg class="abs" style="left:1160px;top:72px;filter:drop-shadow(0 10px 18px rgba(0,0,0,.45))" width="88" height="88" viewBox="0 0 64 64"><circle cx="32" cy="32" r="32" fill="${AMBER}"/><rect x="19" y="29" width="26" height="20" rx="5" fill="#2A1766"/><path d="M24 29v-6a8 8 0 0116 0v6" fill="none" stroke="#2A1766" stroke-width="4.5" stroke-linecap="round"/></svg>
-<div class="card" style="left:64px;top:${lang === 'th' ? 572 : 560}px;background:#fff;padding:12px 10px">${crop('s-privacy', {x: P.x + 14, y: row.y, w: P.w - 28, h: row.h}, 0.88)}</div>`);
+  const {R, crop, win, c} = ctx(lang); const t = c[3]; const L = R.lockCard; const S = R['s-sync'];
+  const lock = {x: L.x - 34, y: L.y - 30, w: L.w + 68, h: L.h + 62};
+  // the real "Sync between devices" settings card, cropped to its heading and its two buttons: the explanatory paragraphs
+  // between them are left out (two crops of the same capture, stacked), so everything shown stays readable when small
+  const sy = lang === 'th' ? {title: {y: 66, h: 42}, btn: {y: 254, h: 48}, w: 316, k: 1.9} : {title: {y: 68, h: 38}, btn: {y: 276, h: 48}, w: 444, k: 1.36};
+  const sx = S.x + 17; const top = lang === 'th' ? 560 : 566;
+  return page(lang, `body{background:radial-gradient(100% 120% at 0% 0%,#FFE3A1 0%,${AMBER} 48%,#FFAA2B 100%);color:${INK}}
+.sub{color:#4A3566}
+.pt{display:flex;align-items:center;gap:14px;font-family:"Prompt","Leelawadee UI",sans-serif;font-weight:600;font-size:${lang === 'th' ? 21 : 22}px;margin-top:${lang === 'th' ? 14 : 18}px;white-space:nowrap}`, `
+<div class="abs" style="left:560px;top:-40px;width:880px;height:880px;border-radius:50%;background:radial-gradient(closest-side,rgba(255,243,220,.85),rgba(255,243,220,0))"></div>
+<div class="abs" style="left:-150px;bottom:-230px;width:520px;height:520px;border-radius:50%;background:${CREAM};opacity:.4"></div>
+<div class="abs" style="left:64px;top:${lang === 'th' ? 44 : 60}px;width:580px"><h1>${t.h}</h1><p class="sub" style="width:${lang === 'th' ? 500 : 460}px">${t.p}</p>
+<div style="margin-top:${lang === 'th' ? 22 : 34}px">${t.pts.map((x) => `<div class="pt">${check(INK, AMBER)}<span>${x}</span></div>`).join('')}</div></div>
+${win('left:680px;top:92px', crop('locked', lock, 1.2))}
+<svg class="abs" style="left:1176px;top:50px;filter:drop-shadow(0 10px 18px rgba(30,18,69,.4))" width="92" height="92" viewBox="0 0 64 64"><circle cx="32" cy="32" r="32" fill="${INK}"/><rect x="19" y="29" width="26" height="20" rx="5" fill="${AMBER}"/><path d="M24 29v-6a8 8 0 0116 0v6" fill="none" stroke="${AMBER}" stroke-width="4.5" stroke-linecap="round"/></svg>
+<div class="card" style="left:64px;top:${top}px;border-radius:18px;background:#fff;padding:18px 14px 20px;box-shadow:0 30px 70px -20px rgba(16,6,56,.55),0 8px 20px -8px rgba(16,6,56,.3),0 0 0 3px ${INK}">${crop('s-sync', {x: sx, y: sy.title.y, w: sy.w, h: sy.title.h}, sy.k)}${crop('s-sync', {x: sx, y: sy.btn.y, w: sy.w, h: sy.btn.h}, sy.k)}</div>
+<div class="chip ink" style="left:88px;top:${top - 22}px">${t.chip}</div>`);
 }
 function shot5(lang) {
   const {R, crop, win, c} = ctx(lang); const t = c[4];
