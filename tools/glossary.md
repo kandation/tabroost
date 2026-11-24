@@ -24,7 +24,7 @@ Use ONE word per idea in every screen, tooltip, toast and manifest string. Add a
 | Tidy up | จัดระเบียบแท็บ | tidy up tabs | Close duplicates, handle Chrome internal pages, sleep idle tabs. |
 | Chrome internal pages | หน้าภายในของ Chrome (เช่น chrome://settings) | Chrome internal pages | Pages that belong to Chrome itself. |
 | RAM saver | โหมดประหยัดแรม | RAM saver mode | The extension works lighter because free RAM is low. |
-| Archive | คลัง (action: ย้ายเข้าคลัง) | archive | Hide a tab set from the main list without deleting it. |
+| Archive | เก็บถาวร (action: เก็บถาวร) | archive | Hide a tab set from the main list without deleting it. |
 | Pin / star / lock / to do | ปักหมุด / ติดดาว / ล็อก / งานค้าง | pin / star / lock / to do | Lock stops accidental delete or removal. |
 | Recommended choice | " · แนะนำ" | " · recommended" | Marks the safest default in a dropdown. |
 

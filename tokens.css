@@ -21,6 +21,7 @@
   --toast-text: #ffffff;
   /* Chrome tab-group colours (>= 3:1 on --surface) */
   --c-grey: #5f6368; --c-blue: #1a73e8; --c-red: #d93025; --c-yellow: #c98a00; --c-green: #188038; --c-pink: #d01884; --c-purple: #9334e6; --c-cyan: #007b83; --c-orange: #d9620a;
+    --pc-1: #dbe8ff; --pc-2: #fddfe1; --pc-3: #ffe8d2; --pc-4: #fff2c6; --pc-5: #daf1df; --pc-6: #d2f0ef; --pc-7: #e8ddfb; --pc-8: #fbdcec; --pc-edge-1: #b9d0f7; --pc-edge-2: #f3bcc1; --pc-edge-3: #f5cfa9; --pc-edge-4: #ecd98f; --pc-edge-5: #b3dcbc; --pc-edge-6: #a8dcda; --pc-edge-7: #cfbbf1; --pc-edge-8: #f1b9d6;
 
   --sp-1: 4px; --sp-2: 8px; --sp-3: 12px; --sp-4: 16px; --sp-5: 24px; --sp-6: 32px;
   --r-1: 6px; --r-2: 10px; --r-3: 14px;
@@ -28,7 +29,7 @@
   --fs-s: 12px; --fs-m: 13px; --fs-b: 14px; --fs-l: 16px; --fs-xl: 20px; --fs-xxl: 24px;
 
   /* row geometry (the list page overrides them for the compact density) */
-  --h-bucket: 40px; --h-group: 56px; --h-item: 38px; --h-sub: 30px;
+  --h-bucket: 40px; --h-group: 56px; --h-item: 38px; --h-sub: 30px; --h-wgap: 34px;
 
   /* legacy names still used by older rules */
   --card: var(--surface); --line: var(--border); --hover: var(--surface-2); --shadow: 0 1px 2px rgba(0, 0, 0, .05);
@@ -41,6 +42,7 @@
     --shadow-2: 0 1px 2px rgba(0, 0, 0, .4), 0 8px 24px rgba(0, 0, 0, .5);
     --toast-bg: #e7eaf0; --toast-text: #111418;
     --c-grey: #9aa0a6; --c-blue: #8ab4f8; --c-red: #f28b82; --c-yellow: #fdd663; --c-green: #81c995; --c-pink: #ff8bcb; --c-purple: #c58af9; --c-cyan: #78d9ec; --c-orange: #fcad70;
+    --pc-1: #233654; --pc-2: #4a2a30; --pc-3: #4a3523; --pc-4: #463f21; --pc-5: #243f2f; --pc-6: #213f40; --pc-7: #38294f; --pc-8: #4a2941; --pc-edge-1: #34507d; --pc-edge-2: #74424a; --pc-edge-3: #74543a; --pc-edge-4: #6f6334; --pc-edge-5: #3b6549; --pc-edge-6: #356466; --pc-edge-7: #5a4382; --pc-edge-8: #744067;
     --shadow: 0 1px 2px rgba(0, 0, 0, .35);
     color-scheme: dark;
   }
@@ -51,10 +53,11 @@
   --shadow-2: 0 1px 2px rgba(0, 0, 0, .4), 0 8px 24px rgba(0, 0, 0, .5);
   --toast-bg: #e7eaf0; --toast-text: #111418;
   --c-grey: #9aa0a6; --c-blue: #8ab4f8; --c-red: #f28b82; --c-yellow: #fdd663; --c-green: #81c995; --c-pink: #ff8bcb; --c-purple: #c58af9; --c-cyan: #78d9ec; --c-orange: #fcad70;
+    --pc-1: #233654; --pc-2: #4a2a30; --pc-3: #4a3523; --pc-4: #463f21; --pc-5: #243f2f; --pc-6: #213f40; --pc-7: #38294f; --pc-8: #4a2941; --pc-edge-1: #34507d; --pc-edge-2: #74424a; --pc-edge-3: #74543a; --pc-edge-4: #6f6334; --pc-edge-5: #3b6549; --pc-edge-6: #356466; --pc-edge-7: #5a4382; --pc-edge-8: #744067;
   --shadow: 0 1px 2px rgba(0, 0, 0, .35);
   color-scheme: dark;
 }
-:root[data-density="compact"] { --h-bucket: 36px; --h-group: 48px; --h-item: 30px; --h-sub: 26px; }
+:root[data-density="compact"] { --h-bucket: 36px; --h-group: 48px; --h-item: 30px; --h-sub: 26px; --h-wgap: 30px; }
 
 /* Chrome tab-group colours (set through data-c) */
 [data-c="grey"] { --tgc: var(--c-grey); }

@@ -2,9 +2,21 @@
 
 Format follows Keep a Changelog. Versions follow the `version` field in manifest.json.
 
-## [Unreleased]
+## [1.0.1] - {{EFFECTIVE_DATE}}
 
 ### Added
+- Tab sets: merge all windows of a set into one, and dissolve Chrome tab groups (one group or all), both with undo; windows of a set are separated by a labelled row of empty space.
+- Archive like mail: a one-click archive button on every set; archived sets leave the main list, and a search hit inside one says so.
+- Right-click menu replacing the browser's own on tab and set rows (big Copy tile, then an icon list); Shift+right-click keeps the browser menu.
+- QR code for any link (right-click a tab), with copy image / save PNG. Generated on this device by lib/qr.js; no network.
+- Printing a set: options dialog (full links, split by window and tab group, QR code per link) and a new A4 layout. Fixes a blank printout caused by the password-lock print rule.
+- Set colour: pastel fill over the whole header (light and dark tuned); emoji replaces the favicon mosaic; a colour and emoji dialog with a "frequently used" tab and one tab per kind of emoji (no typing).
+- Undo history for list management (toolbar button and Ctrl+Z); saving tabs is not part of it.
+- Settings: a search box, and an icon on every card and side link.
+- Sidebar categories show a folder icon (drop targets stay visible when the sidebar is icon-only).
+- Box selection can start from anywhere empty in the main pane; text selection is off outside fields.
+- The copy button sits in front of the favicon next to the delete button; row columns re-aligned.
+- Rewritten set menu (toggle tiles for pin / star / archive / lock, grouped items, no nested "more" submenu).
 - Settings > Shortcuts: a master switch for the keyboard shortcuts of the list page, one switch per shortcut (search `/`, command palette Ctrl/Cmd+K, undo Ctrl/Cmd+Z, rename F2, keyboard selection, Delete), and a read-only list of Chrome's global commands with their assigned keys and a button that opens chrome://extensions/shortcuts. Keys cannot be remapped here; Esc always works.
 - Optional password lock (off by default). Encrypts titles, links, sites, notes, set names, the trash, crash-recovery copies, the vault copy and site rules on this computer. Tabs can still be saved while locked (encrypted to a public key, tabs close only after the saved copy is verified); they are sorted into the list after the next unlock. Auto-lock (idle time, screen lock, closing the list page), recovery key, change password, turn off (restores readable data), erase everything.
 - New permission `idle` (no install warning), used only to lock when the screen locks.

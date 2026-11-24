@@ -1,16 +1,17 @@
 /* Selection, drag and drop, box selection, bulk bar, move menu. Loaded after stash.css. */
 
-/* ---- tab row layout: delete button at the FRONT, copy button at the end ---- */
-.vrow.item { grid-template-columns: 28px 8px 16px minmax(0, 1fr) minmax(0, 220px) auto 28px; padding-left: 6px; }
-.vrow.item.fl { grid-template-columns: 28px 8px 16px minmax(0, 1fr) minmax(0, 150px) minmax(0, 170px) auto 28px; }
-.vrow.item.intg { padding-left: 20px; }
-@media (max-width: 767px) { .vrow.item { grid-template-columns: 28px 8px 16px minmax(0, 1fr) minmax(0, 90px) auto 28px; } }
-.item .x { color: var(--muted); font-size: 18px; line-height: 1; transition: background-color .12s, color .12s; }
+/* ---- tab row layout: delete and copy buttons (22px) at the FRONT, then favicon, title, host, time ---- */
+.vrow.item { grid-template-columns: 22px 22px 16px minmax(0, 1fr) minmax(0, 220px) auto; column-gap: 6px; padding-left: 14px; } /* delete, copy, favicon, title, host, time (the tab-group dot column is gone) */
+.vrow.item.fl { grid-template-columns: 22px 22px 16px minmax(0, 1fr) minmax(0, 150px) minmax(0, 170px) auto; }
+.vrow.item.intg { padding-left: 14px; }
+@media (max-width: 767px) { .vrow.item { grid-template-columns: 22px 22px 16px minmax(0, 1fr) minmax(0, 90px) auto; } }
+.item .x, .item .cpb { width: 22px; height: 22px; }
+.item .x { color: var(--muted); font-size: 16px; line-height: 1; transition: background-color .12s, color .12s; }
 .item .x:hover, .item .x:focus-visible { color: var(--danger); background: color-mix(in srgb, var(--danger) 14%, transparent); }
 .item .x[hidden], .item .cpb[hidden] { display: grid; visibility: hidden; }
-.item .cpb { width: 28px; height: 28px; padding: 0; border: 0; border-radius: 6px; background: transparent; color: var(--muted); display: grid; place-items: center; cursor: pointer; }
+.item .cpb { padding: 0; border: 0; border-radius: 6px; background: transparent; color: var(--muted); display: grid; place-items: center; cursor: pointer; }
 .item .cpb:hover, .item .cpb:focus-visible { background: var(--surface-2); color: var(--accent); }
-.item .cpb .mi { width: 15px; height: 15px; }
+.item .cpb .mi { width: 14px; height: 14px; }
 .shell:not([data-hover="always"]) .item:not(:hover):not(:focus-within) .cpb { opacity: 0; }
 .item.skel .cpb { visibility: hidden; }
 @media (hover: none), (max-width: 767px) { .item .x, .item .cpb { opacity: 1 !important; } }

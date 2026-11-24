@@ -81,6 +81,7 @@ async function onPermChange(p, added) {
   } catch { /* ignore */ }
 }
 
+let reshapeUndo = null; // last reshapeGroup() undo record (memory only; the toast calls undoReshape)
 let purgeFlushQueued = false;
 let syncKickQueued = false;
 // local writes -> sync ops: a debounced scan of the groups marked in meta.syncDirty (same transaction as the change)
@@ -564,7 +565,7 @@ async function handleDebug(msg) {
       return { ms: Math.round(performance.now() - t0), steps: per.length, maxStep: Math.round(Math.max(...per)), n: want.length };
     }
     case 'debug:snapAuto': { const p0 = performance.now(); const r = await snapshot.runSnapshot({ kind: 'auto', force: !!msg.force }); return { ...r, wallMs: Math.round((performance.now() - p0) * 10) / 10 }; } // wall time of exactly what the SNAPSHOT alarm runs
-    case 'debug:seedGroup': return ex(async () => { const g = await db.createGroup({ source: 'debug', title: String(msg.title || ''), createdAt: msg.createdAt || Date.now(), tabGroups: msg.tabGroups }); return { gid: g.id }; });
+    case 'debug:seedGroup': return ex(async () => { const g = await db.createGroup({ source: 'debug', title: String(msg.title || ''), createdAt: msg.createdAt || Date.now(), tabGroups: msg.tabGroups, windowCount: msg.windowCount }); return { gid: g.id }; });
     case 'debug:seedItems': return ex(async () => db.appendItems(msg.gid, Array.isArray(msg.items) ? msg.items : []));
     case 'debug:seedDone': return ex(async () => { await db.setPhase(msg.gid, 'committed'); return {}; });
     case 'debug:stashFake': return debugStashFake(msg.n || 4000);
@@ -732,6 +733,19 @@ async function handle(msg, sender) {
       if (!dup.length) return { n: 0 };
       const r = await db.trashItems(msg.groupId, dup);
       return r.error ? r : { n: dup.length, undo: { type: 'undoTrash', tid: r.tid } };
+    });
+    // merge a session's windows into one / dissolve Chrome tab groups (one index or 'all'); undo is kept in memory for the toast
+    case 'reshapeGroup': return ex(async () => {
+      const ug = msg.ungroup === 'all' ? 'all' : Number.isInteger(msg.ungroup) ? msg.ungroup : null;
+      const r = await db.reshapeGroup(String(msg.groupId), { merge: !!msg.merge, ungroup: ug });
+      if (r.error) return r;
+      reshapeUndo = r.undo;
+      return { changed: r.changed, undo: { type: 'undoReshape' } };
+    });
+    case 'undoReshape': return ex(async () => {
+      const u = reshapeUndo;
+      reshapeUndo = null;
+      return u ? db.undoReshape(u) : { error: 'nothing' };
     });
     case 'groupLook': return ex(() => db.updateGroup(msg.groupId, { ...('color' in msg ? { color: msg.color } : {}), ...('emoji' in msg ? { emoji: msg.emoji } : {}) }));
     case 'groupNote': return ex(() => db.updateGroup(msg.groupId, { note: String(msg.note || '') }));

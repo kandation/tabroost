@@ -165,12 +165,12 @@ const STR = {
   refreshCancel: 'ยกเลิก',
   // navigation / toolbar
   navAll: 'ทั้งหมด', navPinned: 'ปักหมุด', navStarred: 'ติดดาว', navPending: 'งานค้าง', navCats: 'หมวดหมู่', navUncat: 'ยังไม่จัดหมวด',
-  navArchived: 'คลัง', navTrash: 'ถังขยะ', catAdd: 'เพิ่มหมวดหมู่', menu: 'เมนู', expandAll: 'ขยายทั้งหมด', collapseAll: 'ยุบทั้งหมด',
+  navArchived: 'เก็บถาวร', navTrash: 'ถังขยะ', catAdd: 'เพิ่มหมวดหมู่', menu: 'เมนู', expandAll: 'ขยายทั้งหมด', collapseAll: 'ยุบทั้งหมด',
   flatBtn: 'ทุกแท็บรวมกัน', flatTip: 'ดูทุกแท็บจากทุกชุดรวมเป็นรายการเดียว', flatTipOn: 'กลับไปดูแยกเป็นชุดแท็บ', flatHead: 'เรียงทุกแท็บตาม',
   flatOpts: { 'stash:desc': 'วันที่เก็บ: ใหม่ไปเก่า', 'stash:asc': 'วันที่เก็บ: เก่าไปใหม่', 'title:asc': 'ชื่อ ก → ฮ', 'title:desc': 'ชื่อ ฮ → ก', 'site:asc': 'เว็บไซต์ A → Z', 'site:desc': 'เว็บไซต์ Z → A', 'visited:desc': 'เวลาที่เปิดดู: ล่าสุดก่อน', 'visited:asc': 'เวลาที่เปิดดู: เก่าสุดก่อน' },
   flatCount: (n) => `${n.toLocaleString('th-TH')} แท็บ`,
   viewBtn: 'เรียง / จัดกลุ่ม', filterBtn: 'ตัวกรอง',
-  viewTitles: { snaps: 'กู้คืนแท็บที่หาย', all: 'ทั้งหมด', pinned: 'ปักหมุด', starred: 'ติดดาว', pending: 'งานค้าง', uncat: 'ยังไม่จัดหมวด', stale: 'ไม่ได้ใช้นาน', archived: 'คลัง', trash: 'ถังขยะ', settings: 'ตั้งค่า', dash: 'แดชบอร์ด' },
+  viewTitles: { snaps: 'กู้คืนแท็บที่หาย', all: 'ทั้งหมด', pinned: 'ปักหมุด', starred: 'ติดดาว', pending: 'งานค้าง', uncat: 'ยังไม่จัดหมวด', stale: 'ไม่ได้ใช้นาน', archived: 'เก็บถาวร', trash: 'ถังขยะ', settings: 'ตั้งค่า', dash: 'แดชบอร์ด' },
   // view menu
   vmSort: 'เรียงชุดแท็บตาม', vmGroup: 'จัดกลุ่มตาม', vmSlot: 'ช่วงเวลา', vmItems: 'เรียงแท็บในชุด', vmOther: 'อื่นๆ', vmStarredFirst: 'ติดดาวขึ้นก่อน', vmDensity: 'แถวกะทัดรัด',
   sorts: { created: 'วันที่เก็บ (ใหม่สุดก่อน)', createdAsc: 'วันที่เก็บ (เก่าสุดก่อน)', mtime: 'แก้ไขล่าสุด', lastRestored: 'เปิดกลับล่าสุด', lastUsed: 'ใช้ล่าสุด (ใช้ล่าสุดก่อน)', openedOld: 'เปิดแท็บไว้นานสุดก่อน', restoredMost: 'เปิดจากรายการบ่อยสุด', title: 'ชื่อ ก→ฮ / A→Z', count: 'จำนวนแท็บ (มากสุดก่อน)', sites: 'จำนวนเว็บไซต์', manual: 'เรียงเอง (ลากวาง)' },
@@ -180,7 +180,7 @@ const STR = {
   // filters
   fSites: 'เว็บไซต์', fSitesPh: 'พิมพ์ชื่อเว็บไซต์…', fCats: 'หมวดหมู่', fTgs: 'กลุ่มแท็บของ Chrome', fDates: 'ช่วงวันที่', fFlags: 'สถานะ', fClear: 'ล้างตัวกรอง',
   fBasisActive: 'ใช้งานล่าสุด', fDateToday: 'วันนี้', fDate7: '7 วันล่าสุด', fDate30: '30 วันล่าสุด', fDateYear: 'ปีนี้', fFrom: 'ตั้งแต่', fTo: 'ถึง',
-  flags: { starred: 'ติดดาว', locked: 'ล็อก', pending: 'งานค้าง', archived: 'อยู่ในคลัง', pinned: 'ปักหมุด', named: 'ตั้งชื่อแล้ว', saved7: 'เก็บเกิน 7 วัน', unused30: 'ไม่ได้ใช้เกิน 30 วัน', open7: 'เปิดค้างเกิน 7 วัน' },
+  flags: { starred: 'ติดดาว', locked: 'ล็อก', pending: 'งานค้าง', archived: 'เก็บถาวรแล้ว', pinned: 'ปักหมุด', named: 'ตั้งชื่อแล้ว', saved7: 'เก็บเกิน 7 วัน', unused30: 'ไม่ได้ใช้เกิน 30 วัน', open7: 'เปิดค้างเกิน 7 วัน' },
   filterCount: (n, m) => `พบ ${n} แท็บ ใน ${m} ชุดแท็บ`,
   indexing: (p) => `กำลังจัดระเบียบรายชื่อเว็บไซต์ ${p}% เรียงหรือกรองตามเว็บไซต์ได้เมื่อเสร็จ`,
   // group menu
@@ -188,7 +188,7 @@ const STR = {
   mRestoreNew: 'เปิดในหน้าต่างใหม่', mRestoreHere: 'เปิดในหน้าต่างนี้', mRestoreIncog: 'เปิดในหน้าต่างไม่ระบุตัวตน', mAsTabGroup: 'เปิดเป็นกลุ่มแท็บ',
   cfUrlTitle: 'ลิงก์ | ชื่อ', cfTitleUrl: 'ชื่อ | ลิงก์', cfUrl: 'เฉพาะลิงก์', cfMarkdown: 'Markdown', cfRich: 'ข้อความมีลิงก์ (วางในเอกสารได้)',
   mRename: 'เปลี่ยนชื่อ', mNote: 'เพิ่มบันทึก', mDedupe: 'ลบแท็บซ้ำในชุดนี้', mImportHere: 'นำเข้าลิงก์มาไว้ในชุดนี้',
-  mStar: 'ติดดาว', mLock: 'ล็อก (กันลบโดยไม่ตั้งใจ)', mPin: 'ปักหมุดไว้บนสุด', mPending: 'ทำเครื่องหมายเป็นงานค้าง', mArchive: 'ย้ายเข้าคลัง', mSync: 'ซิงค์ชุดนี้ไปเครื่องอื่น', mMoveCat: 'ย้ายไปหมวดหมู่…', mTrash: 'ย้ายไปถังขยะ',
+  mStar: 'ติดดาว', mLock: 'ล็อก (กันลบโดยไม่ตั้งใจ)', mPin: 'ปักหมุดไว้บนสุด', mPending: 'ทำเครื่องหมายเป็นงานค้าง', mArchive: 'เก็บถาวร', mSync: 'ซิงค์ชุดนี้ไปเครื่องอื่น', mMoveCat: 'ย้ายไปหมวดหมู่…', mTrash: 'ย้ายไปถังขยะ',
   syncBtnOff: 'ซิงค์ชุดแท็บนี้ไปเครื่องอื่นเลย', syncBtnNone: 'ซิงค์ระหว่างเครื่อง (ยังไม่ได้เปิดใช้ กดเพื่อตั้งค่า)', syncBtnScope: 'ซิงค์อยู่แล้วตามขอบเขตที่ตั้งไว้ กดเพื่อดูสถานะ', syncBtnOn: 'ชุดแท็บนี้ซิงค์อยู่ กดเพื่อดูสถานะ',
   syncNeedEnable: 'ต้องเปิดซิงค์ระหว่างเครื่องก่อน (ตั้งรหัสผ่านสำหรับซิงค์) จึงจะส่งชุดแท็บไปเครื่องอื่นได้ ไปที่ ตั้งค่า > ซิงค์ระหว่างเครื่อง', syncStarted: 'กำลังส่งชุดแท็บนี้ไปเครื่องอื่น…',
   syncPopTitle: 'ซิงค์ชุดแท็บนี้', syncSt: { ok: 'ซิงค์แล้ว', busy: 'กำลังส่ง หรือรอคิว', bad: 'มีปัญหา', off: 'ยังไม่ซิงค์' }, syncByScope: 'ซิงค์อยู่แล้วตามขอบเขตที่ตั้งไว้', syncLast: (t) => 'ซิงค์ล่าสุด ' + t, syncNever: 'ยังไม่เคยซิงค์',
@@ -202,6 +202,17 @@ const STR = {
   catDeleted: 'ลบหมวดหมู่แล้ว ชุดแท็บในหมวดนี้ยังอยู่ครบ (ย้ายไปอยู่ใน “ยังไม่จัดหมวด”)', moved: (n) => `ย้าย ${n} ชุดแท็บแล้ว`,
   incogHint: 'ต้องเปิด “อนุญาตในโหมดไม่ระบุตัวตน” ให้ส่วนขยายนี้ก่อน ไปที่ chrome://extensions แล้วเลือกส่วนขยายนี้',
   dedupeDone: (n) => (n ? `ลบแท็บซ้ำ ${n} แท็บ` : 'ไม่มีแท็บซ้ำ'),
+  unarchive: 'เอาออกจากเก็บถาวร', archivedDone: 'เก็บถาวรแล้ว ไม่แสดงในรายการหลัก (ดูได้ที่ เก็บถาวร ด้านซ้าย)', unarchived: 'เอาออกจากเก็บถาวรแล้ว', inArchive: 'เก็บถาวร',
+  ctxCopy: 'คัดลอก', ctxCopyLink: 'คัดลอกลิงก์', ctxCopyTitle: 'คัดลอกชื่อ', ctxCopyBoth: 'คัดลอก ชื่อ | ลิงก์', ctxOpen: 'เปิด', ctxOpenNew: 'เปิดในหน้าต่างใหม่', ctxMove: 'ย้ายไป…', ctxMore: 'เพิ่มเติม…', ctxPin: 'ปักหมุด', ctxStar: 'ติดดาว',
+  lookTitle: 'สีและอีโมจิของชุดแท็บ', lookColour: 'สี', lookDone: 'เสร็จ', emoFreq: 'ใช้บ่อย', emoCats: { faces: 'หน้าตา', animals: 'สัตว์', nature: 'ธรรมชาติ', food: 'อาหารและเครื่องดื่ม', activity: 'กิจกรรมและกีฬา', travel: 'เดินทางและสถานที่', objects: 'ของใช้', work: 'งานและเอกสาร', symbols: 'สัญลักษณ์' },
+  undone: 'เลิกทำแล้ว',
+  ctxQr: 'สร้าง QR code ของลิงก์นี้', qrTitle: 'QR code ของลิงก์', qrCopy: 'คัดลอกรูป', qrSave: 'บันทึกเป็นรูป', qrCopied: 'คัดลอกรูป QR แล้ว', qrFailed: 'ทำ QR code ไม่ได้ ลองใหม่อีกครั้ง', qrTooLong: 'ลิงก์ยาวเกินไปสำหรับ QR code', qrDone: 'เสร็จ',
+  printTitle: 'พิมพ์ชุดแท็บ', printUrls: 'แสดงลิงก์เต็ม (ปิด = แสดงแค่ชื่อเว็บ)', printSplit: 'แบ่งตามหน้าต่างและกลุ่มสี', printQr: 'ใส่ QR code ของแต่ละลิงก์', printGo: 'พิมพ์', printCancel: 'ยกเลิก',
+  printMeta: (d, n, w) => `${d} · ${n} แท็บ` + (w ? ` · ${w} หน้าต่าง` : ''), printNone: 'ไม่อยู่ในกลุ่ม', printedBy: 'พิมพ์จาก Tabroost', qrSkipped: 'ลิงก์ยาวเกินไปสำหรับ QR',
+  setSearchPh: 'ค้นหาการตั้งค่า…', setNoResult: (q) => `ไม่พบการตั้งค่าที่ตรงกับ “${q}”`,
+  mMergeWin: 'รวมทุกหน้าต่างเป็นหน้าต่างเดียว', mUngroupAll: 'ยุบกลุ่มสีทั้งหมดในชุดนี้',
+  ungroupTg: 'ยุบกลุ่ม', ungroupTgTip: 'ยุบกลุ่มนี้ (แท็บยังอยู่ครบ แค่ไม่จัดเป็นกลุ่ม)',
+  mergeWinDone: 'รวมเป็นหน้าต่างเดียวแล้ว', ungroupDone: 'ยุบกลุ่มแล้ว',
   importedN: (n) => `นำเข้าแล้ว ${n} แท็บ`,
   noteOf: (t) => `บันทึก: ${t}`,
   // settings sections / labels
@@ -363,7 +374,7 @@ const STR = {
   hcSaved: 'เก็บเมื่อ', hcLastUsed: 'ใช้ล่าสุด', hcOpened: 'เปิดเมื่อ', hcIdle: 'ไม่ได้ใช้ก่อนเก็บ', hcInList: 'อยู่ในรายการมา', hcCreated: 'สร้างเมื่อ', hcRange: 'ช่วงเวลาที่เปิดแท็บ',
   hcMedIdle: 'ไม่ได้ใช้ก่อนเก็บ (ค่ากลาง)', hcMedLife: 'เปิดค้างนาน (ค่ากลาง)', hcRestored: 'เปิดจากรายการ', hcTimes: (n) => `${n} ครั้ง`, hcLastRestored: 'เปิดจากรายการล่าสุด',
   navStale: 'ไม่ได้ใช้นาน', staleBanner: (n) => `มีประมาณ ${n} แท็บที่ไม่ได้ใช้เกิน 30 วัน`, staleView: 'ดู', staleHide: 'ซ่อน 7 วัน', staleBarOn: (n, m) => `${n} ชุดแท็บที่ไม่ได้ใช้เลยเกิน 30 วัน (${m} แท็บ)`, staleBarOff: (n, m) => `${n} ชุดแท็บที่เก็บไว้นานเกิน 90 วัน (${m} แท็บ)`,
-  staleTrash: 'ย้ายไปถังขยะ', staleArchive: 'ย้ายเข้าคลัง', staleTrashConfirm: (n, m) => `ย้าย ${n} ชุดแท็บ (${m} แท็บ) ไปถังขยะ? เอากลับมาได้จากถังขยะ`, staleArchiveConfirm: (n, m) => `ย้าย ${n} ชุดแท็บ (${m} แท็บ) เข้าคลัง?`, staleNeedStats: 'เปิดสถิติการใช้งานเพื่อใช้ตัวกรองนี้',
+  staleTrash: 'ย้ายไปถังขยะ', staleArchive: 'เก็บถาวร', staleTrashConfirm: (n, m) => `ย้าย ${n} ชุดแท็บ (${m} แท็บ) ไปถังขยะ? เอากลับมาได้จากถังขยะ`, staleArchiveConfirm: (n, m) => `ย้าย ${n} ชุดแท็บ (${m} แท็บ) เข้าเก็บถาวร?`, staleNeedStats: 'เปิดสถิติการใช้งานเพื่อใช้ตัวกรองนี้',
   sBackupD: 'ส่งออกเก็บไว้เป็นไฟล์สำรองของคุณเอง หรือนำเข้าแท็บจาก OneTab และไฟล์สำรองเดิม แนะนำให้ส่งออกเก็บไว้เป็นระยะ',
   snapReasons: { empty: 'ตอนนี้ยังไม่มีแท็บที่เปิดอยู่ให้บันทึก', off: 'ปิดการจดแท็บอัตโนมัติอยู่', busy: 'กำลังปิดหรือเปิดแท็บอยู่ ลองใหม่เมื่อเสร็จ', ram: 'แรมเหลือน้อยมาก จึงยังไม่บันทึก ลองใหม่ภายหลัง', same: 'แท็บเหมือนครั้งก่อน ไม่ต้องบันทึกซ้ำ' },
 };
@@ -378,6 +389,10 @@ import {
 import { siteLabel } from './lib/site.js';
 import * as db from './lib/db.js';
 import { getSettings } from './lib/settings.js';
+import { initSettingsSearch } from './lib/settingssearch.js';
+import { openLookDialog } from './lib/lookdialog.js';
+import { buildPrintSheet } from './lib/printsheet.js';
+import { openQrDialog } from './lib/qrdialog.js';
 import * as bus from './lib/bus.js';
 import { connectSearch } from './lib/searchClient.js';
 import { createFavicons, avatarOf } from './lib/favicons.js';
@@ -408,7 +423,7 @@ const FAV_MODE = (() => { try { const m = localStorage.getItem('cmrFavModeDev') 
 const favs = createFavicons({ onReady: (host) => refreshFavHost(host), mode: FAV_MODE });
 
 // ---------- geometry (fixed heights => O(log n) layout from counts alone) ----------
-const DENS = { comfortable: { bucket: 40, group: 56, item: 38, sub: 30 }, compact: { bucket: 36, group: 48, item: 30, sub: 26 } };
+const DENS = { comfortable: { bucket: 40, group: 56, item: 38, sub: 30, wgap: 34 }, compact: { bucket: 36, group: 48, item: 30, sub: 26, wgap: 30 } };
 const H = { ...DENS.comfortable }; // mirrors --h-* in tokens.css
 const RUNS_MAX = 60000; // groups with tab groups and more items than this are listed flat (no sub-headers)
 const OVERSCAN = 160; // px of rows kept above/below the viewport
@@ -428,6 +443,7 @@ const S = {
   searchCtl: null,
   searchTimer: null,
   toastAction: null,
+  undoStack: [], // undo steps of list management (delete, move, archive, reshape, ...) newest last; saving tabs (closing them) is not part of it
   toastTimer: null,
   syncTimer: null,
   statsTimer: null,
@@ -574,10 +590,36 @@ function toast(text, actionLabel, onAction, ms = 6000) {
   const b = $('#toastAction');
   b.hidden = !actionLabel;
   b.textContent = actionLabel || '';
-  S.toastAction = onAction || null;
+  let act = onAction || null;
+  if (act && actionLabel === STR.undo) { // every undo toast is also a step of the undo history (toolbar button / Ctrl+Z)
+    const entry = { text, fn: onAction };
+    S.undoStack.push(entry);
+    if (S.undoStack.length > 10) S.undoStack.shift();
+    act = () => { dropUndo(entry); return onAction(); };
+    entry.drop = act;
+    refreshUndoBtn();
+  }
+  S.toastAction = act;
   $('#toast').hidden = false;
   clearTimeout(S.toastTimer);
   S.toastTimer = setTimeout(() => { $('#toast').hidden = true; S.toastAction = null; }, ms);
+}
+function dropUndo(entry) { const i = S.undoStack.indexOf(entry); if (i >= 0) S.undoStack.splice(i, 1); refreshUndoBtn(); }
+function refreshUndoBtn() {
+  const b = $('#btnUndo');
+  if (!b) return;
+  const top = S.undoStack[S.undoStack.length - 1];
+  b.hidden = !top;
+  if (top) b.title = STR.undo + ': ' + top.text + ' (Ctrl+Z)';
+}
+/** Undoes the latest list-management step (not saving tabs: that has its own button). */
+async function undoLast() {
+  const top = S.undoStack.pop();
+  refreshUndoBtn();
+  if (!top) return;
+  $('#toast').hidden = true;
+  S.toastAction = null;
+  try { await top.fn(); toast(STR.undone + ': ' + top.text, null, null, 2500); } catch { toast(STR.copyFailed || STR.undone, null, null, 2500); }
 }
 const toastError = (r) => {
   if (r && r.error === 'locked') return toast(STR.locked);
@@ -682,6 +724,61 @@ function actBtn(act, text, cls, label) {
   return b;
 }
 
+/** Word-style right-click menu for tab and tab-set rows: one big Copy tile, then a plain list with icons (Shift+right-click keeps the browser menu). */
+function showCtxMenu(e) {
+  const t = e.target;
+  if (!t.closest || e.shiftKey || t.closest('input, textarea, [contenteditable]') || !selUi) return;
+  const row = t.closest('.vrow');
+  const kind = row && row.dataset.kind;
+  if (!row || !row._key || row._skel || (kind !== 'item' && kind !== 'group')) return;
+  e.preventDefault();
+  const A = selUi.actions;
+  if (!selUi.sel.has(row._key)) selUi.sel.select(row._key, 'one');
+  const p = A.payloadOf();
+  const one = p.kind === 'g' && p.keys.length === 1 ? groupOf(row.dataset.g) : null;
+  const m = $('#ctxMenu');
+  m.textContent = '';
+  const run = (fn) => () => { PM.close(); fn(); };
+  const add = (b, fn) => { b.addEventListener('click', run(fn)); m.appendChild(b); return b; };
+  const row1 = (icon, label, fn, opts) => add(menuItem({ label, icon, ...opts }), fn);
+  const big = mk('button', 'mitem ctxbig');
+  big.type = 'button'; big.tabIndex = -1; big.setAttribute('role', 'menuitem');
+  big.append(ICON('copy'), mk('span', 'ml', STR.ctxCopy));
+  add(big, () => (one ? copyGroup(one.id) : A.copy(p, p.kind === 'g' ? 'both' : 'url')));
+  if (p.kind === 'i') {
+    row1('link', STR.ctxCopyLink, () => A.copy(p, 'url'));
+    row1('edit', STR.ctxCopyTitle, () => A.copy(p, 'title'));
+    row1('copy', STR.ctxCopyBoth, () => A.copy(p, 'both'));
+    m.appendChild(mk('div', 'msep'));
+    row1('open', STR.ctxOpen, () => A.openSel());
+    if (p.keys.length === 1) row1('qr', STR.ctxQr, async () => { const [tab] = await resolveKeys(p.keys); if (tab) openQrDialog({ url: tab.url, title: tab.title, t: STR, toast: (x) => toast(x, null, null, 3000) }); });
+    row1('folder', STR.ctxMove, () => selUi.moveMenu(p));
+  } else {
+    row1('open', STR.ctxOpen, () => A.openSel());
+    if (one) row1('window', STR.ctxOpenNew, () => doRestoreGroup(one.id, { newWindow: true }));
+    m.appendChild(mk('div', 'msep'));
+    row1('pin', STR.ctxPin, () => A.applyTarget(p, { t: 'pin' }));
+    row1('star', STR.ctxStar, () => A.applyTarget(p, { t: 'star' }));
+    row1('box', STR.mArchive, () => A.applyTarget(p, { t: 'archive' }));
+    row1('folder', STR.ctxMove, () => selUi.moveMenu(p));
+    const more = one && row.querySelector('[data-act="more"]');
+    if (more) { const at = { x: e.clientX, y: e.clientY }; row1('dots', STR.ctxMore, () => showMore(more, one.id, at)); } // same spot as this menu, not jumping to the ⋯ button
+  }
+  m.appendChild(mk('div', 'msep'));
+  row1('trash', STR.del, () => A.deleteSel(), { danger: true });
+  PM.close();
+  PM.open(m, null, { at: { x: e.clientX, y: e.clientY } });
+}
+
+/** Merge a session's windows / dissolve tab groups (tabs are untouched); the toast offers undo. */
+async function reshape(gid, opts, doneText) {
+  const r = await send({ type: 'reshapeGroup', groupId: gid, ...opts });
+  if (!r.ok) return toastError(r);
+  V.runs.delete(gid);
+  if (r.undo) toast(doneText, STR.undo, async () => { const u = await send(r.undo); if (!u.ok) toastError(u); }, 10000); else toast(doneText, null, null, 2500);
+  return null;
+}
+
 // ---------- layout: section headers (lib/query.js) + prefix sums ----------
 const isOpen = (g) => V.exp.has(g.id);
 
@@ -694,7 +791,7 @@ function tgDefOf(g, i) {
   return c.map.get(i) || null;
 }
 
-const needRuns = (g) => !!(g.tabGroups && g.tabGroups.length) && g.count > 0 && g.count <= RUNS_MAX;
+const needRuns = (g) => !!((g.tabGroups && g.tabGroups.length) || g.windowCount > 1) && g.count > 0 && g.count <= RUNS_MAX;
 /** Valid runs for the group's current item count, or null (flat list). */
 const baseRuns = (g) => {
   if (sortActive(g)) return null; // sub-headers are hidden while a custom item order is active
@@ -704,7 +801,7 @@ const baseRuns = (g) => {
 const viewCache = new WeakMap();
 /** Group-by tab group: a view (copy of a session with vsel = run indexes) only shows its own runs, positions stay absolute. */
 function viewRuns(g, base) {
-  const key = H.item + '|' + H.sub;
+  const key = H.item + '|' + H.sub + '|' + H.wgap;
   const c = viewCache.get(g);
   if (c && c.base === base && c.key === key) return c.r;
   const segs = [];
@@ -712,7 +809,7 @@ function viewRuns(g, base) {
   for (const si of g.vsel) {
     const b = base.segs[si];
     if (!b) continue;
-    segs.push({ ...b, y, si });
+    segs.push({ ...b, y, si, wh: false }); // group-by-tab-group views show no window labels
     y += (b.tg >= 0 ? H.sub : 0) + b.n * H.item;
   }
   const r = { count: base.count, segs, height: y };
@@ -731,15 +828,15 @@ async function ensureRuns(g) {
   const cur = V.runs.get(g.id);
   if (cur && cur.count === g.count) return;
   if (lowMem()) return;
-  const valid = new Set(g.tabGroups.map((x) => x.i));
+  const valid = new Set((g.tabGroups || []).map((x) => x.i));
   const t0 = performance.now();
-  const { segs, total } = await db.scanTgRuns(g.id, valid);
+  const { segs, total } = await db.scanTgRuns(g.id, valid, { split: g.windowCount > 1 });
   let y = 0;
   let ip = 0;
   for (const s of segs) {
     s.y = y;
     s.itemStart = ip;
-    y += (s.tg >= 0 ? H.sub : 0) + s.n * H.item;
+    y += (s.wh ? H.wgap : 0) + (s.tg >= 0 ? H.sub : 0) + s.n * H.item;
     ip += s.n;
   }
   V.runs.set(g.id, { count: total, segs, height: y });
@@ -832,8 +929,9 @@ function rowsGroups(y0, y1) {
           const sy = y + sg.y;
           if (sy >= y1) break;
           let iy = sy;
+          if (sg.wh) { out.push({ key: `w:${g.id}:${si}`, kind: 'note', top: sy, g, note: { t: 'win', v: STR.windowN(sg.w) } }); iy += H.wgap; }
           if (sg.tg >= 0) {
-            out.push({ key: `s:${g.id}:${sg.si != null ? sg.si : si}`, kind: 'sub', top: sy, g, seg: sg });
+            out.push({ key: `s:${g.id}:${sg.si != null ? sg.si : si}`, kind: 'sub', top: iy, g, seg: sg });
             iy += H.sub;
           }
           const first = Math.max(0, Math.floor((y0 - iy) / H.item));
@@ -944,7 +1042,7 @@ function rowsSearch(y0, y1) {
     const h = V.srows[i];
     if (h.t === 'hit') {
       const rec = h.rec;
-      const g = S.groups[V.idxOf.get(rec.g)];
+      const g = S.groups[V.idxOf.get(rec.g)] || S.allGroups.find((x) => x.id === rec.g); // archived sets are not in S.groups (main list) but their hits are still shown
       out.push({ key: 'h:' + rec.g + ':' + rec.seq, kind: 'item', top: i * H.item, g, gid: rec.g, pos: i, rec, hit: h, search: true, last: false });
     } else out.push({ key: 'x:' + h.t + i, kind: 'note', top: i * H.item, note: h });
   }
@@ -1094,6 +1192,9 @@ function buildGroupRow() {
   }
   n._more2 = mk('span', 'fsn');
   n._stack.appendChild(n._more2);
+  n._emo = mk('span', 'gemo'); // the set's emoji, shown instead of the favicon mosaic
+  n._emo.setAttribute('aria-hidden', 'true');
+  n._stack.appendChild(n._emo);
   n._cnt = chip('tab', 'c-cnt');
   n._wins = chip('window', 'c-win');
   n._date = chip('clock', 'c-date');
@@ -1132,6 +1233,7 @@ function buildGroupRow() {
   n._sortBox.append(n._sortMain, n._sortChev);
   n._star = ibtn('star', 'star', 'star', STR.star);
   n._lock = ibtn('lock', 'lock', '', STR.lock);
+  n._arch = ibtn('archive', 'box', '', STR.mArchive);
   n._del = ibtn('delGroup', 'trash', 'danger', STR.del);
   n._sync = ibtn('syncGroup', 'cloud', 'sync', STR.syncBtnOff);
   n._sdot = mk('span', 'sdot');
@@ -1140,7 +1242,7 @@ function buildGroupRow() {
   n._sync.setAttribute('aria-haspopup', 'menu');
   n._more = ibtn('more', 'dots', '', STR.more);
   n._more.setAttribute('aria-haspopup', 'menu');
-  n._acts.append(n._openBox, n._sortBox, n._star, n._lock, n._sync, n._del, n._more);
+  n._acts.append(n._openBox, n._sortBox, n._star, n._lock, n._sync, n._arch, n._del, n._more);
   n.append(n._toggle, n._tarea, n._meta, n._acts);
   return n;
 }
@@ -1265,7 +1367,9 @@ function buildSubRow() {
   n._title = mk('span', 'subtitle');
   n._count = mk('span', 'subcount');
   n._open = actBtn('openTg', STR.openAsTabGroup);
-  n.append(n._dot, n._title, n._count, n._open);
+  n._ung = actBtn('ungroupTg', STR.ungroupTg, 'ugb');
+  n._ung.title = STR.ungroupTgTip;
+  n.append(n._dot, n._title, n._count, n._open, n._ung);
   return n;
 }
 
@@ -1316,7 +1420,10 @@ function fillGroup(n, r) {
   // title: plain text; untitled sessions show a muted automatic title
   const named = !!(g.title && g.title.trim());
   const look = S.settings.setLook !== false;
-  n._tt.textContent = (look && g.emoji ? g.emoji + ' ' : '') + (named ? g.title : STR.autoTitle(g));
+  n._tt.textContent = named ? g.title : STR.autoTitle(g);
+  const hasEmo = !!(look && g.emoji);
+  n._stack.classList.toggle('emoji', hasEmo);
+  n._emo.textContent = hasEmo ? g.emoji : '';
   if (look && g.color) n.dataset.col = String(g.color); else delete n.dataset.col;
   n._tt.classList.toggle('auto', !named);
   n._tt.title = g.note ? STR.noteOf(g.note) : (named ? g.title : '');
@@ -1357,6 +1464,9 @@ function fillGroup(n, r) {
   n._open.dataset.act = multi ? 'openSession' : 'openGroup';
   n._star.replaceChildren(ICON(g.starred ? 'star-fill' : 'star'));
   n._star.setAttribute('aria-pressed', String(!!g.starred));
+  n._arch.classList.toggle('keep', !!g.archived);
+  n._arch.setAttribute('aria-pressed', String(!!g.archived));
+  n._arch.title = n._arch.ariaLabel = g.archived ? STR.unarchive : STR.mArchive;
   n._star.classList.toggle('keep', !!g.starred);
   n._lock.setAttribute('aria-pressed', String(!!g.locked));
   n._lock.classList.toggle('keep', !!g.locked);
@@ -1384,7 +1494,7 @@ function groupSyncState(g) {
 function fillItem(n, r) {
   const rec = r.flat ? r.rec : (r.rec || recAt(r.gid, r.pos));
   const tdef = rec && rec.tg != null ? tgDefOf(r.g, rec.tg) : null;
-  const sig = rec ? rec.g + ':' + rec.seq + (r.last ? 'L' : '') + (r.tgFirst ? 'F' : '') + (r.inTg ? 'T' : '') + (tdef ? tdef.color : '') + (r.hit ? '#' + r.hit.v : '') + (r.flat ? '|' + (r.g ? (r.g.title || '') + r.g.createdAt : '') : '') : 'skel' + (r.flat ? 'f' : '') + (r.last ? 'L' : '') + (r.inTg ? 'T' : '');
+  const sig = rec ? rec.g + ':' + rec.seq + (r.last ? 'L' : '') + (r.tgFirst ? 'F' : '') + (r.inTg ? 'T' : '') + (tdef ? tdef.color : '') + (rec.ws ? 'S' : '') + (rec.w || 0) + '/' + (r.g ? r.g.windowCount : 1) + (r.hit ? '#' + r.hit.v : '') + (r.flat ? '|' + (r.g ? (r.g.title || '') + r.g.createdAt : '') : '') : 'skel' + (r.flat ? 'f' : '') + (r.last ? 'L' : '') + (r.inTg ? 'T' : '');
   if (n._sig === sig) return;
   n._sig = sig;
   n._gid = r.gid;
@@ -1396,6 +1506,7 @@ function fillItem(n, r) {
     n._sess.textContent = '';
     n._dot.style.visibility = 'hidden';
     n._sv.hidden = true;
+    delete n.dataset.c;
     delete n.dataset.seq;
     n.dataset.g = r.gid;
     n._a.textContent = '·';
@@ -1405,8 +1516,10 @@ function fillItem(n, r) {
     n._frec = null;
     return;
   }
-  const wstart = !r.search && !r.flat && rec.ws && g && g.windowCount > 1 && !r.tgFirst; // a tab-group header carries the window label
-  n.className = 'vrow item' + (r.last ? ' last' : '') + (wstart ? ' wstart' : '') + (r.inTg ? ' intg' : '') + (r.hit && r.hit.fuzzy ? ' fz' : '') + (r.flat ? ' fl' : '');
+  const wstart = false; // windows are separated by their own label row (see rowsGroups), not by styling the first tab
+  const multiWin = !r.search && !r.flat && g && g.windowCount > 1 && rec.w > 0;
+  n.className = 'vrow item' + (r.last ? ' last' : '') + (wstart ? ' wstart' : '') + (multiWin ? ' w' + (rec.w % 2) : '') + (r.inTg ? ' intg' : '') + (r.hit && r.hit.fuzzy ? ' fz' : '') + (r.flat ? ' fl' : '');
+  if (tdef) n.dataset.c = tdef.color; else delete n.dataset.c; // the tab-group colour tints the whole row (CSS), no dot
   n._sess.textContent = r.flat && g ? (g.title && g.title.trim() ? g.title : fmtDate(g.createdAt)) : '';
   n._dot.style.visibility = tdef ? '' : 'hidden';
   n._sv.hidden = !(rec.sv >= 0);
@@ -1420,7 +1533,7 @@ function fillItem(n, r) {
   if (classifyUrl(rec.url) === 'save') n._a.setAttribute('href', rec.url); else n._a.removeAttribute('href');
   n._a.title = rec.url + '\n' + STR.itemOpenTip;
   let label = '';
-  if (r.search && g) label = (g.title || fmtDate(g.createdAt)) + ' · ';
+  if (r.search && g) label = (g.archived ? STR.inArchive + ' · ' : '') + (g.title || fmtDate(g.createdAt)) + ' · '; // a hit inside an archived set says so
   if (hit && hit.hl && hit.hl.url.length) {
     // search rows show the url without its scheme so highlights inside the url are visible
     const shown = rec.url.replace(/^[a-z][a-z0-9+.-]*:\/\/(www\.)?/i, '');
@@ -1522,7 +1635,7 @@ function fillNote(n, r) {
   if (n._sig === sig) return;
   n._sig = sig;
   n.className = 'vrow note ' + t;
-  n._label.textContent = t === 'sep' ? STR.searchSimilar : '';
+  n._label.textContent = t === 'sep' ? STR.searchSimilar : t === 'win' ? r.note.v : '';
   n._btn.hidden = t !== 'more';
 }
 
@@ -1530,14 +1643,15 @@ function fillSub(n, r) {
   const g = r.g;
   const sg = r.seg;
   const def = tgDefOf(g, sg.tg) || { title: '', color: 'grey', collapsed: false };
-  const wl = sg.ws && g.windowCount > 1 ? STR.windowN(sg.w) : '';
-  const sig = [g.id, sg.tg, sg.n, def.title, def.color, def.collapsed, wl].join('|');
+  const wl = '';
+  const wpar = g.windowCount > 1 && sg.w > 0 ? ' w' + (sg.w % 2) : '';
+  const sig = [g.id, sg.tg, sg.n, def.title, def.color, def.collapsed, wl, wpar, sg.tg >= 0 ? 1 : 0].join('|');
   if (n._sig === sig) return;
   n._sig = sig;
   n.dataset.g = g.id;
   n.dataset.tg = String(sg.tg);
   n.dataset.n = String(sg.n);
-  n.className = 'vrow sub' + (wl ? ' wstart' : '');
+  n.className = 'vrow sub' + (wl ? ' wstart' : '') + wpar;
   if (wl) n.dataset.wl = wl; else delete n.dataset.wl;
   n.dataset.c = def.color;
   n._dot.dataset.c = def.color;
@@ -2407,6 +2521,11 @@ const catById = (id) => S.cats.find((c) => c.id === id) || null;
 function setDensity(name) {
   const d = DENS[name] || DENS.comfortable;
   Object.assign(H, d);
+  for (const r of V.runs.values()) { // cached tab-group runs hold absolute offsets measured with the old row heights
+    let y = 0;
+    for (const s of r.segs) { s.y = y; y += (s.wh ? H.wgap : 0) + (s.tg >= 0 ? H.sub : 0) + s.n * H.item; }
+    r.height = y;
+  }
   document.documentElement.dataset.density = name === 'compact' ? 'compact' : 'comfortable';
 }
 
@@ -2553,7 +2672,7 @@ function setView(v) {
   if (v === 'trash') renderTrash();
   if (v === 'snaps') renderSnapView();
   if (v === 'dash') { const t0 = performance.now(); ensureDash().then((m) => { if (S.view === 'dash') { m.show(); requestAnimationFrame(() => { globalThis.__cmr.timing.dashOpenMs = Math.round(performance.now() - t0); }); } }).catch(() => toast(STR.dashFail)); }
-  if (v === 'settings') { renderSettings(); refreshStorage(); renderDupLog(); renderCommands(); if (!lockCard) lockCard = mountLockCard($('#s-lock'), { toast: (t) => toast(t) }); else lockCard.refresh(); if (!syncCard) syncCard = mountSyncCard($('#s-sync'), { send, toast }); else syncCard.refresh(); }
+  if (v === 'settings') { if (settingsSearch) setTimeout(() => settingsSearch.apply(), 0); renderSettings(); refreshStorage(); renderDupLog(); renderCommands(); if (!lockCard) lockCard = mountLockCard($('#s-lock'), { toast: (t) => toast(t) }); else lockCard.refresh(); if (!syncCard) syncCard = mountSyncCard($('#s-sync'), { send, toast }); else syncCard.refresh(); }
   if (v === 'list') { relayout(); schedule(); if (prev !== 'list' && S.listTop) scroller.scrollTop = S.listTop; }
 }
 
@@ -2598,8 +2717,9 @@ function renderNav() {
     b.dataset.act = 'navTo';
     b.dataset.nav = 'cat';
     b.dataset.cat = cat.id;
-    const dot = mk('span', 'dot');
+    const dot = ICON('folder', 'catico'); // a folder icon in the category colour (a bare dot is too small to drop onto when the sidebar is icon-only)
     dot.dataset.c = cat.color;
+    b.title = cat.name;
     b.append(dot, mk('span', 'nl', cat.name), mk('span', 'nc', per.get(cat.id) ? String(per.get(cat.id)) : ''));
     b.dataset.menuCat = cat.id;
     box.appendChild(b);
@@ -2607,6 +2727,8 @@ function renderNav() {
   }
   for (const el of document.querySelectorAll('.nav .navi, .sidefoot .navi')) {
     const k = el.dataset.nav;
+    const nl = el.querySelector('.nl');
+    if (nl && !el.title) el.title = nl.textContent; // the label is hidden when the sidebar is icon-only: keep a tooltip
     const on = S.view === 'trash' ? k === 'trash' : S.view === 'dash' ? el.dataset.view === 'dash' : S.view === 'snaps' ? el.dataset.view === 'snaps' : S.view === 'settings' ? el.dataset.view === 'settings' : (k === S.nav.kind && (k !== 'cat' || el.dataset.cat === S.nav.cat));
     el.classList.toggle('on', !!on);
     if (on) el.setAttribute('aria-current', 'page'); else el.removeAttribute('aria-current');
@@ -2721,12 +2843,13 @@ function subOpen(p, focusFirst) {
   b.hidden = false;
   p.setAttribute('aria-expanded', 'true');
   if (!isNarrow()) {
-    b.style.top = Math.max(-6, p.offsetTop - 7) + 'px';
-    b.style.left = (menu.clientWidth - 6) + 'px';
-    const r = b.getBoundingClientRect();
-    if (r.right > window.innerWidth - 8) b.style.left = (-b.offsetWidth + 6) + 'px'; // flip to the other side
+    const pr = p.getBoundingClientRect();
+    const mr = menu.getBoundingClientRect();
+    b.style.top = Math.max(8, pr.top - 7) + 'px';
+    b.style.left = (mr.right - 6) + 'px';
+    if (b.getBoundingClientRect().right > window.innerWidth - 8) b.style.left = Math.max(8, mr.left - b.offsetWidth + 6) + 'px'; // flip to the other side
     const r2 = b.getBoundingClientRect();
-    if (r2.bottom > window.innerHeight - 8) b.style.top = (parseFloat(b.style.top) - (r2.bottom - window.innerHeight + 8)) + 'px';
+    if (r2.bottom > window.innerHeight - 8) b.style.top = Math.max(8, parseFloat(b.style.top) - (r2.bottom - window.innerHeight + 8)) + 'px';
   }
   if (focusFirst) { const f = b.querySelector('[role^="menuitem"]:not([aria-disabled="true"])'); if (f) f.focus({ preventScroll: true }); }
 }
@@ -3146,53 +3269,49 @@ async function syncGroupClick(btn, gid) {
 // ----- session ⋯ menu -----
 function groupFlag(g, k) { return !!g[k]; }
 
-function showMore(btn, gid) {
+function showMore(btn, gid, at) {
   const m = $('#moreMenu');
-  if (PM.isOpen(m) && PM.current.trigger === btn) { PM.close(); return; }
+  if (!at && PM.isOpen(m) && PM.current.trigger === btn) { PM.close(); return; }
   const g = groupOf(gid);
   S.menuGid = gid;
   m.textContent = '';
   if (!g) return;
-  // short top level (8 rows, never scrolls); the open variants live in the chevron of the restore button, rarely used things sit in the submenus
+  // grouped, no nested "more" flyout: quick toggles on top, then edit / organise, output, tab tools, delete
   m.classList.remove('hasSub');
   const item = (o) => m.appendChild(menuItem(o));
   const mi = menuItem;
-  item({ act: 'mRename', label: STR.mRename, icon: 'edit', disabled: g.locked, hint: STR.locked });
-  item({ act: 'mMoveCat', label: STR.mMoveCat, icon: 'folder' });
-  item({ act: 'mPin', label: STR.mPin, icon: 'pin', role: 'menuitemcheckbox', checked: !!g.pinned });
-  item({ act: 'mArchive', label: STR.mArchive, icon: 'box', role: 'menuitemcheckbox', checked: !!g.archived });
-  item({ act: 'printGroup', label: STR.mPrint, icon: 'rows' });
-  menuSub(m, { label: STR.mgCopy, icon: 'copy', items: [['urlTitle', STR.cfUrlTitle], ['titleUrl', STR.cfTitleUrl], ['url', STR.cfUrl], ['markdown', STR.cfMarkdown], ['rich', STR.cfRich]].map(([fmt, label]) => mi({ act: 'copyGroup', label, icon: fmt === 'url' ? 'link' : 'copy', data: { fmt } })) });
-  let lookItems = []; // colour + emoji live inside the ⋯ more submenu (the top level stays short)
-  if (S.settings.setLook !== false) {
-    lookItems = STR.lookNames.map((nm, i) => {
-      const it = mi({ act: 'mLook', label: nm, icon: 'palette', role: 'menuitemradio', checked: g.color === i + 1, data: { c: i + 1 } });
-      const sw = mk('span', 'lsw'); sw.style.background = 'var(--c-' + ['blue', 'red', 'orange', 'yellow', 'green', 'cyan', 'purple', 'pink'][i] + ')';
-      const sv = it.querySelector('svg'); if (sv) sv.replaceWith(sw);
-      return it;
-    });
-    lookItems.push(mi({ act: 'mLook', label: STR.lookNone, icon: 'close', role: 'menuitemradio', checked: !g.color, data: { c: 0 } }));
-    lookItems.push(mi({ act: 'mEmoji', label: STR.lookEmoji, icon: 'star' }));
-    if (g.emoji) lookItems.push(mi({ act: 'mEmojiClear', label: STR.lookEmojiClear, icon: 'close' }));
+  const sep = () => m.appendChild(mk('div', 'msep'));
+  const tiles = mk('div', 'mtiles');
+  tiles.setAttribute('role', 'group');
+  for (const [act, icon, label, on, off] of [['mPin', 'pin', STR.ctxPin, g.pinned], ['mStar', 'star', STR.ctxStar, g.starred], ['mArchive', 'box', STR.mArchive, g.archived], ['mLock', 'lock', STR.flags.locked, g.locked]]) {
+    const t = mk('button', 'mtile' + (on ? ' on' : ''));
+    t.type = 'button'; t.tabIndex = -1; t.dataset.act = act;
+    t.setAttribute('role', 'menuitemcheckbox'); t.setAttribute('aria-checked', String(!!on));
+    t.append(ICON(icon), mk('span', 'ml', label));
+    tiles.appendChild(t);
   }
+  m.appendChild(tiles);
+  item({ act: 'mRename', label: STR.mRename, icon: 'edit', disabled: g.locked, hint: STR.locked });
+  if (S.settings.setLook !== false) item({ act: 'mLookDlg', label: STR.mgLook, icon: 'palette' });
+  item({ act: 'mNote', label: STR.mNote, icon: 'note' });
+  item({ act: 'mMoveCat', label: STR.mMoveCat, icon: 'folder' });
+  sep();
+  menuSub(m, { label: STR.mgCopy, icon: 'copy', items: [['urlTitle', STR.cfUrlTitle], ['titleUrl', STR.cfTitleUrl], ['url', STR.cfUrl], ['markdown', STR.cfMarkdown], ['rich', STR.cfRich]].map(([fmt, label]) => mi({ act: 'copyGroup', label, icon: fmt === 'url' ? 'link' : 'copy', data: { fmt } })) });
+  item({ act: 'printGroup', label: STR.mPrint, icon: 'rows' });
   menuSub(m, { label: STR.mgOpenOther, icon: 'open', items: [
     mi({ act: 'mRestoreIncog', label: STR.mRestoreIncog, icon: 'incog', disabled: S.incogAllowed === false, hint: STR.incogHint }),
     mi({ act: 'refreshSession', label: STR.menuRefreshSession, icon: 'refresh' }),
   ] });
-  const more = [
-    mi({ act: 'mNote', label: STR.mNote, icon: 'note' }),
-    ...lookItems,
-    mi({ act: 'mDedupe', label: STR.mDedupe, icon: 'dedupe', disabled: g.locked, hint: STR.locked }),
-    mi({ act: 'mImportHere', label: STR.mImportHere, icon: 'import' }),
-    mi({ act: 'mPending', label: STR.mPending, icon: 'clock', role: 'menuitemcheckbox', checked: !!g.pending }),
-    mi({ act: 'mStar', label: STR.mStar, icon: 'star', role: 'menuitemcheckbox', checked: !!g.starred }),
-    mi({ act: 'mLock', label: STR.mLock, icon: 'lock', role: 'menuitemcheckbox', checked: !!g.locked }),
-  ];
-  if (SYNC.enabled) more.push(mi({ act: 'mSync', label: STR.mSync, icon: 'cloud', role: 'menuitemcheckbox', checked: !!g.sync || (SYNC.scope && SYNC.scope.mode === 'all') }));
-  menuSub(m, { label: STR.mgMore, icon: 'dots', items: more });
-  m.appendChild(mk('div', 'msep'));
+  sep();
+  item({ act: 'mDedupe', label: STR.mDedupe, icon: 'dedupe', disabled: g.locked, hint: STR.locked });
+  if (g.windowCount > 1) item({ act: 'mMergeWin', label: STR.mMergeWin, icon: 'merge', disabled: g.locked, hint: STR.locked });
+  if (g.tabGroups && g.tabGroups.length) item({ act: 'mUngroupAll', label: STR.mUngroupAll, icon: 'ungroup', disabled: g.locked, hint: STR.locked });
+  item({ act: 'mImportHere', label: STR.mImportHere, icon: 'import' });
+  item({ act: 'mPending', label: STR.mPending, icon: 'clock', role: 'menuitemcheckbox', checked: !!g.pending });
+  if (SYNC.enabled) item({ act: 'mSync', label: STR.mSync, icon: 'cloud', role: 'menuitemcheckbox', checked: !!g.sync || (SYNC.scope && SYNC.scope.mode === 'all') });
+  sep();
   item({ act: 'mTrash', label: STR.mTrash, icon: 'trash', danger: true, disabled: g.locked, hint: STR.locked });
-  anchorMenu(m, btn);
+  anchorMenu(m, btn, at ? { at } : undefined);
 }
 
 /** The open choices, each with an explicit keep / remove variant (locked sessions never remove). */
@@ -3258,18 +3377,64 @@ async function copyGroup(gid, fmt) {
 }
 
 /** Print view of one tab set: a plain sheet of titles + links (the @media print rules hide everything else). Built with textContent only. */
+const PRINT_KEY = 'cmr.printOpts';
+function loadPrintOpts() {
+  const d = { urls: true, split: true, qr: false };
+  try { const o = JSON.parse(localStorage.getItem(PRINT_KEY) || '{}'); for (const k of Object.keys(d)) if (typeof o[k] === 'boolean') d[k] = o[k]; } catch { /* storage may be unavailable */ }
+  return d;
+}
+/** Small dialog before printing: which parts go on the page. Resolves to the options, or null when cancelled. */
+function askPrintOptions() {
+  return new Promise((resolve) => {
+    const opts = loadPrintOpts();
+    const dlg = mk('dialog', 'look-dlg print-dlg');
+    dlg.setAttribute('aria-label', STR.printTitle);
+    const head = mk('div', 'ld-h');
+    head.append(ICON('rows'), mk('h2', 'ld-t', STR.printTitle));
+    const body = mk('div', 'ld-sec pd-body');
+    for (const [k, label] of [['urls', STR.printUrls], ['split', STR.printSplit], ['qr', STR.printQr]]) {
+      const row = mk('label', 'pd-row');
+      const cb = mk('input'); cb.type = 'checkbox'; cb.className = 'switch'; cb.checked = !!opts[k];
+      cb.addEventListener('change', () => { opts[k] = cb.checked; });
+      row.append(mk('span', '', label), cb);
+      body.append(row);
+    }
+    const foot = mk('div', 'ld-f');
+    const cancel = mk('button', 'btn', STR.printCancel); cancel.type = 'button';
+    const go = mk('button', 'btn primary', STR.printGo); go.type = 'button';
+    let result = null;
+    cancel.addEventListener('click', () => dlg.close());
+    go.addEventListener('click', () => { result = { ...opts }; try { localStorage.setItem(PRINT_KEY, JSON.stringify(opts)); } catch { /* ignore */ } dlg.close(); });
+    foot.append(cancel, go);
+    dlg.append(head, body, foot);
+    dlg.addEventListener('close', () => { dlg.remove(); resolve(result); });
+    document.body.appendChild(dlg);
+    dlg.showModal();
+    go.focus();
+  });
+}
+
+/** Print view of one tab set (see lib/printsheet.js; layout in stash.css @media print). */
 async function printGroup(gid) {
   const g = groupOf(gid);
   if (!g) return;
   if (g.count > 20000) return toast(STR.copyTooBig);
+  const opts = await askPrintOptions();
+  if (!opts) return;
   const items = await allItemsOf(gid);
-  let sheet = $('#printSheet');
-  if (sheet) sheet.remove();
-  sheet = mk('div', 'printsheet'); sheet.id = 'printSheet';
-  sheet.append(mk('h1', '', g.title && g.title.trim() ? g.title : fmtDate(g.createdAt)), mk('p', 'pmeta', fmtDate(g.createdAt) + ' · ' + items.length));
-  const ol = mk('ol');
-  for (const it of items) { const li = mk('li'); li.append(mk('span', 'pt', it.title || it.url), mk('span', 'pu', it.url)); ol.appendChild(li); }
-  sheet.appendChild(ol);
+  let qr = null;
+  if (opts.qr) {
+    try { const q = await import('./lib/qr.js'); qr = (url) => q.qrSvg(q.qrMatrix(url, { ecc: 'M' }), { margin: 1 }); } catch { qr = null; }
+  }
+  const old = $('#printSheet');
+  if (old) old.remove();
+  const sheet = buildPrintSheet({
+    g, items, opts, qr,
+    title: g.title && g.title.trim() ? g.title : fmtDate(g.createdAt),
+    dateText: fmtDate(g.createdAt),
+    tgDefs: new Map((g.tabGroups || []).map((x) => [x.i, x])),
+    t: { meta: STR.printMeta, windowN: STR.windowN, tgUntitled: STR.tgUntitled, tgNone: STR.printNone, printedBy: STR.printedBy, qrSkipped: STR.qrSkipped },
+  });
   document.body.appendChild(sheet);
   document.body.classList.add('printing');
   const done = () => { document.body.classList.remove('printing'); const s = $('#printSheet'); if (s) s.remove(); window.removeEventListener('afterprint', done); };
@@ -3319,6 +3484,8 @@ async function menuAction(act) {
       if (r.n && r.undo) toast(STR.dedupeDone(r.n), STR.undo, async () => { const u = await send(r.undo); if (!u.ok) toastError(u); }, 10000); else toast(STR.dedupeDone(0), null, null, 2500);
       return null;
     }
+    case 'mMergeWin': return reshape(gid, { merge: true }, STR.mergeWinDone);
+    case 'mUngroupAll': return reshape(gid, { ungroup: 'all' }, STR.ungroupDone);
     case 'mImportHere': return importHere(gid);
     case 'mStar': return send({ type: 'setFlag', groupId: gid, flag: 'starred', value: !g.starred });
     case 'mLock': return send({ type: 'setFlag', groupId: gid, flag: 'locked', value: !g.locked });
@@ -3759,6 +3926,7 @@ async function onClick(e) {
       const r = await send({ type: 'restoreOpenAll' });
       return r.ok ? null : toastError(r);
     }
+    case 'undoLast': undoLast(); return null;
     case 'undoStash': {
       const ls = S.meta.lastStash;
       const g = ls && groupOf(ls.groupId);
@@ -3882,13 +4050,28 @@ async function onClick(e) {
     case 'jumpTo': { const idx = Number(btn.dataset.idx); if (!Number.isNaN(idx) && V.tops[idx] != null) scroller.scrollTop = V.tops[idx]; closeMenus(); return null; }
     case 'expandAll': expandAll(true); return null;
     case 'collapseAll': expandAll(false); return null;
+    case 'archive': {
+      const was = !!(grp && grp.archived);
+      const r = await send({ type: 'setFlag', groupId: gid, flag: 'archived', value: !was });
+      if (!r.ok) return toastError(r);
+      toast(was ? STR.unarchived : STR.archivedDone, STR.undo, async () => { await send({ type: 'setFlag', groupId: gid, flag: 'archived', value: was }); }, 8000);
+      return null;
+    }
     case 'pin': { const r = await send({ type: 'setFlag', groupId: gid, flag: 'pinned', value: !(grp && grp.pinned) }); return r.ok ? null : toastError(r); }
     case 'subToggle': toggleSub(btn, e.detail === 0); return null;
-    case 'mRestoreNew': case 'mRestoreHere': case 'mRestoreIncog': case 'mAsTabGroup': case 'mRename': case 'mNote': case 'mDedupe': case 'mImportHere':
+    case 'ungroupTg': return reshape(gid, { ungroup: Number(host && host.dataset.tg) }, STR.ungroupDone);
+    case 'mRestoreNew': case 'mRestoreHere': case 'mRestoreIncog': case 'mAsTabGroup': case 'mRename': case 'mNote': case 'mDedupe': case 'mImportHere': case 'mMergeWin': case 'mUngroupAll':
     case 'mSyncStop': case 'mSyncForce': case 'mSyncPush': case 'mStar': case 'mLock': case 'mPin': case 'mPending': case 'mArchive': case 'mMoveCat': case 'mTrash':
       return menuAction(btn.dataset.act);
     case 'mLook': { closeMenus(); const c = Number(btn.dataset.c) || 0; const r = await send({ type: 'groupLook', groupId: S.menuGid, color: c || null }); return r.ok ? null : toastError(r); }
-    case 'mEmoji': { closeMenus(); const g0 = groupOf(S.menuGid); const t = prompt(STR.promptEmoji, (g0 && g0.emoji) || ''); if (t == null) return null; const r = await send({ type: 'groupLook', groupId: S.menuGid, emoji: t.trim() }); return r.ok ? null : toastError(r); }
+    case 'mLookDlg': {
+      closeMenus();
+      const g0 = groupOf(S.menuGid);
+      if (!g0) return null;
+      const gid0 = g0.id;
+      openLookDialog({ g: g0, t: STR, apply: async (look) => { const r = await send({ type: 'groupLook', groupId: gid0, ...look }); if (!r.ok) toastError(r); } });
+      return null;
+    }
     case 'mEmojiClear': { closeMenus(); const r = await send({ type: 'groupLook', groupId: S.menuGid, emoji: '' }); return r.ok ? null : toastError(r); }
     case 'moveToCat': {
       closeMenus();
@@ -4261,6 +4444,7 @@ function onBus(m) {
 // ---------- wiring ----------
 // ---------- selection / drag and drop / box selection / bulk actions (lib/selui.js) ----------
 let selUi = null;
+let settingsSearch = null;
 async function resolveKeys(keys) {
   const by = new Map(); const flat = []; const hits = [];
   for (const k of keys) {
@@ -4384,6 +4568,7 @@ function wire() {
       return rows.map((r, i) => ({ label: String(i + 1), value: r.title || r.url || '' }));
     },
   });
+  settingsSearch = initSettingsSearch({ panel: $('#panelSettings'), nav: $('#snav'), input: $('#setSearch'), empty: $('#setEmpty'), t: { noResult: (q) => STR.setNoResult(q) } });
   $('#panelSettings').addEventListener('change', (e) => {
     const el = e.target;
     const k = el.dataset && el.dataset.k;
@@ -4452,6 +4637,7 @@ function wire() {
     const t = e.target.closest && e.target.closest('.gt');
     if (t && S.settings.titleClick !== 'restore') beginEdit(t.closest('.vrow'));
   });
+  scroller.addEventListener('contextmenu', showCtxMenu);
   scroller.addEventListener('keydown', (e) => { // context-menu key / Shift+F10 on a set header opens its ⋯ menu next to the row
     if (e.key !== 'ContextMenu' && !(e.key === 'F10' && e.shiftKey)) return;
     const row = e.target.closest && e.target.closest('.ghead');
@@ -4471,7 +4657,7 @@ function wire() {
     const typing = e.target && /^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName);
     if (e.key === '/' && !typing && S.view === 'list' && kbOn('kbSearch')) { e.preventDefault(); $('#search').focus(); }
     if ((e.ctrlKey || e.metaKey) && !e.altKey && !e.shiftKey && e.key.toLowerCase() === 'k' && kbOn('kbPalette')) { e.preventDefault(); openCommandPalette(); }
-    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'z' && !typing && S.toastAction && kbOn('kbUndo')) { e.preventDefault(); const fn = S.toastAction; $('#toast').hidden = true; S.toastAction = null; fn(); }
+    if ((e.ctrlKey || e.metaKey) && !e.shiftKey && e.key.toLowerCase() === 'z' && !typing && S.undoStack.length && kbOn('kbUndo')) { e.preventDefault(); undoLast(); }
   });
   bus.on(onBus);
   chrome.tabs.onUpdated.addListener((_id, info) => {

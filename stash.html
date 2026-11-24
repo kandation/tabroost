@@ -47,7 +47,15 @@
     <symbol id="i-edit" viewBox="0 0 24 24"><path d="M4 20l1-4L16 5l3 3L8 19l-4 1zM14 7l3 3" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-linecap="round"/></symbol>
     <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></symbol>
     <symbol id="i-note" viewBox="0 0 24 24"><path d="M6 3h9l4 4v13a1 1 0 01-1 1H6a1 1 0 01-1-1V4a1 1 0 011-1zM14 3v5h5M8 13h8M8 17h5" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-linecap="round"/></symbol>
-    <symbol id="i-dedupe" viewBox="0 0 24 24"><rect x="4" y="4" width="11" height="11" rx="2" fill="none" stroke="currentColor"/><path d="M9 20h9a2 2 0 002-2V9M8 8l3 3M11 8l-3 3" fill="none" stroke="currentColor" stroke-linecap="round"/></symbol>
+    <symbol id="i-merge" viewBox="0 0 24 24"><rect x="3" y="4" width="8" height="7" rx="1.5" fill="none" stroke="currentColor"/><rect x="13" y="4" width="8" height="7" rx="1.5" fill="none" stroke="currentColor"/><path d="M7 11v3a3 3 0 003 3h4a3 3 0 003-3v-3M12 17v3M10 18l2 2 2-2" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-ungroup" viewBox="0 0 24 24"><path d="M4 8V6a2 2 0 012-2h4M20 8V6a2 2 0 00-2-2h-4M4 16v2a2 2 0 002 2h4M20 16v2a2 2 0 01-2 2h-4M8 12h8" fill="none" stroke="currentColor" stroke-linecap="round"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.500-7-10V6l7-3z" fill="none" stroke="currentColor" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-save" viewBox="0 0 24 24"><path d="M12 4v10M8 10l4 4 4-4M5 19h14" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-keyboard" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="2" fill="none" stroke="currentColor"/><path d="M7 10h.01M11 10h.01M15 10h.01M7 14h10" fill="none" stroke="currentColor" stroke-linecap="round"/></symbol>
+    <symbol id="i-key" viewBox="0 0 24 24"><circle cx="8" cy="14" r="4" fill="none" stroke="currentColor"/><path d="M11 11l8-8M16 6l3 3M14 8l2 2" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-undo" viewBox="0 0 24 24"><path d="M9 7L4 12l5 5M4 12h11a5 5 0 010 10h-3" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" transform="translate(0 -3)"/></symbol>
+    <symbol id="i-qr" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1" fill="none" stroke="currentColor"/><rect x="14" y="3" width="7" height="7" rx="1" fill="none" stroke="currentColor"/><rect x="3" y="14" width="7" height="7" rx="1" fill="none" stroke="currentColor"/><path d="M14 14h3v3h-3zM20 14v1M14 20h2M18 18h3v3M20 20" fill="none" stroke="currentColor" stroke-linecap="round"/></symbol>
+    <symbol id="i-dedupe"viewBox="0 0 24 24"><rect x="4" y="4" width="11" height="11" rx="2" fill="none" stroke="currentColor"/><path d="M9 20h9a2 2 0 002-2V9M8 8l3 3M11 8l-3 3" fill="none" stroke="currentColor" stroke-linecap="round"/></symbol>
     <symbol id="i-import" viewBox="0 0 24 24"><path d="M12 4v11M7.5 10.5L12 15l4.5-4.5M4 19h16" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></symbol>
     <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 12a8 8 0 11-2.6-5.9M20 4v5h-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></symbol>
     <symbol id="i-incog" viewBox="0 0 24 24"><path d="M3 12h18M6 12l1.5-6h9L18 12M8 16.5a2 2 0 104 0M12 16.5a2 2 0 104 0" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></symbol>
@@ -75,7 +83,7 @@
       <button type="button" class="navi" data-act="navTo" data-nav="pending"><svg><use href="#i-clock"/></svg><span class="nl" data-s="navPending"></span><span class="nc" data-nc="pending"></span></button>
       <div class="navhead"><span data-s="navCats"></span><button type="button" class="ib sm" data-act="catAdd" data-sa="catAdd" data-st="catAdd"><svg><use href="#i-plus"/></svg></button></div>
       <div id="catList" class="catlist"></div>
-      <button type="button" class="navi" data-act="navTo" data-nav="uncat"><span class="dot" aria-hidden="true"></span><span class="nl" data-s="navUncat"></span><span class="nc" data-nc="uncat"></span></button>
+      <button type="button" class="navi" data-act="navTo" data-nav="uncat" data-st="navUncat"><svg class="mi catico" aria-hidden="true"><use href="#i-folder"/></svg><span class="nl" data-s="navUncat"></span><span class="nc" data-nc="uncat"></span></button>
       <div class="sep"></div>
       <button type="button" class="navi" data-act="navTo" data-nav="archived"><svg><use href="#i-box"/></svg><span class="nl" data-s="navArchived"></span><span class="nc" data-nc="archived"></span></button>
       <button type="button" class="navi" data-act="navTo" data-nav="trash"><svg><use href="#i-trash"/></svg><span class="nl" data-s="navTrash"></span><span class="nc" data-nc="trash"></span></button>
@@ -117,6 +125,7 @@
         <span class="vsep" aria-hidden="true"></span>
         <button type="button" class="ib" data-act="expandAll" data-sa="expandAll" data-st="expandAll"><svg><use href="#i-expand"/></svg></button>
         <button type="button" class="ib" data-act="collapseAll" data-sa="collapseAll" data-st="collapseAll"><svg><use href="#i-collapse"/></svg></button>
+        <button type="button" class="tb" id="btnUndo" data-act="undoLast" hidden><svg><use href="#i-undo"/></svg><span class="tl" data-s="undo"></span></button>
         <button type="button" class="tb" id="btnUndoStash" data-act="undoStash" hidden><svg><use href="#i-refresh"/></svg><span class="tl" data-s="undoStash"></span></button>
         <button type="button" class="tb tonal" id="btnOpenAll" data-act="openAll"><svg><use href="#i-open"/></svg><span class="tl" data-s="openAll"></span></button>
       </div>
@@ -243,6 +252,8 @@
           <a href="about.html" data-s="aboutLink"></a>
         </nav>
         <div class="settings" id="panelSettings">
+          <div class="ssearch"><svg class="si mi" aria-hidden="true"><use href="#i-search"/></svg><input type="search" id="setSearch" data-sp="setSearchPh" autocomplete="off" spellcheck="false"></div>
+          <p class="muted ssempty" id="setEmpty" role="status" hidden></p>
           <section class="card" id="s-appearance">
             <h2 data-s="sAppearance"></h2>
             <label class="srow"><span class="sl"><b data-s="sLanguage"></b></span><select id="selLanguage" data-k="language"></select></label>
@@ -409,6 +420,7 @@
 <div id="filterMenu" class="menu wide" hidden role="dialog" data-sa="filterBtn"></div>
 <div id="itemSortMenu" class="menu" hidden role="menu" data-sa="aItemSort"></div>
 <div id="catMenu" class="menu" hidden role="menu" data-sa="navCats"></div>
+<div id="ctxMenu" class="menu ctx" hidden role="menu"></div>
 <div id="menuScrim" class="mscrim" hidden></div>
 <div id="snapDialog" class="dlgwrap" hidden>
   <div class="dlg" role="dialog" aria-modal="true" aria-labelledby="snapDlgTitle">

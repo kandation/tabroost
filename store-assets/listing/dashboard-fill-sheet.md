@@ -9,10 +9,10 @@ One sheet, in the dashboard's own order. Each field's text is in its own block: 
 Upload this file (Add new item, or Package > Upload new package):
 
 ```
-dist\tabroost-1.0.0.zip
+dist\tabroost-1.0.1.zip
 ```
 
-Version in the zip: 1.0.0 (MV3, minimum Chrome 121).
+Version in the zip: 1.0.1 (MV3, minimum Chrome 121).
 
 ---
 

@@ -69,7 +69,7 @@ html.lk-on, html.lk-on body { background: var(--bg); }
 .lkc-bar > i { display: block; height: 100%; background: var(--accent); width: 0; }
 .lkc-msg { min-height: 20px; margin: 0; font-size: var(--fs-m); color: var(--muted); }
 .lkc-msg.bad { color: var(--danger); }
-@media print { body > *:not(#lkPrint) { display: none !important; } #lkPrint { display: block !important; color: #000; font: 16px monospace; padding: 24px; } }
+@media print { body:has(> #lkPrint) > *:not(#lkPrint) { display: none !important; } #lkPrint { display: block !important; color: #000; font: 16px monospace; padding: 24px; } }
 #lkPrint { display: none; }
 
 /* popup */
