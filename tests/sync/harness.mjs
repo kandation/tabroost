@@ -3,6 +3,9 @@ import { MemoryBookmarks } from '../../lib/sync/transport-memory.js';
 import { createEngine, createMemoryKv } from '../../lib/sync/engine.js';
 import { applyOp } from '../../lib/sync/merge.js';
 import { fieldKey } from '../../lib/sync/hlc.js';
+import { createPrefsSync } from '../../lib/sync/prefs.js';
+import { sanitizeSettingsPatch } from '../../lib/settings.js';
+import { DEFAULTS } from '../../lib/constants.js';
 
 export function mulberry32(seed) {
   let a = seed >>> 0;
@@ -43,25 +46,31 @@ export function makeTimers(clock) {
   };
 }
 
-const GFIELDS = ['title', 'starred', 'locked', 'ord', 'del', 'createdAt', 'windowCount', 'tabGroups'];
-const IFIELDS = ['g', 'url', 'title', 'ts', 't', 'w', 'tg'];
+const GFIELDS = ['title', 'starred', 'locked', 'ord', 'del', 'createdAt', 'windowCount', 'tabGroups', 'pinned', 'archived', 'pending', 'note', 'color', 'emoji', 'cat'];
+const IFIELDS = ['g', 'url', 'title', 'ts', 't', 'w', 'ws', 'tg', 'sv'];
+const CFIELDS = ['name', 'color', 'ord', 'createdAt'];
 
 /** In-memory implementation of the merge store interface (what an IndexedDB binding would do). */
 export class MemStore {
-  constructor() { this.groups = new Map(); this.items = new Map(); this.meta = new Map(); this.nextSeq = 1; }
+  constructor() { this.groups = new Map(); this.items = new Map(); this.cats = new Map(); this.meta = new Map(); this.nextSeq = 1; this.prefsHook = null; }
   async getMeta(t, id) { const m = this.meta.get(t + id); return m ? structuredClone(m) : undefined; }
   async setMeta(t, id, m) { this.meta.set(t + id, structuredClone(m)); }
-  async hasEntity(t, id) { return (t === 'g' ? this.groups : this.items).has(id); }
+  async hasEntity(t, id) { if (t === 's') return true; return (t === 'g' ? this.groups : t === 'c' ? this.cats : this.items).has(id); }
   async createEntity(t, id, fields, opts = {}) {
+    if (t === 's') { if (this.prefsHook && this.prefsHook()) await this.prefsHook().apply(fields); return; }
+    if (t === 'c') { this.cats.set(id, structuredClone(fields)); return; }
     if (t === 'g') this.groups.set(id, { ...structuredClone(fields), ph: !!opts.placeholder });
     else this.items.set(id, { ...structuredClone(fields), seq: this.nextSeq++ });
   }
   async updateEntity(t, id, fields) {
-    const e = (t === 'g' ? this.groups : this.items).get(id);
+    if (t === 's') { if (this.prefsHook && this.prefsHook()) await this.prefsHook().apply(fields); return; }
+    const e = (t === 'g' ? this.groups : t === 'c' ? this.cats : this.items).get(id);
     Object.assign(e, structuredClone(fields));
     if (t === 'g' && fields.createdAt !== undefined) e.ph = false;
   }
   async purgeEntity(t, id) {
+    if (t === 's') return;
+    if (t === 'c') { this.cats.delete(id); return; }
     if (t === 'g') this.groups.delete(id); else this.items.delete(id);
   }
   dump() {
@@ -69,7 +78,8 @@ export class MemStore {
     const purgedG = new Set([...this.meta.entries()].filter(([k, m]) => k[0] === 'g' && m.purged).map(([k]) => k.slice(1)));
     const i = [...this.items.entries()].filter(([, e]) => !purgedG.has(e.g)).map(([id, e]) => ({ id, ...Object.fromEntries(IFIELDS.filter((k) => e[k] !== undefined).map((k) => [k, e[k]])) }));
     g.sort((a, b) => (a.id < b.id ? -1 : 1)); i.sort((a, b) => (a.id < b.id ? -1 : 1));
-    return JSON.stringify({ g, i });
+    const c = [...this.cats.entries()].map(([id, e]) => ({ id, ...Object.fromEntries(CFIELDS.filter((k) => e[k] !== undefined).map((k) => [k, e[k]])) })).sort((a, b) => (a.id < b.id ? -1 : 1));
+    return JSON.stringify(c.length ? { g, i, c } : { g, i });
   }
   purgedIds() { return [...this.meta.entries()].filter(([, m]) => m.purged).map(([k]) => k).sort(); }
 }
@@ -91,6 +101,12 @@ export class Device {
     this.allOps = opts.allOps || null;
     this.engine = null;
     this.restarts = 0;
+    // local preferences of this simulated device (what chrome.storage / localStorage hold in the real extension)
+    this.local = { settings: structuredClone(DEFAULTS), view: null, print: null, emoji: [] };
+    this.syncSettingsOn = true;
+    this.writes = []; // every patch the sync wrote into the local preferences (to prove nothing echoes)
+    this.pv = null; // last synced field map (the baseline of the prefs diff)
+    this.prefs = null;
     this.build();
   }
   now() { return this.clock.now() + this.skew; }
@@ -102,6 +118,16 @@ export class Device {
       partSize: this.opts.partSize, limits: this.opts.limits, budgetBytes: this.opts.budgetBytes, maxNodes: this.opts.maxNodes,
       hooks: extra.hooks || this.opts.hooks, canApply: this.opts.canApply, dekExtractable: this.opts.dekExtractable,
     });
+    this.prefs = createPrefsSync({
+      engine: this.engine, sanitizeSettings: sanitizeSettingsPatch, isOn: () => this.syncSettingsOn,
+      io: {
+        read: async () => structuredClone(this.local),
+        write: async (patch) => { this.writes.push(structuredClone(patch)); if (patch.settings) Object.assign(this.local.settings, structuredClone(patch.settings)); for (const k of ['view', 'print', 'emoji']) if (patch[k] !== undefined) this.local[k] = structuredClone(patch[k]); },
+      },
+      getV: async () => (this.pv ? structuredClone(this.pv) : null), setV: async (v) => { this.pv = structuredClone(v); },
+      resetMeta: async () => { this.store.meta.delete('sprefs'); this.pv = null; },
+    });
+    this.store.prefsHook = () => this.prefs;
     return this.engine;
   }
   /** Simulate a service-worker restart: drop the engine object, keep persisted state. */
@@ -133,6 +159,17 @@ export class Device {
     await this.store.updateEntity('i', iid, f);
     await this._rec([this.engine.stamp('i', iid, f)]);
   }
+  async addCat(cid, f = {}) {
+    const fields = { name: 'Cat ' + cid, color: 'blue', ord: 0, createdAt: this.now(), ...f };
+    await this.store.createEntity('c', cid, fields);
+    await this._rec([this.engine.stamp('c', cid, fields)]);
+  }
+  async setCat(cid, f) {
+    await this.store.updateEntity('c', cid, f);
+    await this._rec([this.engine.stamp('c', cid, f)]);
+  }
+  /** A local settings change (what the settings page does), followed by the scan the service worker runs. */
+  async changeSettings(patch) { Object.assign(this.local.settings, patch); return this.prefs.scan(); }
   async purge(t, id) {
     await this.store.purgeEntity(t, id);
     await this._rec([this.engine.stamp(t, id, null, true)]);

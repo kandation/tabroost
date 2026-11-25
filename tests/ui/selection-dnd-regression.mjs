@@ -102,7 +102,7 @@ try {
   await sleep(1200);
   await shot('00-list');
   check('every tab row has role=option, aria-selected and the delete button first', await ev(`(()=>{ const r=document.querySelector('.vrow.item[data-seq]'); return !!r && r.getAttribute('role')==='option' && r.getAttribute('aria-selected')==='false' && r.firstElementChild.classList.contains('x') && document.getElementById('spacer').getAttribute('role')==='listbox' && document.getElementById('spacer').getAttribute('aria-multiselectable')==='true'; })()`), await ev(`(()=>{ const r=document.querySelector('.vrow.item[data-seq]'); return r? [r.getAttribute('role'), r.getAttribute('aria-selected'), r.firstElementChild.className, document.getElementById('spacer').getAttribute('role')].join('|') : 'no row'; })()`));
-  check('the delete button is 28 px and sits left of the icon', await ev(`(()=>{ const r=document.querySelector('.vrow.item[data-seq]'); const x=r.querySelector('.x').getBoundingClientRect(), f=r.querySelector('.fav').getBoundingClientRect(); return Math.round(x.width)===28 && Math.round(x.height)===28 && x.right<=f.left; })()`));
+  check('the delete button is 22 px and sits left of the icon', await ev(`(()=>{ const r=document.querySelector('.vrow.item[data-seq]'); const x=r.querySelector('.x').getBoundingClientRect(), f=r.querySelector('.fav').getBoundingClientRect(); return Math.round(x.width)===22 && Math.round(x.height)===22 && x.right<=f.left; })()`));
 
   // ---------- 1. selection ----------
   const firstGid = A;
@@ -295,7 +295,7 @@ try {
   await sleep(2500);
   const frames = async (fn) => { await ev(`(()=>{ window.__fr=[]; window.__frOn=true; let l=performance.now(); const f=(t)=>{ window.__fr.push(t-l); l=t; if(window.__frOn) requestAnimationFrame(f); }; requestAnimationFrame(f); })()`); await fn(); await ev(`window.__frOn=false`); await sleep(50); return ev(`(()=>{ const a=window.__fr.slice(2); return {n:a.length, max:Math.max(...a), over50:a.filter(x=>x>50).length}; })()`); };
   const sc2 = await rect('#scroller');
-  const fr1 = await frames(async () => { await drag(sc2.x + 60, sc2.y + 100, sc2.x + 400, sc2.y + sc2.h - 30, { alt: true }, 40, true); for (let i = 0; i < 40; i++) { await mouse('mouseMoved', sc2.x + 400, sc2.y + sc2.h - 6, { alt: true }); await sleep(30); } await mouse('mouseReleased', sc2.x + 400, sc2.y + sc2.h - 6, { alt: true }); });
+  const fr1 = await frames(async () => { await drag(sc2.x + 8, sc2.y + 100, sc2.x + 400, sc2.y + sc2.h - 30, { alt: true }, 40, true); for (let i = 0; i < 40; i++) { await mouse('mouseMoved', sc2.x + 400, sc2.y + sc2.h - 6, { alt: true }); await sleep(30); } await mouse('mouseReleased', sc2.x + 400, sc2.y + sc2.h - 6, { alt: true }); });
   check('marquee over a long flat list (auto-scroll): no frame > 50 ms', fr1.over50 === 0, JSON.stringify(fr1));
   check('the marquee selected many rows', (await selSize()) > 100, String(await selSize()));
   await key('Escape');

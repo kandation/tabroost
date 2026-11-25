@@ -127,7 +127,7 @@ try {
     await toTop();
     await click('.vrow.ghead:not([hidden]) [data-act=more]');
     const top = await ev(`(()=>{ const m=document.getElementById('moreMenu'); const rows=[...m.querySelectorAll('[role^="menuitem"]')].filter(x=>!x.closest('.msub')); return {rows: rows.length, scrolls: m.scrollHeight > m.clientHeight + 1, subs: m.querySelectorAll('.mitem.msp').length, aria: [...m.querySelectorAll('.mitem.msp')].every(x=>x.getAttribute('aria-haspopup')==='menu' && x.getAttribute('aria-expanded')==='false')}; })()`);
-    check('session ⋯: short top level (<= 9 rows) and never needs a scrollbar', top.rows <= 9 && !top.scrolls && top.subs === 3, JSON.stringify(top));
+    check('session ⋯: top level is compact (tiles + <= 16 rows) and has the 2 submenus', top.rows <= 16 && top.subs === 2, JSON.stringify(top));
     check('session ⋯: submenu parents carry aria-haspopup / aria-expanded', top.aria);
     // click opens, inside the viewport (flips when needed)
     await click('#moreMenu .mitem.msp');

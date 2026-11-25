@@ -1,0 +1,22 @@
+/* Question dialogs of lib/dialogs.js (replace window.prompt / confirm). Same look as the colour dialog (.look-dlg in stash.css).
+   Self-contained, so the popup (which does not load stash.css) can use it too. Colours come from tokens.css (light + dark). */
+.cmd-dlg { box-sizing: border-box; border: 1px solid var(--border); border-radius: 16px; background: var(--surface); color: var(--text); padding: 0; width: min(420px, calc(100vw - 24px)); max-height: calc(100vh - 24px); box-shadow: var(--shadow-2); font: var(--fs-b, 14px)/1.5 var(--font, system-ui, sans-serif); }
+.cmd-dlg[open] { display: flex; flex-direction: column; }
+.cmd-dlg::backdrop { background: rgba(10, 14, 20, .38); }
+.cmd-h { padding: 16px 18px 4px; }
+.cmd-t { margin: 0; font-size: var(--fs-l, 16px); font-weight: 650; line-height: 1.35; }
+.cmd-b { display: flex; flex-direction: column; gap: 8px; padding: 8px 18px 4px; overflow-y: auto; min-height: 0; }
+.cmd-msg { margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; line-height: 1.55; }
+.cmd-lab { font-size: var(--fs-s, 12px); font-weight: 600; color: var(--muted); }
+.cmd-in { box-sizing: border-box; width: 100%; padding: 8px 10px; border: 1px solid var(--border); border-radius: var(--r-2, 10px); background: var(--bg); color: var(--text); font: inherit; }
+textarea.cmd-in { min-height: 120px; resize: vertical; line-height: 1.5; }
+.cmd-in:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; border-color: var(--accent); }
+.cmd-f { display: flex; justify-content: flex-end; gap: 8px; padding: 12px 18px 16px; }
+.cmd-dlg .btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 32px; padding: 6px 14px; border: 1px solid var(--border); border-radius: var(--r-1, 6px); background: var(--surface); color: var(--text); font: inherit; font-size: var(--fs-m, 13px); cursor: pointer; }
+.cmd-dlg .btn:hover { background: var(--surface-2); }
+.cmd-dlg .btn.primary { background: var(--accent); color: var(--accent-text); border-color: var(--accent); font-weight: 600; }
+.cmd-dlg .btn.primary:hover { filter: brightness(1.06); }
+.cmd-dlg .btn.primary.danger { background: color-mix(in srgb, var(--danger) 14%, var(--surface)); color: var(--danger); border-color: var(--danger); }
+.cmd-dlg .btn.primary.danger:hover { background: color-mix(in srgb, var(--danger) 24%, var(--surface)); filter: none; }
+.cmd-dlg .btn:disabled { opacity: .45; cursor: default; filter: none; }
+.cmd-dlg .btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }

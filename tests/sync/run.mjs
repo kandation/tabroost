@@ -4,6 +4,7 @@ import './crypto-tests.mjs';
 import './scenarios.mjs';
 import './property.mjs';
 import './lock-sync.mjs';
+import './prefs-sync.mjs';
 
 const filter = process.argv[2];
 let pass = 0, fail = 0;

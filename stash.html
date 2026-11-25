@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="stash.css">
   <link rel="stylesheet" href="selection.css">
   <link rel="stylesheet" href="lock.css">
+  <link rel="stylesheet" href="lib/dialogs.css">
   <script type="module" src="stash.js"></script>
 </head>
 <body>
@@ -384,6 +385,8 @@
           <section class="card" id="s-backup">
             <h2 data-s="sBackup"></h2>
             <p class="muted" data-s="sBackupD"></p>
+            <p class="muted" data-s="backupIncludes"></p>
+            <p class="muted" data-s="backupExcludes"></p>
             <div class="row">
               <button type="button" class="btn" data-act="exportNdjson" data-s="exportNdjson"></button>
               <button type="button" class="btn" data-act="exportOneTab" data-s="exportOneTab"></button>
@@ -397,6 +400,8 @@
                 <input id="importFile" type="file" accept=".json,.txt,.ndjson,.gz" hidden>
               </label>
             </div>
+            <label class="check"><input id="impSettings" type="checkbox" checked><span data-s="impSettings"></span></label>
+            <p class="muted" data-s="importMergeNote"></p>
             <textarea id="importText" rows="6" data-sp="importPh" data-sa="importPh" spellcheck="false"></textarea>
             <div class="row">
               <button type="button" class="btn" data-act="importText" data-s="importBtn"></button>

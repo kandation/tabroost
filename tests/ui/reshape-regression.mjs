@@ -56,7 +56,7 @@ try {
   await until(() => ev(`__cmr.S.allGroups.some(g=>g.id==='${G}')`), 15000);
   await ev(`(()=>{ const st=document.createElement('style'); st.textContent='#welcome, #panels, .banner { display: none !important; }'; document.head.appendChild(st); __cmr.fn.expandAll(true); })()`); await sleep(1500);
   const state = () => db(`async(d)=>{ const g=await d.getGroup('${G}'); const it=await d.getItemsPage('${G}',0,5000); return { g:{count:g.count,windowCount:g.windowCount,tabGroups:g.tabGroups||null}, it:it.map(x=>({seq:x.seq,url:x.url,w:x.w,ws:x.ws,tg:x.tg})) }; }`);
-  const dom = () => ev(`(()=>{ const q=(s)=>[...document.querySelectorAll(s)].filter(n=>!n.hidden&&n.dataset.g==='${G}'); const dots=[...document.querySelectorAll('.tgdot')].filter(n=>n.offsetParent!==null&&getComputedStyle(n).display!=='none'&&n.getBoundingClientRect().width>0); return { wstart:q('.vrow.wstart').length, sub:q('.vrow.sub').length, items:q('.vrow.item[data-seq]').length, dots:dots.length, ugb:q('.vrow.sub').filter(n=>n.querySelector('.ugb')).length }; })()`);
+  const dom = () => ev(`(()=>{ const q=(s)=>[...document.querySelectorAll(s)].filter(n=>!n.hidden&&n.dataset.g==='${G}'); const dots=[...document.querySelectorAll('.tgdot')].filter(n=>n.offsetParent!==null&&getComputedStyle(n).display!=='none'&&n.getBoundingClientRect().width>0); return { wstart:[...document.querySelectorAll('.vrow.note.win')].filter(n=>!n.hidden).length, sub:q('.vrow.sub').length, items:q('.vrow.item[data-seq]').length, dots:dots.length, ugb:q('.vrow.sub').filter(n=>n.querySelector('.ugb')).length }; })()`);
   const relayout = async () => { await ev(`__cmr.fn.relayout && __cmr.fn.relayout()`); await sleep(1200); };
   const strip = (s) => JSON.stringify(s);
 

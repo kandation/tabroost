@@ -92,7 +92,14 @@ const STR = {
   importBtn: 'นำเข้า',
   importing: (n) => `กำลังนำเข้า… ${n} แท็บ`,
   importResult: (x, y, z) => `นำเข้าแล้ว ${x} แท็บ ใน ${y} ชุดแท็บ · ข้าม ${z} (ซ้ำหรือใช้ไม่ได้)`,
-  sIconAction: 'เมื่อกดไอคอนบนแถบเครื่องมือ',
+  exportedFull: (n, c, t) => `สร้างไฟล์แล้ว ${n} แท็บ · หมวดหมู่ ${c} · ถังขยะ ${t} รายการ · การตั้งค่าและค่ากำหนด`,
+  importExtras: (c, t, s, m) => `${c ? ` · หมวดหมู่ ${c}` : ''}${t ? ` · ถังขยะ ${t} รายการ` : ''}${m ? ` · รวมเข้ากับชุดเดิม ${m} ชุด` : ''}${s ? ' · คืนค่าการตั้งค่าแล้ว' : ''}`,
+  importTrashSkipped: 'ถังขยะในไฟล์ยังไม่ถูกนำเข้า เพราะเปิดรหัสผ่านล็อกอยู่ (ไฟล์ยังอยู่ครบ)',
+  importCut: 'ไฟล์อาจถูกตัดทอน (ไม่มีท้ายไฟล์) นำเข้าเท่าที่อ่านได้',
+  impSettings: 'คืนค่าการตั้งค่าและค่ากำหนดจากไฟล์ด้วย (แทนที่ค่าปัจจุบัน)',
+  importMergeNote: 'ถ้านำเข้าไฟล์ลงในเบราว์เซอร์ที่มีชุดแท็บเดียวกันอยู่แล้ว จะเพิ่มเฉพาะแท็บที่ยังไม่มี ไม่ลบหรือแทนที่อะไรเลย',
+  backupIncludes: 'ไฟล์สำรองมี: ชุดแท็บทั้งหมด (รวมที่เก็บถาวรและที่ลบแล้ว) พร้อมแท็บ ชื่อ โน้ต สี อีโมจิ และสถานะปักหมุด ติดดาว ต้องทำ ล็อก · หมวดหมู่ · ถังขยะ (แท็บที่กู้คืนได้) · การตั้งค่าทั้งหมดรวมรายการเว็บที่ยกเว้นและอนุญาต · มุมมองรายการที่บันทึกไว้ ตัวเลือกการพิมพ์ และอีโมจิที่ใช้ล่าสุด',
+  backupExcludes: 'ไฟล์สำรองไม่มี: รหัสผ่านล็อก (ใช้ไฟล์ .tabroost แบบเข้ารหัสในหมวดรหัสผ่านล็อก) การตั้งค่าซิงค์และรหัสผ่านซิงค์ สิทธิ์ที่ให้ไว้ ดัชนีค้นหา ไอคอนเว็บ และสำเนากู้คืนตอนเบราว์เซอร์ค้าง ข้อมูลเวลาใช้งานใส่ได้เมื่อติ๊กตัวเลือกด้านล่าง',  sIconAction: 'เมื่อกดไอคอนบนแถบเครื่องมือ',
   iaStash: 'เก็บแท็บทันที (ไม่ถามก่อน)',
   iaPopup: 'เปิดหน้าต่างเล็กให้เลือกก่อน',
   sIconScope: 'ไอคอนและ Alt+Shift+S จะเก็บแท็บของ',
@@ -195,6 +202,8 @@ const STR = {
   syncStop: 'หยุดซิงค์ชุดนี้', syncForce: 'ส่งใหม่ทั้งชุด', syncPushNow: 'ซิงค์ตอนนี้',
   mOn: (x) => `${x} ✓`,
   promptRename: 'ชื่อชุดแท็บ', promptNote: 'บันทึกของชุดแท็บนี้', promptCat: 'ชื่อหมวดหมู่', promptImport: 'วางลิงก์ (บรรทัดละหนึ่งลิงก์ หรือข้อความรูปแบบ OneTab)',
+  dlgOk: 'ตกลง', dlgCancel: 'ยกเลิก', dlgImport: 'นำเข้าลิงก์', dlgRename: 'เปลี่ยนชื่อชุดแท็บ', dlgNote: 'บันทึกของชุดแท็บ', dlgCatNew: 'หมวดหมู่ใหม่', dlgCatRename: 'เปลี่ยนชื่อหมวดหมู่',
+  dlgOpenMany: 'เปิดหลายแท็บ', dlgDelForever: 'ลบถาวร', dlgStale: 'ชุดแท็บที่ไม่ได้ใช้นาน', dlgClean: 'จัดระเบียบแท็บ', dlgPurgeStats: 'ลบสถิติการใช้งาน', dlgDbReset: 'รีเซ็ตรายการ',
   catRename: 'เปลี่ยนชื่อ', catColor: 'เปลี่ยนสี', catDelete: 'ลบหมวดหมู่', catNone: 'ไม่มีหมวดหมู่', catNew: 'สร้างหมวดหมู่ใหม่…',
   catMoveUp: 'ย้ายขึ้น', catMoveDown: 'ย้ายลง',
   catMoved: (name, pos, total) => `ย้าย “${name}” ไปลำดับที่ ${pos} จาก ${total}`,
@@ -391,6 +400,8 @@ import * as db from './lib/db.js';
 import { getSettings } from './lib/settings.js';
 import { initSettingsSearch } from './lib/settingssearch.js';
 import { openLookDialog } from './lib/lookdialog.js';
+import { sendPref, pullPrefs, readLocalPref } from './lib/prefs.js';
+import { backupHeader, settingsLine, prefsLine, categoryLine, trashLines, endLine, readSettings, readPrefs, readCategory, readGroup, readTrash, MAX_LINE, MAX_CATEGORIES } from './lib/backup.js';
 import { buildPrintSheet } from './lib/printsheet.js';
 import { openQrDialog } from './lib/qrdialog.js';
 import * as bus from './lib/bus.js';
@@ -401,6 +412,12 @@ import { createFlat, PAGE as FLAT_PAGE } from './lib/flat.js';
 import { gate as lockGate } from './lib/lockui.js';
 import * as lockrt from './lib/lockrt.js';
 import { mountLockCard } from './lib/lockcard.js';
+import { askText, askConfirm } from './lib/dialogs.js';
+
+// our own dialogs (lib/dialogs.js) instead of window.prompt / confirm; the labels come from STR when the dialog opens
+const askIn = (o) => askText({ okLabel: STR.dlgOk, cancelLabel: STR.dlgCancel, ...o });
+const askGo = (message, title, o = {}) => askConfirm({ title, message, okLabel: STR.dlgOk, cancelLabel: STR.dlgCancel, ...o });
+const askDel = (message, title) => askGo(message, title || STR.dlgDelForever, { danger: true });
 import { initSelUi } from './lib/selui.js';
 import { applyLanguage } from './lib/i18n.js';
 import { createPopovers } from './lib/popover.js';
@@ -744,7 +761,7 @@ function showCtxMenu(e) {
   const big = mk('button', 'mitem ctxbig');
   big.type = 'button'; big.tabIndex = -1; big.setAttribute('role', 'menuitem');
   big.append(ICON('copy'), mk('span', 'ml', STR.ctxCopy));
-  add(big, () => (one ? copyGroup(one.id) : A.copy(p, p.kind === 'g' ? 'both' : 'url')));
+  add(big, () => (one ? copyGroup(one.id) : A.copy(p, 'fmt')));
   if (p.kind === 'i') {
     row1('link', STR.ctxCopyLink, () => A.copy(p, 'url'));
     row1('edit', STR.ctxCopyTitle, () => A.copy(p, 'title'));
@@ -1177,6 +1194,10 @@ function buildGroupRow() {
     n._mos.appendChild(f);
     n._mosf.push(f);
   }
+  n._emoL = mk('span', 'gemoL'); // the set's emoji, replaces the mosaic left of the title
+  n._emoL.setAttribute('aria-hidden', 'true');
+  n._emoL.hidden = true;
+  n._tarea.prepend(n._emoL);
   n._tarea.prepend(n._mos);
   // meta cluster (fixed columns => rows align across sessions)
   n._meta = mk('div', 'gmeta');
@@ -1192,9 +1213,6 @@ function buildGroupRow() {
   }
   n._more2 = mk('span', 'fsn');
   n._stack.appendChild(n._more2);
-  n._emo = mk('span', 'gemo'); // the set's emoji, shown instead of the favicon mosaic
-  n._emo.setAttribute('aria-hidden', 'true');
-  n._stack.appendChild(n._emo);
   n._cnt = chip('tab', 'c-cnt');
   n._wins = chip('window', 'c-win');
   n._date = chip('clock', 'c-date');
@@ -1294,8 +1312,9 @@ function paintStack(n, g) {
 function paintMosaic(n, g) {
   const top = (g.agg && g.agg.top) || [];
   const on = S.settings.sessionCover !== false && document.documentElement.dataset.density !== 'compact' && top.length > 0 && !(lockrt.enabled() && lockrt.isLocked());
-  n._mos.hidden = !on;
-  if (!on) return;
+  const emo = !n._emoL.hidden;
+  n._mos.hidden = !on || emo;
+  if (!on || emo) return;
   for (let i = 0; i < 4; i++) {
     const f = n._mosf[i];
     const h = top[i] && top[i][0];
@@ -1422,8 +1441,8 @@ function fillGroup(n, r) {
   const look = S.settings.setLook !== false;
   n._tt.textContent = named ? g.title : STR.autoTitle(g);
   const hasEmo = !!(look && g.emoji);
-  n._stack.classList.toggle('emoji', hasEmo);
-  n._emo.textContent = hasEmo ? g.emoji : '';
+  n._emoL.hidden = !hasEmo;
+  n._emoL.textContent = hasEmo ? g.emoji : '';
   if (look && g.color) n.dataset.col = String(g.color); else delete n.dataset.col;
   n._tt.classList.toggle('auto', !named);
   n._tt.title = g.note ? STR.noteOf(g.note) : (named ? g.title : '');
@@ -2233,7 +2252,7 @@ async function trashClearType(reason) {
   const c = trashCounts(all, reason);
   if (!c.sessions && !c.tabs) return null;
   const msg = reason ? STR.trConfirmClear(reason === 'opened' ? STR.trTabOpened : STR.trTabDeleted, c.sessions, c.tabs) : STR.trConfirmClearAll(c.sessions, c.tabs);
-  if (!confirm(msg)) return null;
+  if (!(await askDel(msg))) return null;
   const r = await send(reason ? { type: 'trashEmptyType', reason } : { type: 'emptyTrash' });
   if (!r.ok) return toastError(r);
   S.trashSel = new Set();
@@ -2246,7 +2265,7 @@ async function trashDo(what, rows) {
   const tids = rows.flatMap((r) => r.tids);
   if (what === 'purge') {
     const tabs = rows.reduce((a, r) => a + r.n, 0);
-    if (!confirm(STR.trConfirmPurge(rows.length) + (tabs ? STR.trConfirmTabs(tabs) : ''))) return null;
+    if (!(await askDel(STR.trConfirmPurge(rows.length) + (tabs ? STR.trConfirmTabs(tabs) : '')))) return null;
     const r = await send({ type: 'trashPurge', gids, tids });
     if (!r.ok) return toastError(r);
   } else if (what === 'recover') {
@@ -2255,7 +2274,7 @@ async function trashDo(what, rows) {
     toast(STR.trRecovered(r.recovered || 0), null, null, 3000);
   } else if (what === 'open') {
     const n = rows.reduce((a, r) => a + r.n, 0);
-    if (n > CONFIRM_MANY && !confirm(STR.confirmMany(n))) return null;
+    if (n > CONFIRM_MANY && !(await askGo(STR.confirmMany(n), STR.dlgOpenMany))) return null;
     const r = await send({ type: 'trashOpen', gids, tids });
     if (!r.ok) return toastError(r);
     if (r.failed) toast(STR.restoreFailed(r.failed));
@@ -3022,7 +3041,7 @@ function buildFilterMenu(fresh) {
 
 // ----- categories -----
 async function catAddPrompt() {
-  const name = prompt(STR.promptCat, '');
+  const name = await askIn({ title: STR.dlgCatNew, label: STR.promptCat });
   if (!name || !name.trim()) return null;
   const r = await send({ type: 'catSave', cat: { name: name.trim() } });
   if (!r.ok) { toastError(r); return null; }
@@ -3404,7 +3423,7 @@ function askPrintOptions() {
     const go = mk('button', 'btn primary', STR.printGo); go.type = 'button';
     let result = null;
     cancel.addEventListener('click', () => dlg.close());
-    go.addEventListener('click', () => { result = { ...opts }; try { localStorage.setItem(PRINT_KEY, JSON.stringify(opts)); } catch { /* ignore */ } dlg.close(); });
+    go.addEventListener('click', () => { result = { ...opts }; try { localStorage.setItem(PRINT_KEY, JSON.stringify(opts)); } catch { /* ignore */ } sendPref('print', opts); dlg.close(); });
     foot.append(cancel, go);
     dlg.append(head, body, foot);
     dlg.addEventListener('close', () => { dlg.remove(); resolve(result); });
@@ -3443,7 +3462,7 @@ async function printGroup(gid) {
 }
 
 async function importHere(gid) {
-  const text = prompt(STR.promptImport, '');
+  const text = await askIn({ title: STR.dlgImport, label: STR.promptImport, multiline: true });
   if (!text || !text.trim()) return;
   const p = parseOneTab(text);
   const items = [];
@@ -3476,8 +3495,8 @@ async function menuAction(act) {
       if (!ok) return toast(STR.incogHint, null, null, 6000);
       return doRestoreGroup(gid, { incognito: true });
     }
-    case 'mRename': { const t = prompt(STR.promptRename, g.title || ''); if (t == null) return null; const r = await send({ type: 'renameGroup', groupId: gid, title: t }); return r.ok ? null : toastError(r); }
-    case 'mNote': { const t = prompt(STR.promptNote, g.note || ''); if (t == null) return null; const r = await send({ type: 'groupNote', groupId: gid, note: t }); return r.ok ? null : toastError(r); }
+    case 'mRename': { const t = await askIn({ title: STR.dlgRename, label: STR.promptRename, value: g.title || '' }); if (t == null) return null; const r = await send({ type: 'renameGroup', groupId: gid, title: t }); return r.ok ? null : toastError(r); }
+    case 'mNote': { const t = await askIn({ title: STR.dlgNote, label: STR.promptNote, value: g.note || '', multiline: true }); if (t == null) return null; const r = await send({ type: 'groupNote', groupId: gid, note: t }); return r.ok ? null : toastError(r); }
     case 'mDedupe': {
       const r = await send({ type: 'dedupeGroup', groupId: gid });
       if (!r.ok) return toastError(r);
@@ -3685,7 +3704,7 @@ function renderStaleBanner() {
 async function staleBulk(kind) {
   const t = staleTargets();
   if (!t.groups.length) return;
-  if (!confirm((kind === 'trash' ? STR.staleTrashConfirm : STR.staleArchiveConfirm)(t.groups.length, t.tabs))) return;
+  if (!(await askGo((kind === 'trash' ? STR.staleTrashConfirm : STR.staleArchiveConfirm)(t.groups.length, t.tabs), STR.dlgStale))) return;
   for (const g of t.groups) await send(kind === 'trash' ? { type: 'deleteGroup', groupId: g.id } : { type: 'setFlag', groupId: g.id, flag: 'archived', value: true });
 }
 
@@ -3812,7 +3831,7 @@ const groupOf = (gid) => S.groups.find((g) => g.id === gid);
 async function doRestoreGroup(gid, { newWindow = false, session = false, here = false, incognito = false, asTabGroup = false, remove } = {}) {
   const g = groupOf(gid);
   const n = g ? g.count : 0;
-  if (n > CONFIRM_MANY && !confirm(STR.confirmMany(n))) return;
+  if (n > CONFIRM_MANY && !(await askGo(STR.confirmMany(n), STR.dlgOpenMany))) return;
   const r = await send({ type: 'restoreGroup', groupId: gid, newWindow, session, here, incognito, asTabGroup, ...(typeof remove === 'boolean' ? { remove } : {}) });
   if (!r.ok) return toastError(r);
   if (r.failed) toast(STR.restoreFailed(r.failed));
@@ -3883,7 +3902,7 @@ async function onClick(e) {
     }
     case 'openTg': {
       const n = Number((host && host.dataset.n) || 0);
-      if (n > CONFIRM_MANY && !confirm(STR.confirmMany(n))) return null;
+      if (n > CONFIRM_MANY && !(await askGo(STR.confirmMany(n), STR.dlgOpenMany))) return null;
       const r = await send({ type: 'restoreTabGroup', groupId: gid, tg: Number(host && host.dataset.tg) });
       if (!r.ok) return toastError(r);
       if (r.failed) toast(STR.restoreFailed(r.failed));
@@ -3922,7 +3941,7 @@ async function onClick(e) {
       let n = 0;
       for (const g of S.ugroups) n += g.count;
       if (!n) return null;
-      if (n > CONFIRM_MANY && !confirm(STR.confirmMany(n))) return null;
+      if (n > CONFIRM_MANY && !(await askGo(STR.confirmMany(n), STR.dlgOpenMany))) return null;
       const r = await send({ type: 'restoreOpenAll' });
       return r.ok ? null : toastError(r);
     }
@@ -3932,7 +3951,7 @@ async function onClick(e) {
       const g = ls && groupOf(ls.groupId);
       if (!g) return null;
       const n = (ls.groupIds || [ls.groupId]).reduce((a, id) => a + ((groupOf(id) || {}).count || 0), 0);
-      if (n > CONFIRM_MANY && !confirm(STR.confirmMany(n))) return null;
+      if (n > CONFIRM_MANY && !(await askGo(STR.confirmMany(n), STR.dlgOpenMany))) return null;
       const r = await send({ type: 'undoLastStash' });
       return r.ok ? null : toastError(r);
     }
@@ -3982,7 +4001,7 @@ async function onClick(e) {
     case 'actOffDel': $('#actDialog').hidden = true; await send({ type: 'saveSettings', patch: { activityTracking: false } }); runActPurge(); return null;
     case 'actOffKeep': $('#actDialog').hidden = true; await send({ type: 'saveSettings', patch: { activityTracking: false } }); return null;
     case 'actOffCancel': $('#actDialog').hidden = true; renderSettings(); return null;
-    case 'actPurgeAll': if (confirm(STR.actPurgeConfirm)) runActPurge(); return null;
+    case 'actPurgeAll': if (await askDel(STR.actPurgeConfirm, STR.dlgPurgeStats)) runActPurge(); return null;
     case 'ramReset': await send({ type: 'ram:reset' }); renderRamInfo(); return null;
     case 'actExport': return exportActivity();
     case 'snapAll': if (S.snap) { S.snap.body.tabs.forEach((t, i) => { if (S.snap.showAll || S.snap.missing.has(t)) S.snap.sel.add(i); }); renderSnapDialog(); } return null;
@@ -4088,7 +4107,7 @@ async function onClick(e) {
     case 'catRename': {
       closeMenus();
       const c = catById(S.catMenuId);
-      const name = c && prompt(STR.promptCat, c.name);
+      const name = c && await askIn({ title: STR.dlgCatRename, label: STR.promptCat, value: c.name });
       if (!name || !name.trim()) return null;
       await send({ type: 'catSave', cat: { id: c.id, name: name.trim() } }); await loadCats(); applyView(); return null;
     }
@@ -4128,13 +4147,13 @@ async function onClick(e) {
     case 'importText': return doImportText($('#importText').value);
     case 'undeleteGroup': { const r = await send({ type: 'undeleteGroup', groupId: gid }); return r.ok ? null : toastError(r); }
     case 'purgeGroup': {
-      if (!confirm(STR.confirmPurge)) return null;
+      if (!(await askDel(STR.confirmPurge))) return null;
       const r = await send({ type: 'purgeGroup', groupId: gid });
       return r.ok ? null : toastError(r);
     }
     case 'undoTrash': { const r = await send({ type: 'undoTrash', tid: btn.dataset.t }); return r.ok ? null : toastError(r); }
     case 'emptyTrash': {
-      if (!(S.trash.groups.length || S.trash.items.length) || !confirm(STR.confirmEmptyTrash)) return null;
+      if (!(S.trash.groups.length || S.trash.items.length) || !(await askDel(STR.confirmEmptyTrash))) return null;
       const r = await send({ type: 'emptyTrash' });
       return r.ok ? null : toastError(r);
     }
@@ -4151,7 +4170,7 @@ async function onClick(e) {
       return r.ok ? toast(STR.vaultRecovered(r.groups, r.items)) : toastError(r);
     }
     case 'dbReset': {
-      if (prompt(STR.dbResetPrompt) !== 'RESET') return null;
+      if ((await askIn({ title: STR.dlgDbReset, message: STR.dbResetPrompt, placeholder: 'RESET', validate: (v) => v === 'RESET' })) !== 'RESET') return null;
       const r = await send({ type: 'dbReset', confirm: 'RESET' });
       if (!r.ok) return toastError(r);
       await send({ type: 'vault:rebuild' });
@@ -4175,7 +4194,7 @@ async function runCleanAll() {
   const s = await send({ type: 'cleanSummary' });
   if (!s.ok) return toastError(s);
   if (!s.duplicates && !s.internalClose && !s.internalSave && !s.idle) return toast(STR.cleanNothing);
-  if (!confirm(STR.cleanConfirm(s))) return null;
+  if (!(await askGo(STR.cleanConfirm(s), STR.dlgClean))) return null;
   const r = await send({ type: 'cleanAll' });
   return r.ok ? toast(STR.cleanDone(r)) : toastError(r);
 }
@@ -4207,34 +4226,58 @@ async function buildBlob(kind) {
   let n = 0;
   let firstGroup = true;
   const flush = () => { if (buf.length) { blob = new Blob([blob, buf.join('\n') + '\n']); buf = []; } };
-  if (kind === 'ndjson') buf.push(ndjsonHeader(Date.now()));
+  const counts = { groups: 0, items: 0, categories: 0, trash: 0 };
+  if (kind === 'ndjson') {
+    // format 3 (lib/backup.js): settings and preferences first, then categories, then every tab set (also archived and deleted ones), then the trash
+    buf.push(backupHeader(Date.now()));
+    buf.push(settingsLine(await getSettings()));
+    buf.push(prefsLine(await pagePrefs()));
+    for (const c of await db.listCategories()) { if (c && !c.corrupt && c.id) { buf.push(categoryLine(c)); counts.categories++; } }
+  }
   await db.iterateExport(
     (g) => {
-      if (kind === 'ndjson') buf.push(ndjsonGroup(g, wt));
-      else { if (!firstGroup) buf.push(''); firstGroup = false; }
+      if (kind === 'ndjson') { buf.push(ndjsonGroup(g, wt)); counts.groups++; } else { if (!firstGroup) buf.push(''); firstGroup = false; }
     },
     (g, items) => {
       for (const it of items) buf.push(kind === 'ndjson' ? ndjsonItem(g.id, it, wt) : oneTabLine(it));
       n += items.length;
       if (buf.length >= 2000) { flush(); $('#exportStatus').textContent = STR.exporting(n); }
     },
+    { includeDeleted: kind === 'ndjson' },
   );
+  if (kind === 'ndjson') {
+    for (const row of (await db.listTrash()).items) {
+      if (!row || !Array.isArray(row.items) || !row.items.length || row.corrupt) continue;
+      for (const l of trashLines(row)) buf.push(l);
+      counts.trash += row.items.length;
+      if (buf.length >= 2000) flush();
+    }
+    counts.items = n;
+    buf.push(endLine(counts));
+  }
   flush();
-  return { blob, n };
+  return { blob, n, counts };
 }
 
 const totalLinks = () => S.ugroups.reduce((a, g) => a + g.count, 0);
 
+/** Page-side preferences for the backup: saved view (storage.local), print options and recent emoji (mirrored copy or localStorage), expand / item-sort state (localStorage). */
+async function pagePrefs() {
+  const lsJson = (k) => { try { return JSON.parse(localStorage.getItem(k) || 'null'); } catch { return null; } };
+  let view; let mirror = {};
+  try { const r = await chrome.storage.local.get(['view', 'prefs']); view = r.view; if (r.prefs && typeof r.prefs === 'object') mirror = r.prefs; } catch { /* defaults */ }
+  return { view, print: readLocalPref('print') || mirror.print, emoji: readLocalPref('emoji') || mirror.emoji, exp: lsJson('cmr.exp'), isort: lsJson('cmr.isort') };
+}
+
 async function exportNdjson() {
-  if (!totalLinks()) return toast(STR.nothingToExport);
-  let { blob, n } = await buildBlob('ndjson');
+  let { blob, n, counts } = await buildBlob('ndjson');
   let name = `tabroost-export-${fmtStamp(Date.now())}.cmr.ndjson`;
   if (n > 20000) {
     blob = await new Response(blob.stream().pipeThrough(new CompressionStream('gzip'))).blob();
     name += '.gz';
   }
   saveBlob(blob, name);
-  $('#exportStatus').textContent = STR.exported(n);
+  $('#exportStatus').textContent = STR.exportedFull(n, counts.categories, counts.trash);
   return null;
 }
 
@@ -4277,6 +4320,13 @@ class Importer {
     this.added = 0;
     this.skipped = 0;
     this.onProgress = onProgress;
+    this.catMap = new Map(); // category id in the file -> category id here (an existing one with the same id or name is reused)
+    this.idMap = new Map(); // set id in the file -> set id here (the same id when it is new, the existing set when it is merged)
+    this.curMerge = false;
+    this.merged = 0;
+    this.cats = 0;
+    this.trash = 0;
+    this.trashSkipped = false;
   }
 
   async startGroup(meta) {
@@ -4284,8 +4334,25 @@ class Importer {
     const r = await send({ type: 'import:group', meta });
     if (!r.ok) throw new Error(r.error);
     this.cur = r.gid;
-    this.gids.push(r.gid);
+    this.curMerge = !!r.merged;
+    // a merged set already existed: it is never part of the clean-up of an aborted / empty import (nothing of it may be removed)
+    if (r.merged) this.merged++; else this.gids.push(r.gid);
+    if (meta && meta.id) this.idMap.set(meta.id, r.gid);
     this.seen = new Set();
+  }
+
+  async addCategory(c) {
+    if (this.catMap.size >= MAX_CATEGORIES) return;
+    const r = await send({ type: 'import:category', cat: c });
+    if (r.ok && r.id) { this.catMap.set(c.id, r.id); this.cats++; }
+  }
+
+  async addTrash(row) {
+    const gid = (row.g && this.idMap.get(row.g)) || row.g;
+    if (!gid) { this.skipped += row.items.length; return; }
+    const r = await send({ type: 'import:trash', gid, deletedAt: row.deletedAt, delReason: row.delReason, items: row.items });
+    if (r.ok && r.skipped) this.trashSkipped = true;
+    else if (r.ok) this.trash += r.n || 0;
   }
 
   async add(it) {
@@ -4300,7 +4367,7 @@ class Importer {
     if (!this.batch.length || !this.cur) return;
     const items = this.batch;
     this.batch = [];
-    const r = await send({ type: 'import:items', gid: this.cur, items });
+    const r = await send({ type: 'import:items', gid: this.cur, items, merge: this.curMerge });
     if (!r.ok) throw new Error(r.error);
     this.added += r.added;
     this.skipped += r.skipped;
@@ -4316,7 +4383,7 @@ class Importer {
     await this.endGroup();
     const r = await send({ type: 'import:end', gids: this.gids });
     if (!r.ok) throw new Error(r.error);
-    return { added: this.added, groups: r.groups, skipped: this.skipped };
+    return { added: this.added, groups: r.groups, skipped: this.skipped, merged: this.merged, cats: this.cats, trash: this.trash, trashSkipped: this.trashSkipped };
   }
 
   async abort() {
@@ -4331,21 +4398,35 @@ async function importLines(lines) {
     let mode = null;
     const rest = [];
     let curGroupOpen = false;
+    let fileVersion = 0; let sawEnd = false; let fileSettings = null; let filePrefs = null;
     for await (const line of lines) {
       if (mode === null) {
         if (!line.trim()) continue;
         const o = parseNdjsonLine(line);
-        if (o && o.type === 'header') mode = 'ndjson';
+        if (o && o.type === 'header') { mode = 'ndjson'; fileVersion = Number(o.version) || 0; }
         else if (/^\s*[{[]/.test(line)) { mode = 'json'; rest.push(line); } else { mode = 'onetab'; rest.push(line); }
         continue;
       }
       if (mode === 'ndjson') {
+        if (line.length > MAX_LINE) { imp.skipped++; continue; } // untrusted file: an absurdly long line is skipped, not parsed
         const o = parseNdjsonLine(line);
         if (!o) continue;
         if (o.type === 'group') {
-          await imp.startGroup({ title: o.title, starred: o.starred, locked: o.locked, createdAt: o.createdAt, windowCount: o.windowCount, tabGroups: o.tabGroups, color: o.color, emoji: o.emoji });
+          const meta = readGroup(o, new Set(imp.catMap.keys()));
+          if (meta.cat) meta.cat = imp.catMap.get(meta.cat);
+          await imp.startGroup(meta);
           curGroupOpen = true;
-        } else if (o.type === 'item') {
+        } else if (o.type === 'category') {
+          const c = readCategory(o);
+          if (c) await imp.addCategory(c);
+        } else if (o.type === 'trash') {
+          await imp.endGroup(); curGroupOpen = false;
+          const row = readTrash(o, Date.now());
+          if (row) await imp.addTrash(row);
+        } else if (o.type === 'settings') fileSettings = readSettings(o);
+        else if (o.type === 'prefs') filePrefs = readPrefs(o);
+        else if (o.type === 'end') sawEnd = true;
+        else if (o.type === 'item') {
           if (!curGroupOpen) { await imp.startGroup({}); curGroupOpen = true; }
           await imp.add(o);
         }
@@ -4369,7 +4450,14 @@ async function importLines(lines) {
       }
     }
     const r = await imp.finish();
-    const msg = STR.importResult(r.added, r.groups, r.skipped);
+    // settings and preferences of a format-3 file: restored only when the box is ticked (they replace the current values); the same sanitising as the settings page
+    let restored = false;
+    if ((fileSettings || filePrefs) && $('#impSettings') && $('#impSettings').checked) {
+      const sr = await send({ type: 'import:settings', values: fileSettings || {}, prefs: filePrefs });
+      restored = !!(sr && sr.ok);
+      if (restored && filePrefs) restorePagePrefs(filePrefs);
+    }
+    const msg = STR.importResult(r.added, r.groups, r.skipped) + STR.importExtras(r.cats, r.trash, restored, r.merged) + (r.trashSkipped ? ' · ' + STR.importTrashSkipped : '') + (fileVersion >= 3 && !sawEnd ? ' · ' + STR.importCut : '');
     status.textContent = msg;
     toast(msg);
     return r;
@@ -4379,6 +4467,17 @@ async function importLines(lines) {
     toast(STR.errorPrefix + (e && e.message));
     return null;
   }
+}
+
+/** After a backup import: print options / recent emoji go to the mirrored copy, expanded state and per-set item sorting are merged into localStorage (never replacing what is there). */
+function restorePagePrefs(p) {
+  try {
+    if (p.print) { localStorage.setItem('cmr.printOpts', JSON.stringify(p.print)); }
+    if (p.emoji) { localStorage.setItem('cmr.emojiRecent', JSON.stringify(p.emoji)); }
+    const cur = (k) => { try { return JSON.parse(localStorage.getItem(k) || '{}') || {}; } catch { return {}; } };
+    if (p.exp && Object.keys(p.exp).length) localStorage.setItem('cmr.exp', JSON.stringify({ ...p.exp, ...cur('cmr.exp') }));
+    if (p.isort && Object.keys(p.isort).length) { localStorage.setItem('cmr.isort', JSON.stringify({ ...p.isort, ...cur('cmr.isort') })); isortState = null; }
+  } catch { /* storage unavailable */ }
 }
 
 async function doImportText(text) {
@@ -4403,6 +4502,7 @@ function onBus(m) {
   if (m.type === 'changed') { scheduleSync(m.groups); if (S.view === 'trash' || S.view === 'settings') { clearTimeout(S._trT); S._trT = setTimeout(() => { if (S.view === 'trash') renderTrash(); else loadTrashCounts().then(() => renderTrash().catch(() => {})).catch(() => {}); }, 300); } }
   else if (m.type === 'act:purgeProgress') { const p = $('#actPurgeProg'); if (p) { p.hidden = false; const pct = m.phase === 'done' ? 100 : Math.min(99, Math.round((m.done / m.total) * 100)); p.textContent = m.phase === 'done' ? STR.actPurged : STR.actPurging(pct); } }
   else if (m.type === 'settings') { getSettings().then((s) => { S.settings = s; if (dash) dash.remount(s).then(() => { if (S.view === 'dash') dash.show(); }).catch(() => {}); applySettingsToUi(); renderSettings(); for (const [, n] of V.live) n._sig = null; applyView(); if (S.view === 'trash') renderTrashView(); }); }
+  else if (m.type === 'prefs') pullPrefs().catch(() => {});
   else if (m.type === 'snapbanner') renderSnapBanner(m.banner);
   else if (m.type === 'snapshots') { if (S.view === 'snaps') renderSnapView(); else loadSnapCount(); }
   else if (m.type === 'migr') { S.indexing = m.remaining > 0 ? Math.round(((m.total - m.remaining) / Math.max(1, m.total)) * 100) : null; const info = $('#searchInfo'); if (S.indexing != null && !S.query) { info.hidden = false; info.textContent = STR.indexing(S.indexing); } else if (!S.query && !S.filtersActiveLine) info.hidden = true; if (S.indexing == null) loadData().then(() => applyView()); }
@@ -4635,7 +4735,15 @@ function wire() {
   });
   scroller.addEventListener('dblclick', (e) => {
     const t = e.target.closest && e.target.closest('.gt');
-    if (t && S.settings.titleClick !== 'restore') beginEdit(t.closest('.vrow'));
+    if (t && S.settings.titleClick !== 'restore') { beginEdit(t.closest('.vrow')); return; }
+    // double-click on the empty part of a set header folds / unfolds its list (not on buttons, fields, links or the title)
+    if (t || (e.target.closest && e.target.closest('button, input, textarea, a, select, [data-act]'))) return;
+    const head = e.target.closest && e.target.closest('.ghead');
+    const host = head && head.closest('[data-g]');
+    if (!host || !host.dataset.g) return;
+    const sel = window.getSelection && window.getSelection();
+    if (sel) sel.removeAllRanges(); // the double-click selects a word; drop it
+    toggleGroup(host.dataset.g, host.dataset.vk || '');
   });
   scroller.addEventListener('contextmenu', showCtxMenu);
   scroller.addEventListener('keydown', (e) => { // context-menu key / Shift+F10 on a set header opens its ⋯ menu next to the row
@@ -4670,6 +4778,7 @@ async function init() {
   const t0 = performance.now();
   await lockGate({ beforeLock: () => { try { SRCH.client && SRCH.client.post({ type: 'lock' }); } catch { /* ignore */ } } }); // password lock: resolves at once when it is off; shows the lock screen (and nothing else) while locked
   try { const r = await chrome.storage.local.get('view'); if (r.view) S.vs = { ...Q.DEFAULT_VIEW, ...r.view }; } catch { /* defaults */ }
+  pullPrefs().catch(() => {}); // print options / recent emoji: localStorage <-> the copy sync and the backup use (lib/prefs.js)
   try { applyLang((await getSettings()).language); } catch { /* Thai until the settings can be read */ }
   applyStrings();
   const syncLockBtn = () => { const b = $('#lockNowRow'); if (b) b.hidden = !(lockrt.enabled() && !lockrt.isLocked()); };

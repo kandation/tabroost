@@ -137,6 +137,9 @@ try {
   await shot('settings-filter-light'); await scheme('dark'); await sleep(400); await shot('settings-filter-dark'); await scheme('light');
   await type('sync'); v = await vis();
   check('settings search "sync": the sync card is shown', v.cards.includes('s-sync') && !v.empty, strip(v.cards));
+  { const hs = await ev(`(()=>{ const h=CSS.highlights.get('setsearch'); if(!h) return {n:0}; const t=[...h].map(r=>r.toString().toLowerCase()); const vis=[...h].every(r=>!r.startContainer.parentElement.closest('[hidden]')); return {n:h.size, allSync:t.every(x=>x==='sync'), vis}; })()`);
+  check('settings search highlights every match of "sync" in the shown text', hs.n > 0 && hs.allSync && hs.vis, strip(hs));
+  await type(''); const hc = await ev(`!CSS.highlights.has('setsearch')`); check('settings search: clearing the box removes the highlight', hc); await type('sync'); }
   await type('มืด'); v = await vis(); // the Thai word for "dark": the Thai search must not throw (English UI: simply may find nothing or a row)
   console.log('INFO thai query ' + strip(v));
   await type('zzqqxx'); v = await vis();

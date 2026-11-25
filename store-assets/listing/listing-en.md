@@ -58,7 +58,7 @@ HOW IT PROTECTS YOUR TABS AND DATA
 
 OPTIONAL: SYNC BETWEEN YOUR DEVICES
 
-If you turn it on, Tabroost encrypts your tab sets with a passphrase you choose and stores the encrypted data in your browser's own bookmarks, in a folder named "Tabroost sync data - do not edit" under Other bookmarks. Chrome's own sync (if you use it) carries the bookmarks to your other devices. The entries look like bookmarks to https://cmr.invalid/..., which is a reserved address that cannot open anything; they only hold encrypted data. Do not edit or move this folder. Your passphrase is never stored or sent. If you forget it, the synced data cannot be recovered, but your local list is not affected. Sync is off by default.
+If you turn it on, Tabroost encrypts your tab sets, categories and (unless you switch off “Sync settings too”) your settings with a passphrase you choose and stores the encrypted data in your browser's own bookmarks, in a folder named "Tabroost sync data - do not edit" under Other bookmarks. Chrome's own sync (if you use it) carries the bookmarks to your other devices. The entries look like bookmarks to https://cmr.invalid/..., which is a reserved address that cannot open anything; they only hold encrypted data. Do not edit or move this folder. Your passphrase is never stored or sent. If you forget it, the synced data cannot be recovered, but your local list is not affected. Sync is off by default.
 
 PRIVACY
 

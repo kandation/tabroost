@@ -162,7 +162,7 @@ try {
   await ev(`(()=>{ const i=document.getElementById('search'); i.focus(); i.value='Charlie tab'; i.dispatchEvent(new Event('input',{bubbles:true})); })()`);
   await until(() => ev(`__cmr.V.mode==='search' && __cmr.V.srows.length>=4`), 15000); await sleep(1200); console.log('INFO search', await ev(`JSON.stringify({m:__cmr.V.mode,q:__cmr.S.query,st:__cmr.SRCH.status.state,docs:__cmr.SRCH.status.docs,cur:!!__cmr.SRCH.cur,rows:__cmr.V.srows.length,info:document.getElementById('searchInfo').textContent})`));
   const hits = await ev(`document.querySelectorAll('.vrow.item:not([hidden])').length`);
-  p = await ev(`(()=>{ const n=document.querySelectorAll('.vrow.item:not([hidden])')[1]; if(!n) return null; const r=n.getBoundingClientRect(); return {x:r.left+60,y:r.top+r.height/2,k:n._key,t:n.textContent.slice(0,40)}; })()`);
+  p = await ev(`(()=>{ const n=document.querySelectorAll('.vrow.item:not([hidden])')[1]; if(!n) return null; const r=n.getBoundingClientRect(); return {x:r.left+78,y:r.top+r.height/2,k:n._key,t:n.textContent.slice(0,40)}; })()`);
   check('5. search shows hits', hits >= 4 && !!p, String(hits));
   if (p) {
     await dropTrash(p); await sleep(900);

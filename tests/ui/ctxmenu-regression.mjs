@@ -90,6 +90,58 @@ try {
   c = await ctxState();
   check('ctx: pointer in a corner (empty area) opens nothing or stays inside viewport', c.hidden || (c.r <= vp.w && c.b <= vp.h), strip(c));
 
+  // 1b. every Copy entry puts the right text on the real clipboard (read back), toasts, and closes the menu
+  await br.send('Browser.grantPermissions', { origin: `chrome-extension://${ld.result.id}`, permissions: ['clipboardReadWrite', 'clipboardSanitizedWrite'] });
+  // record what the page writes (reading the system clipboard back is unreliable when the window is not focused)
+  await ev(`(()=>{ if (window.__clipRec) return; window.__clipRec = true; const w = navigator.clipboard.writeText.bind(navigator.clipboard); navigator.clipboard.writeText = (t) => { window.__lastClip = String(t); return w(t); }; const w2 = navigator.clipboard.write.bind(navigator.clipboard); navigator.clipboard.write = async (items) => { try { const b = await items[0].getType('text/plain'); window.__lastClip = await b.text(); } catch {} return w2(items); }; })()`);
+  const clip = () => ev(`window.__lastClip !== undefined ? window.__lastClip : navigator.clipboard.readText().catch((e) => 'ERR ' + e.message)`);
+  const seed = () => ev(`navigator.clipboard.writeText('SENTINEL')`);
+  await ev(`(()=>{ const st=document.createElement('style'); st.id='noBarTest'; st.textContent='.selbar { display: none !important; }'; document.head.appendChild(st); return true; })()`);
+  const unsel = () => ev(`__cmr.sel.clear()`);
+  const rowPt = async (g, seq) => { // scrolled to the middle, measured twice (the list settles after a scroll)
+    const q = `(()=>{ const n=[...document.querySelectorAll('.vrow.item[data-g="${g}"][data-seq]:not([hidden])')].find(x=>x._key.endsWith(':${seq}')); if(!n) return null; n.scrollIntoView({block:'center'}); const r=n.getBoundingClientRect(); return {x:r.left+400,y:r.top+r.height/2}; })()`;
+    await ev(q); await sleep(1000); return ev(q);
+  };
+  const copyVia = async (pt, label, expectOpen = true) => {
+    await seed();
+    for (let tries = 0; tries < 3; tries++) { await rclick(pt.x, pt.y); if (!(await ctxState()).hidden) break; }
+    const open = !(await ctxState()).hidden;
+    const b = await ev(`(()=>{ const b=[...document.querySelectorAll('#ctxMenu .mitem')].find(x=>x.textContent.trim()===${JSON.stringify(label)}); if(!b) return null; const r=b.getBoundingClientRect(); return {x:r.left+r.width/2,y:r.top+r.height/2}; })()`);
+    if (!open || !b) return { open, clip: 'NOBTN', toast: '', hidden: true };
+    await lclick(b.x, b.y); await sleep(500);
+    return { open, clip: await clip(), toast: await toastText(), hidden: (await ctxState()).hidden };
+  };
+  const u = (i) => `https://${'abc'[i % 3]}.example.test/Zetastash/${i}`, ti = (i) => `Zeta stash tab ${i} with a fairly long title`;
+  await msg({ type: 'saveSettings', patch: { copyFormat: 'urlTitle' } }); await sleep(600);
+  const p1 = await rowPt(A, 1);
+  let r;
+  r = await copyVia(p1, 'Copy'); check('ctx copy: big Copy on a tab follows the Copy format setting (url | title), not just the link', r.clip === `${u(1)} | ${ti(1)}` && r.hidden && /1/.test(r.toast), strip(r));
+  await unsel(); r = await copyVia(p1, 'Copy link'); check('ctx copy: Copy link = url only', r.clip === u(1) && r.hidden && !!r.toast, strip(r));
+  await unsel(); r = await copyVia(p1, 'Copy title'); check('ctx copy: Copy title = title only', r.clip === ti(1) && r.hidden && !!r.toast, strip(r));
+  await unsel(); r = await copyVia(p1, 'Copy title | link'); check('ctx copy: Copy title | link = "title | url"', r.clip === `${ti(1)} | ${u(1)}` && r.hidden && !!r.toast, strip(r));
+  await msg({ type: 'saveSettings', patch: { copyFormat: 'titleUrl' } }); await sleep(600);
+  await unsel(); r = await copyVia(p1, 'Copy'); check('ctx copy: big Copy honours copyFormat=titleUrl', r.clip === `${ti(1)} | ${u(1)}`, strip(r));
+  await msg({ type: 'saveSettings', patch: { copyFormat: 'urlTitle' } }); await sleep(600);
+  // several tabs selected, right-click one of them: every selected tab is copied
+  const selKeys = (ks) => ev(`(()=>{ const s=__cmr.sel.sel; s.select(${JSON.stringify(ks[0])},'one'); ${JSON.stringify(ks.slice(1))}.forEach((k)=>s.select(k,'add')); return s.size; })()`);
+  const fullKey = (i) => ev(`[...document.querySelectorAll('.vrow.item[data-g="${A}"][data-seq]')].map(n=>n._key).find(k=>k.endsWith(':${i}'))`);
+  await unsel(); const k0 = await fullKey(0), k2 = await fullKey(2);
+  await selKeys([k0, k2]); const p2 = await rowPt(A, 2);
+  r = await copyVia(p2, 'Copy link'); check('ctx copy: 2 tabs selected, Copy link on one = both links, toast says 2', r.clip.replace(/\r/g, '') === `${u(0)}\n${u(2)}` && /2/.test(r.toast) && r.hidden, strip(r));
+  await selKeys([k0, k2]);
+  r = await copyVia(await rowPt(A, 2), 'Copy title | link'); check('ctx copy: 2 tabs selected, Copy title | link = both lines', r.clip.replace(/\r/g, '') === `${ti(0)} | ${u(0)}\n${ti(2)} | ${u(2)}`, strip(r));
+  await selKeys([k0, k2]);
+  r = await copyVia(await rowPt(A, 2), 'Copy'); check('ctx copy: 2 tabs selected, big Copy = both lines', r.clip.replace(/\r/g, '') === `${u(0)} | ${ti(0)}\n${u(2)} | ${ti(2)}`, strip(r));
+  // right-click a row OUTSIDE the selection: the selection moves to that row, only it is copied
+  await selKeys([k0, k2]); const p3 = await rowPt(A, 3);
+  r = await copyVia(p3, 'Copy link'); check('ctx copy: right-click a row outside the selection copies only that row', r.clip === u(3) && /1/.test(r.toast) && (await ev(`__cmr.sel.sel.size`)) === 1, strip(r));
+  // a whole tab set (header): big Copy copies the whole set, with the toast
+  await unsel(); await ev(`document.querySelector('.vrow.ghead[data-g="${A}"]').scrollIntoView({block:'center'})`); await sleep(900);
+  const hA = await rect(`.vrow.ghead[data-g="${A}"]`);
+  r = await copyVia({ x: hA.x + 500, y: hA.cy }, 'Copy'); check('ctx copy: big Copy on a tab set header copies every tab of the set', r.clip.replace(/\r/g, '') === [0, 1, 2, 3].map((i) => `${u(i)} | ${ti(i)}`).join('\n') && r.hidden && !!r.toast, strip(r).slice(0, 300));
+  await unsel(); await ev(`document.getElementById('noBarTest').remove()`);
+  await key('Escape', 27); await ev(`document.querySelector('.vrow.item[data-g="${A}"][data-seq]:not([hidden])') && document.getElementById('scroller')?.scrollTo(0, 0)`); await sleep(500);
+
   // 2. context menu on a set header
   const hr = await rect(`.vrow.ghead[data-g="${B}"]`);
   await rclick(hr.x + 500, hr.cy);
@@ -108,6 +160,8 @@ try {
   const spread = (rows, k) => { const v = rows.map((r) => r[k]).filter((z) => z != null); return v.length ? Math.max(...v) - Math.min(...v) : 0; };
   const cA = await cols(A);
   check('plain rows: x, copy, favicon, title left edges aligned across rows', ['x', 'cp', 'fav', 't'].every((k) => spread(cA, k) <= 1), strip(cA.slice(0, 2)));
+  { const lk = await ev(`(()=>{ const rows=[...document.querySelectorAll('.vrow.item[data-g="${A}"][data-seq]:not([hidden])')]; if(rows.length<2) return null; const left=(n)=>Math.round(n.querySelector('.ilink').getBoundingClientRect().left); const w=(n)=>Math.round(n.querySelector('.ilink').getBoundingClientRect().width); const a=left(rows[0]), wa=w(rows[0]); rows[1]._x.hidden=true; const r={ same: left(rows[1])===a, wsame: Math.abs(w(rows[1])-wa)<=1 }; rows[1]._x.hidden=false; return r; })()`);
+  check('locked row (x hidden) keeps the same title column as other rows', !!lk && lk.same && lk.wsame, strip(lk)); }
   const cW = await cols(W);
   const xs = cW.map((r) => r.x), fv = cW.map((r) => r.fav);
   console.log('INFO multiwin columns ' + strip(cW));

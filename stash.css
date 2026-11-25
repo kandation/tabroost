@@ -578,10 +578,6 @@ svg { stroke-width: 1.5; }
 .ghead[data-col="7"] { --setc: var(--c-purple); --setbg: var(--pc-7); --setedge: var(--pc-edge-7); }
 .ghead[data-col="8"] { --setc: var(--c-pink); --setbg: var(--pc-8); --setedge: var(--pc-edge-8); }
 .ghead[data-col] .gstack .fs { background: transparent; border-color: transparent; }
-.gemo { display: none; font-size: 20px; line-height: 22px; font-family: "Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji", sans-serif; }
-.gstack.emoji .fs, .gstack.emoji .fsn { display: none; }
-.gstack.emoji .gemo { display: inline-block; }
-.gstack.emoji { padding-left: 4px; }
 .lsw { width: 14px; height: 14px; border-radius: 50%; flex: none; display: inline-block; }
 .gmos { display: grid; grid-template-columns: repeat(2, 16px); grid-auto-rows: 16px; gap: 2px; flex: none; padding: 2px; border-radius: 8px; background: var(--surface-2); }
 .gmos[hidden] { display: none; }
@@ -864,3 +860,8 @@ html, body { max-width: 100vw; }
 .qd-name { max-width: 100%; font-weight: 600; text-align: center; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
 .qd-url { max-width: 100%; font-size: var(--fs-s); color: var(--muted); text-align: center; overflow-wrap: anywhere; user-select: text; }
 .qd-right { display: flex; gap: 8px; }
+
+.gemoL { flex: none; display: grid; place-items: center; width: 36px; height: 36px; font-size: 24px; line-height: 1; border-radius: 8px; background: var(--surface-2); font-family: "Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji", sans-serif; }
+.gemoL[hidden] { display: none; }
+:root[data-density="compact"] .gemoL { width: 24px; height: 24px; font-size: 16px; }
+::highlight(setsearch) { background-color: #ffe27a; color: #1b1b1b; }

@@ -24,6 +24,7 @@ const STR = {
   audibleWarn: (n) => `มีแท็บที่กำลังเล่นเสียง ${n} แท็บ ถ้าเก็บ เสียงจะหยุด
 เก็บต่อไหม?`,
   cleanNothing: 'ไม่มีอะไรต้องจัดระเบียบ',
+  dlgOk: 'ตกลง', dlgCancel: 'ยกเลิก', dlgSave: 'เก็บแท็บ', dlgClean: 'จัดระเบียบแท็บ',
   cleanConfirm: (s) => `จัดระเบียบแท็บตอนนี้ จะทำดังนี้\n• ปิดแท็บที่ซ้ำกัน ${s.duplicates} แท็บ (เปิดกลับได้)\n• หน้าภายในของ Chrome: ปิดทิ้ง ${s.internalClose} แท็บ · เก็บไว้ในรายการแล้วปิด ${s.internalSave} แท็บ\n• พักแท็บที่ไม่ได้ใช้ ${s.idle} แท็บ (ยังอยู่ในแถบแท็บ กดแล้วจะโหลดใหม่)\n\nแท็บทั่วไปที่คุณใช้อยู่จะไม่ถูกปิด ต้องการทำต่อหรือไม่?`,
   cleanDone: (r) => `จัดระเบียบแล้ว: ปิดแท็บซ้ำ ${r.duplicates} · ปิดหน้าภายในของ Chrome ${r.internalClosed} · เก็บหน้าภายในไว้ในรายการ ${r.internalSaved}`,
   stLinks: 'แท็บที่เก็บไว้',
@@ -56,6 +57,8 @@ import * as lockrt from './lib/lockrt.js';
 import { LOCK_TH } from './lib/lockstr.js';
 import { LOCK_EN, resolveLang } from './lib/i18n.js';
 import { POP_EN } from './lib/popstr.js';
+import { askConfirm } from './lib/dialogs.js';
+const askGo = (message, title) => askConfirm({ title, message, okLabel: STR.dlgOk, cancelLabel: STR.dlgCancel });
 
 initTheme();
 
@@ -207,7 +210,7 @@ async function stash(scope) {
   let warn = false;
   try { warn = !!(await getSettings()).warnAudibleStash; } catch { /* default: no warning */ }
   const aud = warn ? await audibleInScope(scope, $('#chkPinned').checked) : 0;
-  if (aud && !confirm(STR.audibleWarn(aud))) return;
+  if (aud && !(await askGo(STR.audibleWarn(aud), STR.dlgSave))) return;
   const btns = document.querySelectorAll('button[data-act^="stash"]');
   for (const b of btns) b.disabled = true;
   $('#msg').textContent = '';
@@ -230,7 +233,7 @@ document.addEventListener('click', async (e) => {
       const s = await send({ type: 'cleanSummary' });
       if (!s.ok) { $('#msg').textContent = STR.error(s.error); return null; }
       if (!s.duplicates && !s.internalClose && !s.internalSave && !s.idle) { $('#msg').textContent = STR.cleanNothing; return null; }
-      if (!confirm(STR.cleanConfirm(s))) return null;
+      if (!(await askGo(STR.cleanConfirm(s), STR.dlgClean))) return null;
       const r = await send({ type: 'cleanAll', windowId: await currentWindowId() });
       $('#msg').textContent = r.ok ? STR.cleanDone(r) : STR.error(r.error);
       renderStats();

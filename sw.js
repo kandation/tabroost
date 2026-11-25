@@ -4,6 +4,7 @@
 import { swStr, swLang } from './lib/swstr.js';
 import { KEYS, ALARMS, STASH_PAGE, APPEND_CHUNK, TRASH_DAYS, PURGE_CHUNK } from './lib/constants.js';
 import { hostOf, normItem } from './lib/formats.js';
+import { ID_RE, readSettings, readPrefs, MAX_CATEGORIES } from './lib/backup.js';
 import { debugDisableSplit, canSplit } from './lib/splitview.js';
 import * as db from './lib/db.js';
 import { runExclusive } from './lib/queue.js';
@@ -22,6 +23,7 @@ import * as vault from './lib/vault.js';
 import { installBookmarkListeners } from './lib/sync/transport-bookmarks.js';
 import { has as hasPerm, hasHost, namesIn, bookmarksApi, sessionsApi } from './lib/perms.js';
 import { createSyncController } from './lib/synccontrol.js';
+import { cleanView, cleanPrint, cleanEmojiRecent } from './lib/sync/prefs.js';
 import { migrate } from './lib/migrate.js';
 import * as act from './lib/activity.js';
 import * as firstseen from './lib/firstseen.js';
@@ -58,8 +60,47 @@ function attachBookmarkListeners() {
   bmListening = true;
 }
 async function refreshBmPerm() { permBm = await hasPerm('bookmarks'); if (permBm) attachBookmarkListeners(); return permBm; }
+// ---------- preferences: settings + saved view + print options + recent emoji (what "sync settings too" carries, lib/sync/prefs.js) ----------
+// The print options and the recent emoji live in the list page's localStorage; the page mirrors them into chrome.storage.local 'prefs'
+// (message 'prefs:set', lib/prefs.js) so that this worker can read, send and apply them.
+/** What changes elsewhere when a setting changes (the same for the 'saveSettings' message and for settings that arrive by sync). */
+async function settingsEffects(patch) {
+  if (!patch || typeof patch !== 'object') return;
+  if ('activityTracking' in patch || 'preciseOpenTime' in patch || 'ramCalibrate' in patch || 'retentionDays' in patch) {
+    act.setFrom(await settingsLib.getSettings());
+    if (!act.A.on) { try { await chrome.storage.session.remove(['fs', 'actbuf']); } catch { /* ignore */ } }
+    applyPreciseListener();
+  }
+  if ('iconClickAction' in patch) await applyIconAction();
+  if ('closeDuplicates' in patch || 'dupAutoMinutes' in patch) await clean.applyDupAlarm();
+  if ('autoSnapshot' in patch || 'snapshotMinutes' in patch) await applySnapshotAlarm();
+}
+const prefsIO = {
+  async read() {
+    const [settings, r] = await Promise.all([settingsLib.getSettings(), chrome.storage.local.get(['view', 'prefs'])]);
+    const p = r.prefs && typeof r.prefs === 'object' ? r.prefs : {};
+    return { settings, view: r.view, print: p.print, emoji: p.emoji };
+  },
+  /** patch = lib/sync/prefs.js toLocalPatch() (already sanitised). Goes through the same save path as the settings page; the page is told by the usual 'settings' / 'prefs' events. */
+  async write(patch) {
+    if (patch.settings) {
+      const r = await settingsLib.saveSettings(patch.settings);
+      if (r && r.error) throw new Error(r.error);
+      await settingsEffects(patch.settings);
+    }
+    const upd = {};
+    if (patch.view) upd.view = cleanView(patch.view);
+    if (patch.print || patch.emoji) {
+      const cur = (await chrome.storage.local.get('prefs')).prefs;
+      upd.prefs = { ...(cur && typeof cur === 'object' ? cur : {}), ...(patch.print ? { print: cleanPrint(patch.print) } : {}), ...(patch.emoji ? { emoji: cleanEmojiRecent(patch.emoji) } : {}) };
+    }
+    if (Object.keys(upd).length) { await chrome.storage.local.set(upd); post({ type: 'prefs' }); }
+  },
+};
 const syncCtl = createSyncController({
   bookmarks: bmApi,
+  prefsIO,
+  sanitizeSettings: settingsLib.sanitizeSettingsPatch,
   ensure: refreshBmPerm,
   // no remote apply while a drain or a restore runs (RAM is what matters then)
   canApply: () => !drain.isRunning() && !isRestoring() && !lockrt.isLocked(),
@@ -700,19 +741,9 @@ async function handle(msg, sender) {
     }
     case 'saveView': {
       const v = msg.view && typeof msg.view === 'object' ? msg.view : {};
-      const clean = {
-        sort: ['created', 'createdAsc', 'mtime', 'lastRestored', 'title', 'count', 'sites', 'manual'].includes(v.sort) ? v.sort : 'created',
-        starredFirst: !!v.starredFirst,
-        groupBy: ['calendar', 'slot', 'site', 'tabgroup', 'count', 'category', 'none'].includes(v.groupBy) ? v.groupBy : 'calendar',
-        slotMode: ['wdHour', 'hour', 'weekday', 'dom', 'partOfDay'].includes(v.slotMode) ? v.slotMode : 'wdHour',
-        itemSort: ['stash', 'title', 'site', 'visited'].includes(v.itemSort) ? v.itemSort : 'stash',
-        itemDir: v.itemDir === 'desc' ? 'desc' : 'asc',
-        sortRev: !!v.sortRev,
-        flat: !!v.flat,
-        flatSort: ['stash', 'title', 'site', 'visited'].includes(v.flatSort) ? v.flatSort : 'stash',
-        flatDir: v.flatDir === 'asc' ? 'asc' : 'desc',
-      };
+      const clean = cleanView(v); // lib/sync/prefs.js: the one sanitiser (also used for views that arrive by sync or from a backup file)
       await chrome.storage.local.set({ view: clean });
+      syncKick();
       return {};
     }
     // remove duplicate urls inside one session (they go to the trash as one entry, so it is undoable)
@@ -771,22 +802,77 @@ async function handle(msg, sender) {
     case 'import:group':
       return ex(async () => {
         const m = msg.meta || {};
+        // a set with the same id is already here (importing a backup into the browser it came from, or twice): MERGE, never replace or remove anything.
+        // The tabs of the file that are not in it yet are added (import:items with merge); its own title, flags and layout stay as they are.
+        if (typeof m.id === 'string' && ID_RE.test(m.id)) { const have = await db.getGroup(m.id); if (have) return { gid: have.id, merged: true }; }
         const g = await db.createGroup({
+          id: typeof m.id === 'string' && ID_RE.test(m.id) ? m.id : undefined,
           title: String(m.title || ''), starred: !!m.starred, locked: !!m.locked, source: 'import',
           createdAt: typeof m.createdAt === 'number' ? m.createdAt : Date.now(),
           windowCount: typeof m.windowCount === 'number' ? m.windowCount : 1,
           tabGroups: m.tabGroups, // optional (older exports have none)
           color: m.color, emoji: m.emoji,
+          ord: typeof m.ord === 'number' && isFinite(m.ord) ? m.ord : undefined,
+          deletedAt: typeof m.deletedAt === 'number' && m.deletedAt > 0 ? m.deletedAt : null, delReason: m.delReason,
         });
+        const patch = {};
+        for (const f of ['pinned', 'pending', 'archived']) if (m[f] === true) patch[f] = true;
+        if (typeof m.note === 'string' && m.note) patch.note = m.note;
+        if (typeof m.cat === 'string' && m.cat) patch.cat = m.cat;
+        if (Object.keys(patch).length) await db.updateGroup(g.id, patch);
         return { gid: g.id };
       });
+    case 'import:category': // backup import: a category of the file. Same id or same name already here = keep ours (the file's sets are mapped to it)
+      return ex(async () => {
+        const c = msg.cat || {};
+        if (typeof c.id !== 'string' || !ID_RE.test(c.id)) return { error: 'bad-category' };
+        const all = await db.listCategories();
+        const byId = all.find((x) => x.id === c.id);
+        if (byId) return { id: byId.id, existed: true };
+        const name = String(c.name || '').trim().toLowerCase();
+        const byName = name && all.find((x) => String(x.name || '').trim().toLowerCase() === name);
+        if (byName) return { id: byName.id, existed: true };
+        if (all.length >= MAX_CATEGORIES) return { error: 'too-many-categories' };
+        const made = await db.saveCategory({ id: c.id, name: c.name, color: c.color, ord: typeof c.ord === 'number' ? c.ord : undefined });
+        return { id: made.id };
+      });
+    case 'import:trash': // backup import: one row of recoverable tabs (skipped while the password lock is on: rows would have to be encrypted)
+      return ex(async () => {
+        if (lockrt.enabled()) return { skipped: true };
+        const items = [];
+        for (const raw of Array.isArray(msg.items) ? msg.items : []) { const it = normItem(raw, Date.now()); if (it) items.push(it); }
+        if (!items.length || typeof msg.gid !== 'string' || !ID_RE.test(msg.gid)) return { skipped: true };
+        const r = await db.importTrashRow(msg.gid, items, typeof msg.deletedAt === 'number' ? msg.deletedAt : Date.now(), msg.delReason);
+        return { n: (r && r.n) || 0 };
+      });
+    case 'import:settings': // backup import: settings and preferences of the file. Same sanitiser as the settings page; the sync configuration and the lock are never in a file
+      return (async () => {
+        const vals = readSettings({ values: msg.values });
+        const r = Object.keys(vals).length ? await settingsLib.saveSettings(vals) : {};
+        if (r && r.error) return { error: r.error };
+        await settingsEffects(vals);
+        if (msg.prefs) {
+          const p = readPrefs(msg.prefs);
+          const cur = (await chrome.storage.local.get('prefs')).prefs;
+          await chrome.storage.local.set({ view: p.view, prefs: { ...(cur && typeof cur === 'object' ? cur : {}), print: p.print, emoji: p.emoji } });
+          post({ type: 'prefs' });
+        }
+        syncKick();
+        return { ok: true, n: Object.keys(vals).length };
+      })();
     case 'import:items':
       return ex(async () => {
         const now = Date.now();
         const items = [];
         let skipped = 0;
+        let have = null;
+        if (msg.merge) { // into a set that already exists: only tabs it does not have yet, without layout fields that point into the other set's window / group numbering
+          have = new Set();
+          for (let after = 0; ;) { const page = await db.getItemsPage(msg.gid, after, 1000); if (!page.length) break; for (const r of page) have.add(r.url); after = page[page.length - 1].seq; if (page.length < 1000) break; }
+        }
         for (const raw of Array.isArray(msg.items) ? msg.items : []) {
-          const it = normItem(raw, now);
+          let it = normItem(raw, now);
+          if (it && have) { if (have.has(it.url)) { skipped++; continue; } have.add(it.url); it = { url: it.url, title: it.title, ts: it.ts }; }
           if (it) items.push(it); else skipped++;
         }
         if (items.length) await db.appendItems(msg.gid, items);
@@ -812,16 +898,21 @@ async function handle(msg, sender) {
     // ----- settings / misc -----
     case 'saveSettings': {
       const r = await settingsLib.saveSettings(msg.patch);
-      if (msg.patch && ('activityTracking' in msg.patch || 'preciseOpenTime' in msg.patch || 'ramCalibrate' in msg.patch || 'retentionDays' in msg.patch)) {
-        act.setFrom(await settingsLib.getSettings());
-        if (!act.A.on) { try { await chrome.storage.session.remove(['fs', 'actbuf']); } catch { /* ignore */ } }
-        applyPreciseListener();
-      }
-      if (msg.patch && 'iconClickAction' in msg.patch) await applyIconAction();
-      if (msg.patch && ('closeDuplicates' in msg.patch || 'dupAutoMinutes' in msg.patch)) await clean.applyDupAlarm();
-      if (msg.patch && ('autoSnapshot' in msg.patch || 'snapshotMinutes' in msg.patch)) await applySnapshotAlarm();
+      await settingsEffects(msg.patch);
+      syncKick(); // a local change: the preferences scan sends it when "sync settings too" is on (nothing echoes: remote values are applied through prefsIO.write)
       return r;
     }
+    case 'prefs:set': { // the page mirrors a localStorage preference here (print options / recent emoji)
+      if (msg.name !== 'print' && msg.name !== 'emoji') return { error: 'bad-pref' };
+      return ex(async () => {
+        const cur = (await chrome.storage.local.get('prefs')).prefs;
+        const next = { ...(cur && typeof cur === 'object' ? cur : {}), [msg.name]: msg.name === 'print' ? cleanPrint(msg.value) : cleanEmojiRecent(msg.value) };
+        await chrome.storage.local.set({ prefs: next });
+        syncKick();
+        return {};
+      });
+    }
+    case 'prefs:get': { const p = (await chrome.storage.local.get('prefs')).prefs; return { prefs: p && typeof p === 'object' ? p : {} }; }
     // popup.html: stash on demand. scope: 'tab' | 'window' | 'all'
     case 'stashNow': {
       const opts = { includePinned: !!msg.includePinned };

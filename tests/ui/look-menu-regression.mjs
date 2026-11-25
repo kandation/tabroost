@@ -70,7 +70,7 @@ try {
   await metrics(1400, 900); await sleep(400);
   const vp = await ev(`({w:innerWidth,h:innerHeight})`);
   const gsel = (g) => `.vrow.ghead[data-g="${g}"]`;
-  const hdr = (g) => ev(`(()=>{ const n=document.querySelector('${gsel(g)}'); if(!n) return null; const cs=getComputedStyle(n,'::before'); const st=n.querySelector('.gstack'); return { col:n.dataset.col||'', cls:n.className, bg:cs.backgroundColor, bd:cs.borderTopColor, emoji: st? st.classList.contains('emoji'):null, emo: n.querySelector('.gemo')?.textContent||'', emoShown: n.querySelector('.gemo') ? getComputedStyle(n.querySelector('.gemo')).display!=='none':null, favShown: [...n.querySelectorAll('.gstack .fs')].filter(f=>getComputedStyle(f).display!=='none').length, title:n.querySelector('.gtitle,.gt,.title')?.textContent||'' }; })()`);
+  const hdr = (g) => ev(`(()=>{ const n=document.querySelector('${gsel(g)}'); if(!n) return null; const cs=getComputedStyle(n,'::before'); const st=n.querySelector('.gstack'); return { col:n.dataset.col||'', cls:n.className, bg:cs.backgroundColor, bd:cs.borderTopColor, emoji: !!(n.querySelector('.gemoL') && !n.querySelector('.gemoL').hidden), emo: n.querySelector('.gemoL')?.textContent||'', emoShown: n.querySelector('.gemoL') ? getComputedStyle(n.querySelector('.gemoL')).display!=='none':null, favShown: n.querySelector('.gmos') && getComputedStyle(n.querySelector('.gmos')).display!=='none' ? 1 : 0, title:n.querySelector('.gtitle,.gt,.title')?.textContent||'' }; })()`);
   const reveal = async (g) => { await ev(`(()=>{ const n=document.querySelector('${gsel(g)}'); const r=n&&!n.hidden&&n.getBoundingClientRect(); if(r&&r.top>=0&&r.bottom<=innerHeight) return; const i=__cmr.V.idxOf.get('${g}'); document.getElementById('scroller').scrollTop=Math.max(0,__cmr.V.tops[i]-70); })()`); await sleep(500); };
   const look = (groupId, o) => msg({ type: 'groupLook', groupId, ...o });
   const waitCol = (g, c) => until(() => ev(`(document.querySelector('${gsel(g)}')?.dataset.col||'')==='${c}'`), 4000);
@@ -86,7 +86,7 @@ try {
   const readable = (g) => ev(`(()=>{ ${contrast}
     const n=document.querySelector('${gsel(g)}'); const base=P(getComputedStyle(n,'::before').backgroundColor); const out=[]; const bad=[];
     const w=document.createTreeWalker(n,NodeFilter.SHOW_TEXT); let t;
-    while((t=w.nextNode())){ if(!t.textContent.trim()) continue; const e=t.parentElement; if(e.closest('.gemo')) continue; const r=e.getBoundingClientRect(); if(!r.width||getComputedStyle(e).visibility==='hidden') continue;
+    while((t=w.nextNode())){ if(!t.textContent.trim()) continue; const e=t.parentElement; if(e.closest('.gemoL')) continue; const r=e.getBoundingClientRect(); if(!r.width||getComputedStyle(e).visibility==='hidden') continue;
       let bg=base; const chain=[]; for(let x=e;x&&x!==n.parentElement;x=x.parentElement){ const b=P(getComputedStyle(x).backgroundColor); if(b&&b[3]>0) chain.push(b); }
       for(const b of chain.reverse()) bg=blend(b,bg);
       const fg=P(getComputedStyle(e).color); const op=parseFloat(getComputedStyle(e).opacity); const f2=[fg[0],fg[1],fg[2],fg[3]*op]; const cr=CR(blend(f2,bg),bg); out.push(cr); if(cr<3.2) bad.push(e.className+':'+t.textContent.trim().slice(0,12)+':'+cr.toFixed(2)); }
@@ -137,18 +137,18 @@ try {
   await ev(`__cmr.fn.expandAll(true)`); await sleep(400); await reveal(A);
 
   // ---------- 2. emoji ----------
-  await look(A, { color: null, emoji: '🚀' }); await until(() => ev(`document.querySelector('${gsel(A)} .gstack.emoji')`), 4000); await sleep(300);
+  await look(A, { color: null, emoji: '🚀' }); await until(() => ev(`document.querySelector('${gsel(A)} .gemoL:not([hidden])')`), 4000); await sleep(300);
   let h = await hdr(A);
-  check('emoji: .gstack.emoji, emoji shown, favicon mosaic hidden, title has no emoji prefix', h.emoji && h.emoShown && h.emo === '🚀' && h.favShown === 0 && !h.title.includes('🚀'), S(h));
+  check('emoji: .gemoL:not([hidden]), emoji shown, favicon mosaic hidden, title has no emoji prefix', h.emoji && h.emoShown && h.emo === '🚀' && h.favShown === 0 && !h.title.includes('🚀'), S(h));
   await metrics(1600, 900); await sleep(500); await reveal(A);
-  const al = await ev(`(()=>{ const n=document.querySelector('${gsel(A)}'); const e=n.querySelector('.gemo').getBoundingClientRect(); const c=n.querySelector('.c-cnt').getBoundingClientRect(); const st=n.querySelector('.gstack').getBoundingClientRect(); return { emoCy:(e.top+e.bottom)/2, cntCy:(c.top+c.bottom)/2, w:e.width, ht:e.height, stack:[st.left,st.right], cnt:c.left, vis:getComputedStyle(n.querySelector('.gstack')).display }; })()`);
-  check('emoji: vertically aligned with the chips and not overlapping the count chip', al.vis !== 'none' && Math.abs(al.emoCy - al.cntCy) <= 4 && al.stack[1] <= al.cnt + 1 && al.w > 8, S(al));
+  const al = await ev(`(()=>{ const n=document.querySelector('${gsel(A)}'); const e=n.querySelector('.gemoL').getBoundingClientRect(); const c=n.querySelector('.c-cnt').getBoundingClientRect(); const t=n.querySelector('.gtitle,.gt,.title').getBoundingClientRect(); return { emoRight:e.right, titleLeft:t.left, w:e.width, ht:e.height, cnt:c.left, vis:getComputedStyle(n.querySelector('.gemoL')).display }; })()`);
+  check('emoji: sits left of the title (where the mosaic was), visible, not overlapping', al.vis !== 'none' && al.emoRight <= al.titleLeft + 1 && al.w >= 20, S(al));
   await ev(`__cmr.fn.relayout && __cmr.fn.relayout()`); await sleep(500);
   await msg({ type: 'debug:seedItems', gid: A, items: plain('Colour set', 6).slice(4) }); await sleep(1500);
   h = await hdr(A);
   check('emoji: still replaces the mosaic after repaint / new items', h.emoji && h.favShown === 0, S(h));
   await look(A, { color: 5 }); await waitCol(A, 5); await sleep(300); await shot('emoji-colour-light'); await scheme('dark'); await shot('emoji-colour-dark'); await scheme('light');
-  await look(A, { emoji: '' }); await until(() => ev(`!document.querySelector('${gsel(A)} .gstack.emoji')`), 4000);
+  await look(A, { emoji: '' }); await until(() => ev(`!document.querySelector('${gsel(A)} .gemoL:not([hidden])')`), 4000);
   h = await hdr(A);
   check('emoji removed: mosaic comes back (favicon slots visible)', !h.emoji && !h.emoShown && h.favShown > 0, S(h));
   await metrics(1400, 900); await sleep(400);
@@ -201,10 +201,10 @@ try {
     if (act === 'mArchive') { await ev(`document.querySelector('.navi[data-nav="all"]').click()`); await sleep(1000); }
   }
   await openMore(B);
-  await ev(`window.__promptReply='Renamed set'; document.querySelector('#moreMenu [data-act="mRename"]').click()`); await sleep(700);
+  await ev(`document.querySelector('#moreMenu [data-act="mRename"]').click()`); await sleep(500); await ev(`(()=>{ const d=document.querySelector('dialog.cmd-dlg[open]'); const f=d.querySelector('input,textarea'); f.value=${JSON.stringify('Renamed set')}; f.dispatchEvent(new Event('input',{bubbles:true})); d.querySelector('.cmd-ok').click(); })()`); await sleep(700);
   check('item Rename: asks for a name and renames', await until(() => ev(`__cmr.S.allGroups.find(x=>x.id==='${B}')?.title==='Renamed set'`), 4000) && !(await menu()).open);
   await openMore(B);
-  await ev(`window.__promptReply='a note'; document.querySelector('#moreMenu [data-act="mNote"]').click()`); await sleep(700);
+  await ev(`document.querySelector('#moreMenu [data-act="mNote"]').click()`); await sleep(500); await ev(`(()=>{ const d=document.querySelector('dialog.cmd-dlg[open]'); const f=d.querySelector('input,textarea'); f.value=${JSON.stringify('a note')}; f.dispatchEvent(new Event('input',{bubbles:true})); d.querySelector('.cmd-ok').click(); })()`); await sleep(700);
   check('item Note: stores the note', await until(() => ev(`__cmr.S.allGroups.find(x=>x.id==='${B}')?.note==='a note'`), 4000));
   await openMore(B);
   await ev(`document.querySelector('#moreMenu [data-act="mMoveCat"]').click()`); await sleep(600);
@@ -297,7 +297,7 @@ try {
   const e1 = await rect('dialog.look-dlg .ld-e:nth-child(5)');
   const e1t = await ev(`document.querySelector('dialog.look-dlg .ld-e:nth-child(5)').textContent`);
   await lclick(e1.cx, e1.cy);
-  check('dialog: emoji click applies at once (header emoji)', await until(() => ev(`document.querySelector('${gsel(A)} .gemo')?.textContent===${JSON.stringify(e1t)}`), 4000), e1t);
+  check('dialog: emoji click applies at once (header emoji)', await until(() => ev(`document.querySelector('${gsel(A)} .gemoL')?.textContent===${JSON.stringify(e1t)}`), 4000), e1t);
   const rec = await ev(`localStorage.getItem('cmr.emojiRecent')`);
   check('dialog: recents saved in localStorage cmr.emojiRecent', rec && JSON.parse(rec)[0] === e1t, rec);
   const tf = await rect('dialog.look-dlg .ld-tab:nth-child(1)'); await lclick(tf.cx, tf.cy);
@@ -334,7 +334,7 @@ try {
   const sw0 = await rect('dialog.look-dlg .ld-c[data-c="0"]'); await lclick(sw0.cx, sw0.cy);
   check('dialog: "none" swatch removes the colour', await waitCol(A, ''), S((await hdr(A)).col));
   const clr = await rect('dialog.look-dlg .ld-clear'); await lclick(clr.cx, clr.cy);
-  check('dialog: "remove emoji" clears the emoji (mosaic back)', await until(() => ev(`!document.querySelector('${gsel(A)} .gstack.emoji')`), 4000));
+  check('dialog: "remove emoji" clears the emoji (mosaic back)', await until(() => ev(`!document.querySelector('${gsel(A)} .gemoL:not([hidden])')`), 4000));
   await shot('look-dialog-cleared-light');
   const dn = await rect('dialog.look-dlg .btn.primary'); await lclick(dn.cx, dn.cy);
   check('dialog: Done closes it', (await dlg()) === null);
