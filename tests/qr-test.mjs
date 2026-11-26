@@ -98,6 +98,8 @@ try {
   ws.onmessage = (e) => { const m = JSON.parse(e.data); if (m.id && pend[m.id]) { pend[m.id](m); delete pend[m.id]; } };
   const send = (method, params = {}) => new Promise((r) => { const i = ++id; pend[i] = r; ws.send(JSON.stringify({ id: i, method, params })); });
   const ev = async (expr) => { const r = await send('Runtime.evaluate', { expression: expr, awaitPromise: true, returnByValue: true }); if (r.result.exceptionDetails) throw new Error(String(r.result.exceptionDetails.exception?.description || r.result.exceptionDetails.text).slice(0, 400)); return r.result.result.value; };
+  // the target can be listed before the page has committed: imports would then resolve against about:blank
+  for (let i = 0; i < 40 && !(await ev(`location.port === '${HTTP}' && document.readyState === 'complete'`)); i++) await sleep(250);
 
   const hasBD = await ev(`(async()=>{ if(!('BarcodeDetector' in window)) return false; try { return (await BarcodeDetector.getSupportedFormats()).includes('qr_code'); } catch { return false; } })()`);
   console.log(`decoder: ${hasBD ? 'Chrome BarcodeDetector (qr_code)' : 'jsqr (dev-only, installed outside the project)'}`);
