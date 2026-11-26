@@ -882,6 +882,7 @@ function layout() {
   if (V.mode === 'flat') flatEnsure();
   const gs = S.groups;
   const n = gs.length;
+  S.anyEmo = S.settings.setLook !== false && gs.some((g) => !!g.emoji);
   const tops = new Float64Array(n + 1);
   V.bucketAt = V.labels && V.labels.length === n ? V.labels : new Array(n).fill(null);
   V.idxOf = new Map();
@@ -1314,7 +1315,11 @@ function paintMosaic(n, g) {
   const on = S.settings.sessionCover !== false && document.documentElement.dataset.density !== 'compact' && top.length > 0 && !(lockrt.enabled() && lockrt.isLocked());
   const emo = !n._emoL.hidden;
   n._mos.hidden = !on || emo;
-  if (!on || emo) return;
+  // keep every title on one line: a set with neither emoji nor cover gets an empty slot of the same size while other sets show one
+  const cover = S.settings.sessionCover !== false && document.documentElement.dataset.density !== 'compact';
+  if (!emo && !on && (cover || S.anyEmo)) { n._emoL.hidden = false; n._emoL.classList.add('blank'); }
+  if (!on || emo) { delete n._mos.dataset.n; return; }
+  n._mos.dataset.n = String(Math.min(4, top.length));
   for (let i = 0; i < 4; i++) {
     const f = n._mosf[i];
     const h = top[i] && top[i][0];
@@ -1426,7 +1431,7 @@ function fillGroup(n, r) {
   const multi = g.windowCount > 1;
   const cat = g.cat ? catById(g.cat) : null;
   const sst = groupSyncState(g);
-  const sig = [sst, g.id, g.vk, g.vcount, g.title, g.count, g.starred, g.locked, g.pinned, g.archived, g.pending, g.cat, cat && cat.name, cat && cat.color, g.note, open, g.phase, g.windowCount, g.agg && g.agg.top && g.agg.top.map((x) => x[0]).join(','), g.agg && g.agg.nSites, g.createdAt, g.rc, g.tm && g.tm.luMax, S.settings.timeDisplay, S.settings.dateCalendar, S.settings.titleClick, S.lang, sortSig(g), g.color, g.emoji, S.settings.setLook, S.settings.sessionCover, document.documentElement.dataset.density, !!(g.agg && g.agg.top && g.agg.top.length)].join('|');
+  const sig = [sst, g.id, g.vk, g.vcount, g.title, g.count, g.starred, g.locked, g.pinned, g.archived, g.pending, g.cat, cat && cat.name, cat && cat.color, g.note, open, g.phase, g.windowCount, g.agg && g.agg.top && g.agg.top.map((x) => x[0]).join(','), g.agg && g.agg.nSites, g.createdAt, g.rc, g.tm && g.tm.luMax, S.settings.timeDisplay, S.settings.dateCalendar, S.settings.titleClick, S.lang, sortSig(g), g.color, g.emoji, S.settings.setLook, S.settings.sessionCover, S.anyEmo, document.documentElement.dataset.density, !!(g.agg && g.agg.top && g.agg.top.length)].join('|');
   if (n._sig === sig) return;
   n._sig = sig;
   n.dataset.g = g.id;
@@ -1443,6 +1448,7 @@ function fillGroup(n, r) {
   const hasEmo = !!(look && g.emoji);
   n._emoL.hidden = !hasEmo;
   n._emoL.textContent = hasEmo ? g.emoji : '';
+  n._emoL.classList.remove('blank');
   if (look && g.color) n.dataset.col = String(g.color); else delete n.dataset.col;
   n._tt.classList.toggle('auto', !named);
   n._tt.title = g.note ? STR.noteOf(g.note) : (named ? g.title : '');
@@ -1479,6 +1485,7 @@ function fillGroup(n, r) {
   n._sortChev.title = STR.isortMenuTip;
   n._sortChev.setAttribute('aria-label', STR.isortMenuTip);
   n._openL.textContent = multi ? STR.openSession : STR.openGroup;
+  n._openL.dataset.w = STR.openSession.length > STR.openGroup.length ? STR.openSession : STR.openGroup; // same button width on every row, so the columns to its left line up
   n._open.title = multi ? STR.openSession : STR.openGroup;
   n._open.dataset.act = multi ? 'openSession' : 'openGroup';
   n._star.replaceChildren(ICON(g.starred ? 'star-fill' : 'star'));
@@ -4776,6 +4783,7 @@ function wire() {
 
 async function init() {
   const t0 = performance.now();
+  { const p = document.createElement('div'); p.style.cssText = 'position:absolute;top:-99px;width:50px;height:50px;overflow:scroll'; document.body.appendChild(p); document.documentElement.style.setProperty('--sbw', (p.offsetWidth - p.clientWidth) + 'px'); p.remove(); }
   await lockGate({ beforeLock: () => { try { SRCH.client && SRCH.client.post({ type: 'lock' }); } catch { /* ignore */ } } }); // password lock: resolves at once when it is off; shows the lock screen (and nothing else) while locked
   try { const r = await chrome.storage.local.get('view'); if (r.view) S.vs = { ...Q.DEFAULT_VIEW, ...r.view }; } catch { /* defaults */ }
   pullPrefs().catch(() => {}); // print options / recent emoji: localStorage <-> the copy sync and the backup use (lib/prefs.js)

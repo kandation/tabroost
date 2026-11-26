@@ -865,3 +865,23 @@ html, body { max-width: 100vw; }
 .gemoL[hidden] { display: none; }
 :root[data-density="compact"] .gemoL { width: 24px; height: 24px; font-size: 16px; }
 ::highlight(setsearch) { background-color: #ffe27a; color: #1b1b1b; }
+
+/* ---------- alignment lines (list page): one line per column, no row-dependent widths ---------- */
+.acts .openbox .tl { flex-direction: column; align-items: center; }
+.acts .openbox .tl:not(:empty) { display: inline-flex; }
+.acts .openbox .tl::after { content: attr(data-w); height: 0; overflow: hidden; visibility: hidden; }
+@media (max-width: 1200px) { .acts .openbox .tl:not(:empty) { display: none; } }
+/* the favicon cover: 1 icon sits in the middle, 2 side by side, 3 with the last one centred; same box as the emoji */
+.gmos { display: flex; flex-wrap: wrap; justify-content: center; align-content: center; gap: 2px; box-sizing: border-box; width: 38px; height: 38px; padding: 2px; }
+.gmos[hidden] { display: none; }
+:root[data-density="compact"] .gmos { display: none; }
+.gmos .fs.empty { display: none; }
+.gemoL { width: 38px; height: 38px; }
+.gemoL.blank { background: none; }
+.bucket { padding-left: 0; padding-right: 0; }
+/* the bars above the list end where the cards end (the list keeps room for its scrollbar) */
+.main > .topbar, #chips, #searchInfo, #panels { margin-right: var(--sbw, 0px); }
+/* sidebar: logo, section name and icons share one line; + sits over the counts */
+.brand { padding-left: 6px; gap: 4px; }
+.navhead { padding-left: 10px; padding-right: 0; }
+@media (min-width: 768px) and (max-width: 1199px) { .brand { padding-left: var(--sp-2); } .navhead { padding-left: 0; } }
