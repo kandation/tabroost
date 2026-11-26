@@ -67,7 +67,7 @@ try {
   await msg({ type: 'groupLook', groupId: b, emoji: '🔥', color: 2 });
   await msg({ type: 'groupNote', groupId: c, note: 'note' });
   const measure = () => ev(`(()=>{ const L=(e)=>e&&e.getClientRects().length?Math.round(e.getBoundingClientRect().left*10)/10:null; const R=(e)=>Math.round(e.getBoundingClientRect().right);
-    const heads=[...document.querySelectorAll('.ghead')]; const it=document.querySelector('.item');
+    const heads=[...document.querySelectorAll('.ghead:not([hidden])')]; const it=document.querySelector('.item:not([hidden])');
     return { title:heads.map(h=>L(h.querySelector('.gt'))), cnt:heads.map(h=>L(h.querySelector('.c-cnt'))), date:heads.map(h=>L(h.querySelector('.c-date'))),
       item: it?L(it.querySelector('.ilink')):null, cardR: heads.length?R(heads[0]):0, barR: R(document.querySelector('#btnOpenAll')),
       x: it?L(it.querySelector('.x'))+it.querySelector('.x').offsetWidth/2:null, chev: heads.length?L(heads[0].querySelector('.toggle'))+heads[0].querySelector('.toggle').offsetWidth/2:null }; })()`);
@@ -77,7 +77,7 @@ try {
     await pg.send('Emulation.setDeviceMetricsOverride', { width, height: 1400, deviceScaleFactor: 1, mobile: false });
     await pg.send('Page.reload'); await sleep(3000);
     await ev('__cmr.fn.expandAll(false)'); await sleep(700);
-    await ev(`document.querySelector('.ghead [data-act=toggle]').click()`); await until(() => ev("!!document.querySelector('.item .ilink')"));await sleep(900);
+    await ev(`document.querySelector('.ghead [data-act=toggle]').click()`); await until(() => ev("!!document.querySelector('.item:not([hidden]) .ilink')"));await sleep(900);
     const m = await measure(); const tag = lang + ' ' + density + ' ' + width + ': ';
     check(tag + 'set titles on one line', same(m.title), S(m.title));
     check(tag + 'tab-count chips on one line', same(m.cnt), S(m.cnt));

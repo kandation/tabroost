@@ -185,6 +185,18 @@ try {
   const ovn = await overlap(); check('1000px wide: no overlapping rows', ovn.bad.length === 0, strip(ovn));
   await shot('win-1000-light'); await scheme('dark'); await sleep(400); await shot('win-1000-dark'); await scheme('light');
   await metrics(1400, 900); await sleep(500);
+  // (last) labels follow the window number, not the stored "window starts here" flag (that tab may have been deleted or moved)
+  await msg({ type: 'saveSettings', patch: { density: 'comfortable' } });
+  const noFlag = (p, n, w) => it(p, n, w).map(({ ws, ...r }) => r);
+  const allFlag = (p, n, w) => it(p, n, w).map((r) => ({ ...r, ws: true }));
+  const S4 = await mkSet('LostFlag', [...it('f1', 3, 1), ...noFlag('f2', 3, 2)], { windowCount: 2 });
+  const S5 = await mkSet('EveryFlag', [...allFlag('e1', 3, 1), ...allFlag('e2', 3, 2)], { windowCount: 2 });
+  await sleep(1500);
+  for (const [name, gid] of [['first tab of window 2 has no flag', S4], ['every tab has the flag', S5]]) {
+    await ev(`__cmr.fn.expandAll(false)`); await sleep(400); await ev(`__cmr.fn.ensureRuns(__cmr.S.allGroups.find((g)=>g.id===${strip(gid)})).then(()=>{ __cmr.V.exp.add(${strip(gid)}); __cmr.fn.relayout(); })`); await sleep(1200); await toTop(gid);
+    const o = await orderOf(gid);
+    check(name + ': exactly one label per window, at the boundary', strip(o) === strip(['W:Window 1', 'i:1', 'i:2', 'i:3', 'W:Window 2', 'i:4', 'i:5', 'i:6']), strip(o));
+  }
   console.log('shots in ' + SHOTS);
 } catch (e) {
   console.log('ERROR ' + (e && e.stack || e));
